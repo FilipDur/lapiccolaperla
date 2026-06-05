@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lapiccolaperla.vercel.app/sitemap.xml

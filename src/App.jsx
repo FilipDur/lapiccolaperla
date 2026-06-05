@@ -57,6 +57,97 @@ const photoData = [
 }));
 
 const languageCodes = ["cs", "en", "it"];
+const SITE_URL = "https://lapiccolaperla.vercel.app";
+const SEO_IMAGE_URL = `${SITE_URL}/og-la-piccola-perla.webp`;
+
+const seoByLanguage = {
+  cs: {
+    path: "/",
+    htmlLang: "cs",
+    locale: "cs_CZ",
+    title: "La Piccola Perla | Italska restaurace Praha 1",
+    description: "La Piccola Perla je italska restaurace v centru Prahy 1 u Staromestskeho namesti. Pasta, pizza, morske plody, vino, denni menu a online rezervace."
+  },
+  en: {
+    path: "/en",
+    htmlLang: "en",
+    locale: "en_US",
+    title: "La Piccola Perla | Italian Restaurant in Prague Old Town",
+    description: "La Piccola Perla is an Italian restaurant in Prague 1 near Old Town Square. Pasta, pizza, seafood, wine and online table reservations."
+  },
+  it: {
+    path: "/it",
+    htmlLang: "it",
+    locale: "it_IT",
+    title: "La Piccola Perla | Ristorante italiano a Praga 1",
+    description: "La Piccola Perla e un ristorante italiano nel centro di Praga 1 vicino alla Piazza della Citta Vecchia. Pasta, pizza, pesce, vino e prenotazioni online."
+  }
+};
+
+const getCanonicalUrl = (language) => `${SITE_URL}${seoByLanguage[language].path}`;
+
+const setMetaTag = (attribute, key, content) => {
+  let element = document.head.querySelector(`meta[${attribute}="${key}"]`);
+
+  if (!element) {
+    element = document.createElement("meta");
+    element.setAttribute(attribute, key);
+    document.head.appendChild(element);
+  }
+
+  element.setAttribute("content", content);
+};
+
+const setLinkTag = (selector, attributes) => {
+  let element = document.head.querySelector(selector);
+
+  if (!element) {
+    element = document.createElement("link");
+    document.head.appendChild(element);
+  }
+
+  Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, value));
+};
+
+const applyPublicSeo = (language) => {
+  const seo = seoByLanguage[language] || seoByLanguage.cs;
+  const canonicalUrl = getCanonicalUrl(language);
+
+  document.documentElement.lang = seo.htmlLang;
+  document.title = seo.title;
+
+  setMetaTag("name", "description", seo.description);
+  setMetaTag("name", "robots", "index, follow, max-image-preview:large");
+  setMetaTag("property", "og:title", seo.title);
+  setMetaTag("property", "og:description", seo.description);
+  setMetaTag("property", "og:url", canonicalUrl);
+  setMetaTag("property", "og:locale", seo.locale);
+  setMetaTag("property", "og:image", SEO_IMAGE_URL);
+  setMetaTag("name", "twitter:title", seo.title);
+  setMetaTag("name", "twitter:description", seo.description);
+  setMetaTag("name", "twitter:image", SEO_IMAGE_URL);
+
+  setLinkTag('link[rel="canonical"]', { rel: "canonical", href: canonicalUrl });
+  languageCodes.forEach((code) => {
+    setLinkTag(`link[rel="alternate"][hreflang="${code}"]`, {
+      rel: "alternate",
+      hreflang: code,
+      href: getCanonicalUrl(code)
+    });
+  });
+  setLinkTag('link[rel="alternate"][hreflang="x-default"]', {
+    rel: "alternate",
+    hreflang: "x-default",
+    href: getCanonicalUrl("cs")
+  });
+};
+
+const applyAdminSeo = () => {
+  document.documentElement.lang = "cs";
+  document.title = "Administrace denniho menu | La Piccola Perla";
+  setMetaTag("name", "robots", "noindex, nofollow");
+  setLinkTag('link[rel="canonical"]', { rel: "canonical", href: `${SITE_URL}/admin` });
+};
 
 const publicCopy = {
   cs: {
@@ -326,8 +417,8 @@ const publicCopy = {
 
 const languageLinks = [
   { code: "cs", label: "CZ", href: "/" },
-  { code: "en", label: "EN", href: "/?lang=en" },
-  { code: "it", label: "IT", href: "/?lang=it" }
+  { code: "en", label: "EN", href: "/en" },
+  { code: "it", label: "IT", href: "/it" }
 ];
 
 const getLanguageFromLocation = () => {
@@ -938,9 +1029,8 @@ function PublicSite() {
   const activePhoto = activePhotoIndex === null ? null : localizedPhotos[activePhotoIndex];
 
   useEffect(() => {
-    document.documentElement.lang = language;
-    document.title = copy.title;
-  }, [copy.title, language]);
+    applyPublicSeo(language);
+  }, [language]);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 24);
@@ -1373,6 +1463,7 @@ function AdminPage() {
   const weekend = isWeekendDate(dateValue);
 
   useEffect(() => {
+    applyAdminSeo();
     document.body.classList.remove("is-locked");
   }, []);
 

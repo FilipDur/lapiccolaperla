@@ -1,0 +1,31 @@
+# La Piccola Perla
+
+La Piccola Perla is an Italian restaurant in Prague 1, Czech Republic.
+
+Canonical site: https://lapiccolaperla.vercel.app/
+Languages: Czech (https://lapiccolaperla.vercel.app/), English (https://lapiccolaperla.vercel.app/en), Italian (https://lapiccolaperla.vercel.app/it)
+
+## Key Facts
+
+- Name: La Piccola Perla
+- Type: Italian restaurant
+- Address: Perlova 412/1, Praha 1, 110 00, Czech Republic
+- Phone: +420 224 282 537
+- Opening hours: daily 11:00-23:00
+- Lunch menu: served Monday-Friday 11:00-14:30 on the Czech version of the site
+- Cuisine: Italian, pizza, pasta, seafood, meat dishes, desserts, wine, coffee
+- Reservations: https://la-piccola-perla.choiceqr.com/takeaway/booking
+- Online ordering: https://la-piccola-perla.choiceqr.com/takeaway/section:menu/polevky
+
+## Useful Pages
+
+- Home and Czech content: https://lapiccolaperla.vercel.app/
+- English content: https://lapiccolaperla.vercel.app/en
+- Italian content: https://lapiccolaperla.vercel.app/it
+- Menu section: https://lapiccolaperla.vercel.app/#menu
+- Gallery section: https://lapiccolaperla.vercel.app/#gallery
+- Contact section: https://lapiccolaperla.vercel.app/#contact
+
+## Description
+
+La Piccola Perla serves Italian food in Prague Old Town near Old Town Square. The menu includes soups, salads, antipasti, pasta, risotto, pizza, meat, fish, seafood, sides, desserts, drinks, wine and spirits.

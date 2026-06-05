@@ -3,66 +3,139 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>La Piccola Perla | Italská restaurace Praha 1</title>
+    <title>La Piccola Perla | Italska restaurace Praha 1</title>
     <meta
       name="description"
-      content="Autentická italská restaurace La Piccola Perla v centru Prahy. Pasta, pizza, mořské plody, vína a rychlá rezervace stolu online."
+      content="La Piccola Perla je italska restaurace v centru Prahy 1 u Staromestskeho namesti. Pasta, pizza, morske plody, vino, denni menu a online rezervace."
     />
-    <meta
-      name="keywords"
-      content="italská restaurace Praha, La Piccola Perla, restaurace Praha 1, pizza Praha, pasta Praha, rezervace restaurace Praha"
-    />
-    <link rel="canonical" href="https://www.lapiccoloperla.cz/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#6b7f5e" />
+    <link rel="canonical" href="https://lapiccolaperla.vercel.app/" />
+    <link rel="alternate" hreflang="cs" href="https://lapiccolaperla.vercel.app/" />
+    <link rel="alternate" hreflang="en" href="https://lapiccolaperla.vercel.app/en" />
+    <link rel="alternate" hreflang="it" href="https://lapiccolaperla.vercel.app/it" />
+    <link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.vercel.app/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta property="og:type" content="restaurant" />
-    <meta property="og:title" content="La Piccola Perla | Italská restaurace Praha 1" />
+    <meta property="og:site_name" content="La Piccola Perla" />
+    <meta property="og:title" content="La Piccola Perla | Italska restaurace Praha 1" />
     <meta
       property="og:description"
-      content="Poctivá italská kuchyně, víno a útulný interiér v pražském Starém Městě."
+      content="Italska kuchyne, vino, poledni menu a utulny interier v Perlove ulici v prazskem Starem Meste."
     />
-    <meta property="og:image" content="https://www.lapiccolaperla.cz/images/webp/_DSR0014.webp" />
-    <meta property="og:url" content="https://www.lapiccoloperla.cz/" />
+    <meta property="og:image" content="https://lapiccolaperla.vercel.app/og-la-piccola-perla.webp" />
+    <meta property="og:image:alt" content="Interier restaurace La Piccola Perla v Praze" />
+    <meta property="og:url" content="https://lapiccolaperla.vercel.app/" />
     <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale:alternate" content="it_IT" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="La Piccola Perla | Italska restaurace Praha 1" />
+    <meta
+      name="twitter:description"
+      content="Italska restaurace v centru Prahy 1: pasta, pizza, morske plody, vino, denni menu a online rezervace."
+    />
+    <meta name="twitter:image" content="https://lapiccolaperla.vercel.app/og-la-piccola-perla.webp" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Restaurant",
-        "name": "La Piccola Perla",
-        "image": "https://www.lapiccolaperla.cz/images/webp/_DSR0014.webp",
-        "url": "https://www.lapiccoloperla.cz/",
-        "telephone": "+420 224 282 537",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Perlová 412/1",
-          "addressLocality": "Praha",
-          "postalCode": "110 00",
-          "addressCountry": "CZ"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 50.0838,
-          "longitude": 14.4197
-        },
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          "opens": "11:00",
-          "closes": "23:00"
-        },
-        "servesCuisine": "Italian",
-        "priceRange": "$$$",
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.5",
-          "reviewCount": "6088"
-        },
-        "hasMenu": "https://www.lapiccoloperla.cz/#menu",
-        "acceptsReservations": true
+        "@graph": [
+          {
+            "@type": "Restaurant",
+            "@id": "https://lapiccolaperla.vercel.app/#restaurant",
+            "name": "La Piccola Perla",
+            "url": "https://lapiccolaperla.vercel.app/",
+            "image": "https://lapiccolaperla.vercel.app/og-la-piccola-perla.webp",
+            "logo": "https://lapiccolaperla.vercel.app/og-la-piccola-perla.webp",
+            "telephone": "+420224282537",
+            "priceRange": "$$",
+            "servesCuisine": ["Italian", "Pizza", "Pasta", "Seafood"],
+            "acceptsReservations": true,
+            "hasMenu": "https://lapiccolaperla.vercel.app/#menu",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Perlova 412/1",
+              "addressLocality": "Praha 1",
+              "addressRegion": "Praha",
+              "postalCode": "110 00",
+              "addressCountry": "CZ"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 50.0835457,
+              "longitude": 14.4213246
+            },
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                "opens": "11:00",
+                "closes": "23:00"
+              }
+            ],
+            "potentialAction": [
+              {
+                "@type": "ReserveAction",
+                "target": "https://la-piccola-perla.choiceqr.com/takeaway/booking",
+                "result": {
+                  "@type": "Reservation",
+                  "name": "Rezervace stolu"
+                }
+              },
+              {
+                "@type": "OrderAction",
+                "target": "https://la-piccola-perla.choiceqr.com/takeaway/section:menu/polevky"
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://lapiccolaperla.vercel.app/#website",
+            "url": "https://lapiccolaperla.vercel.app/",
+            "name": "La Piccola Perla",
+            "inLanguage": ["cs-CZ", "en-US", "it-IT"],
+            "publisher": {
+              "@id": "https://lapiccolaperla.vercel.app/#restaurant"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://lapiccolaperla.vercel.app/#breadcrumbs",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "La Piccola Perla",
+                "item": "https://lapiccolaperla.vercel.app/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Menu",
+                "item": "https://lapiccolaperla.vercel.app/#menu"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Kontakt",
+                "item": "https://lapiccolaperla.vercel.app/#contact"
+              }
+            ]
+          }
+        ]
       }
     </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <main>
+        <h1>La Piccola Perla - italska restaurace Praha 1</h1>
+        <p>La Piccola Perla v Perlove 412/1 v Praze 1 podava italskou kuchyni, pastu, pizzu, morske plody, vina a poledni menu. Otevreno denne 11:00-23:00. Rezervace: +420 224 282 537.</p>
+        <p><a href="https://la-piccola-perla.choiceqr.com/takeaway/booking">Rezervovat stul</a></p>
+      </main>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

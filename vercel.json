@@ -17,6 +17,39 @@
       "has": [
         {
           "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
           "value": "www.lapiccolaperla.cz"
         }
       ],

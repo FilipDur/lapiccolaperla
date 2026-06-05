@@ -59,6 +59,7 @@ const photoData = [
 const languageCodes = ["cs", "en", "it"];
 const SITE_URL = "https://lapiccolaperla.cz";
 const SEO_IMAGE_URL = `${SITE_URL}/og-la-piccola-perla.webp`;
+const LANGUAGE_PREFERENCE_KEY = "la-piccola-perla-language";
 
 const seoByLanguage = {
   cs: {
@@ -421,14 +422,26 @@ const languageLinks = [
   { code: "it", label: "IT", href: "/it" }
 ];
 
-const getLanguageFromLocation = () => {
-  const params = new URLSearchParams(window.location.search);
-  const queryLanguage = params.get("lang");
-  const path = window.location.pathname.toLowerCase();
+const getLanguageFromHostname = () => {
+  const hostname = window.location.hostname.toLowerCase();
 
-  if (languageCodes.includes(queryLanguage)) {
-    return queryLanguage;
+  if (hostname.startsWith("en.")) {
+    return "en";
   }
+
+  if (hostname.startsWith("it.")) {
+    return "it";
+  }
+
+  if (hostname.startsWith("cs.")) {
+    return "cs";
+  }
+
+  return null;
+};
+
+const getLanguageFromPath = () => {
+  const path = window.location.pathname.toLowerCase().replace(/\/$/, "");
 
   if (path.includes("index-en") || path === "/en") {
     return "en";
@@ -436,6 +449,87 @@ const getLanguageFromLocation = () => {
 
   if (path.includes("index-it") || path === "/it") {
     return "it";
+  }
+
+  if (path.includes("index-de")) {
+    return "it";
+  }
+
+  return null;
+};
+
+const getStoredLanguage = () => {
+  try {
+    const storedLanguage = window.localStorage?.getItem(LANGUAGE_PREFERENCE_KEY);
+    return languageCodes.includes(storedLanguage) ? storedLanguage : null;
+  } catch {
+    return null;
+  }
+};
+
+const saveStoredLanguage = (language) => {
+  try {
+    window.localStorage?.setItem(LANGUAGE_PREFERENCE_KEY, language);
+  } catch {
+    // Language choice is a convenience only; navigation still works without storage.
+  }
+};
+
+const getBrowserPreferredLanguage = () => {
+  const primaryLanguage = (navigator.languages?.[0] || navigator.language || "").toLowerCase();
+
+  if (primaryLanguage.startsWith("it")) {
+    return "it";
+  }
+
+  if (primaryLanguage.startsWith("cs")) {
+    return "cs";
+  }
+
+  return primaryLanguage ? "en" : null;
+};
+
+const isLikelyCrawler = () => /bot|crawler|spider|crawling|google|bing|yandex|duckduck|baidu|facebookexternalhit|twitterbot|linkedinbot/i.test(navigator.userAgent || "");
+
+const getLanguageRedirectTarget = () => {
+  const path = window.location.pathname.replace(/\/$/, "") || "/";
+  const isRootPath = path === "/";
+
+  if (!isRootPath || isLikelyCrawler() || getLanguageFromHostname() || getLanguageFromPath()) {
+    return null;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+
+  if (languageCodes.includes(params.get("lang"))) {
+    return null;
+  }
+
+  const preferredLanguage = getStoredLanguage() || getBrowserPreferredLanguage();
+
+  if (!preferredLanguage || preferredLanguage === "cs") {
+    return null;
+  }
+
+  return `${seoByLanguage[preferredLanguage].path}${window.location.search || ""}${window.location.hash || ""}`;
+};
+
+const getLanguageFromLocation = () => {
+  const params = new URLSearchParams(window.location.search);
+  const queryLanguage = params.get("lang");
+  const hostLanguage = getLanguageFromHostname();
+  const pathLanguage = getLanguageFromPath();
+
+  if (hostLanguage) {
+    return hostLanguage;
+  }
+
+  if (languageCodes.includes(queryLanguage)) {
+    return queryLanguage;
+  }
+
+  if (pathLanguage) {
+    return pathLanguage;
   }
 
   return "cs";
@@ -1029,6 +1123,14 @@ function PublicSite() {
   const activePhoto = activePhotoIndex === null ? null : localizedPhotos[activePhotoIndex];
 
   useEffect(() => {
+    const redirectTarget = getLanguageRedirectTarget();
+
+    if (redirectTarget) {
+      window.location.replace(redirectTarget);
+    }
+  }, []);
+
+  useEffect(() => {
     applyPublicSeo(language);
   }, [language]);
 
@@ -1074,6 +1176,10 @@ function PublicSite() {
   const selectPhoto = (index) => setActivePhotoIndex(index);
   const showPreviousPhoto = () => setActivePhotoIndex((current) => (current === 0 ? localizedPhotos.length - 1 : current - 1));
   const showNextPhoto = () => setActivePhotoIndex((current) => (current === localizedPhotos.length - 1 ? 0 : current + 1));
+  const handleLanguageSelect = (languageCode) => {
+    saveStoredLanguage(languageCode);
+    setMenuOpen(false);
+  };
 
   return (
     <>
@@ -1093,7 +1199,7 @@ function PublicSite() {
         <div className="header-actions">
           <div className="language-switch" aria-label={copy.languageAria}>
             {languageLinks.map((item) => (
-              <a key={item.code} className={language === item.code ? "is-active" : ""} href={item.href}>
+              <a key={item.code} className={language === item.code ? "is-active" : ""} href={item.href} onClick={() => handleLanguageSelect(item.code)}>
                 {item.label}
               </a>
             ))}
@@ -1126,7 +1232,7 @@ function PublicSite() {
         ))}
         <div className="mobile-language-switch" aria-label={copy.languageAria}>
           {languageLinks.map((item) => (
-            <a key={item.code} className={language === item.code ? "is-active" : ""} href={item.href}>
+            <a key={item.code} className={language === item.code ? "is-active" : ""} href={item.href} onClick={() => handleLanguageSelect(item.code)}>
               {item.label}
             </a>
           ))}

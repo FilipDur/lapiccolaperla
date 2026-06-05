@@ -10,6 +10,30 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "lapiccolaperla.vercel.app"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

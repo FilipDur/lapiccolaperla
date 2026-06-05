@@ -57,7 +57,7 @@ const photoData = [
 }));
 
 const languageCodes = ["cs", "en", "it"];
-const SITE_URL = "https://lapiccolaperla.vercel.app";
+const SITE_URL = "https://lapiccolaperla.cz";
 const SEO_IMAGE_URL = `${SITE_URL}/og-la-piccola-perla.webp`;
 
 const seoByLanguage = {

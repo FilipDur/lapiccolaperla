@@ -2,8 +2,8 @@
 
 La Piccola Perla is an Italian restaurant in Prague 1, Czech Republic.
 
-Canonical site: https://lapiccolaperla.vercel.app/
-Languages: Czech (https://lapiccolaperla.vercel.app/), English (https://lapiccolaperla.vercel.app/en), Italian (https://lapiccolaperla.vercel.app/it)
+Canonical site: https://lapiccolaperla.cz/
+Languages: Czech (https://lapiccolaperla.cz/), English (https://lapiccolaperla.cz/en), Italian (https://lapiccolaperla.cz/it)
 
 ## Key Facts
 
@@ -19,12 +19,12 @@ Languages: Czech (https://lapiccolaperla.vercel.app/), English (https://lapiccol
 
 ## Useful Pages
 
-- Home and Czech content: https://lapiccolaperla.vercel.app/
-- English content: https://lapiccolaperla.vercel.app/en
-- Italian content: https://lapiccolaperla.vercel.app/it
-- Menu section: https://lapiccolaperla.vercel.app/#menu
-- Gallery section: https://lapiccolaperla.vercel.app/#gallery
-- Contact section: https://lapiccolaperla.vercel.app/#contact
+- Home and Czech content: https://lapiccolaperla.cz/
+- English content: https://lapiccolaperla.cz/en
+- Italian content: https://lapiccolaperla.cz/it
+- Menu section: https://lapiccolaperla.cz/#menu
+- Gallery section: https://lapiccolaperla.cz/#gallery
+- Contact section: https://lapiccolaperla.cz/#contact
 
 ## Description
 

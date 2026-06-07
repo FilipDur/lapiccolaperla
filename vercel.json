@@ -9,6 +9,15 @@
           "value": "noindex, nofollow"
         }
       ]
+    },
+    {
+      "source": "/admin.html",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     }
   ],
   "redirects": [
@@ -69,6 +78,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    },
     {
       "source": "/en",
       "destination": "/en.html"

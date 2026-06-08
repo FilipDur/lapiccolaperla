@@ -223,10 +223,21 @@ const publicCopy = {
       hours: ["Po-Ne", "11:00-23:00"]
     },
     footer: "© 2026 La Piccola Perla. Italská kuchyně v centru Prahy.",
+    footerCredit: "Web vytvořil",
+    legal: {
+      operator: "Provozovatel",
+      registeredOffice: "Sídlo",
+      companyId: "IČO",
+      vatId: "DIČ"
+    },
     lightbox: {
       close: "Zavřít galerii",
       previous: "Předchozí fotka",
       next: "Další fotka"
+    },
+    cookieNotice: {
+      text: "Pouzivame pouze technicke cookies a mistni ulozeni pro jazyk webu a denni menu. Nepouzivame reklamni ani analyticke cookies.",
+      accept: "Rozumim"
     },
     photos: {}
   },
@@ -301,10 +312,21 @@ const publicCopy = {
       hours: ["Mon-Sun", "11:00-23:00"]
     },
     footer: "© 2026 La Piccola Perla. Italian cuisine in the centre of Prague.",
+    footerCredit: "Website by",
+    legal: {
+      operator: "Operator",
+      registeredOffice: "Registered office",
+      companyId: "Company ID",
+      vatId: "VAT ID"
+    },
     lightbox: {
       close: "Close gallery",
       previous: "Previous photo",
       next: "Next photo"
+    },
+    cookieNotice: {
+      text: "We only use technical cookies and local storage for the site language and daily menu. We do not use advertising or analytics cookies.",
+      accept: "Got it"
     },
     photos: {
       "_DSR0014.webp": ["Evening at the wine bar", "Interior"],
@@ -393,10 +415,21 @@ const publicCopy = {
       hours: ["Lun-Dom", "11:00-23:00"]
     },
     footer: "© 2026 La Piccola Perla. Cucina italiana nel centro di Praga.",
+    footerCredit: "Sito realizzato da",
+    legal: {
+      operator: "Gestore",
+      registeredOffice: "Sede legale",
+      companyId: "Numero aziendale",
+      vatId: "Partita IVA"
+    },
     lightbox: {
       close: "Chiudi galleria",
       previous: "Foto precedente",
       next: "Foto successiva"
+    },
+    cookieNotice: {
+      text: "Usiamo solo cookie tecnici e archiviazione locale per la lingua del sito e il menu del giorno. Non usiamo cookie pubblicitari o analitici.",
+      accept: "Ho capito"
     },
     photos: {
       "_DSR0014.webp": ["Sera al wine bar", "Interno"],
@@ -1011,6 +1044,7 @@ const getLocalizedMenuCategories = (language) => {
 
 const DAILY_MENU_STORAGE_KEY = "la-piccola-perla-daily-menu";
 const DAILY_MENU_COOKIE_KEY = "la_piccola_perla_daily_menu";
+const COOKIE_NOTICE_STORAGE_KEY = "la-piccola-perla-cookie-notice";
 const ADMIN_SESSION_KEY = "la-piccola-perla-admin-session";
 const ADMIN_USER = "perla";
 const ADMIN_PASSWORD = "la perla";
@@ -1073,6 +1107,30 @@ const saveDailyMenuItems = (dateValue, items) => {
   window.dispatchEvent(new Event("daily-menu-updated"));
 };
 
+const getCookieNoticeAccepted = () => {
+  if (typeof window === "undefined") {
+    return true;
+  }
+
+  if (typeof navigator !== "undefined" && navigator.cookieEnabled === false) {
+    return true;
+  }
+
+  try {
+    return window.localStorage?.getItem(COOKIE_NOTICE_STORAGE_KEY) === "accepted";
+  } catch {
+    return false;
+  }
+};
+
+const saveCookieNoticeAccepted = () => {
+  try {
+    window.localStorage?.setItem(COOKIE_NOTICE_STORAGE_KEY, "accepted");
+  } catch {
+    // The banner can still be dismissed for the current session.
+  }
+};
+
 const normalizePriceInput = (value) => value.replace(/[^\d,.\s]/g, "").replace(/\s+/g, " ").trim();
 const formatPrice = (value) => {
   const cleanValue = normalizePriceInput(value);
@@ -1117,6 +1175,7 @@ function PublicSite() {
   const [activeCategoryId, setActiveCategoryId] = useState(baseMenuCategories[0].id);
   const [activePhotoIndex, setActivePhotoIndex] = useState(null);
   const [dailyMenuForToday, setDailyMenuForToday] = useState(() => loadDailyMenuItems(getTodayDate()));
+  const [cookieNoticeAccepted, setCookieNoticeAccepted] = useState(getCookieNoticeAccepted);
 
   const heroPhotos = useMemo(() => localizedPhotos.filter((photo) => photo.featured), [localizedPhotos]);
   const activeCategory = menuCategories.find((category) => category.id === activeCategoryId) || menuCategories[0];
@@ -1179,6 +1238,10 @@ function PublicSite() {
   const handleLanguageSelect = (languageCode) => {
     saveStoredLanguage(languageCode);
     setMenuOpen(false);
+  };
+  const acceptCookieNotice = () => {
+    saveCookieNoticeAccepted();
+    setCookieNoticeAccepted(true);
   };
 
   return (
@@ -1482,8 +1545,40 @@ function PublicSite() {
           ))}
           <a href="#reservation">{copy.reservation}</a>
         </nav>
-        <p>{copy.footer}</p>
+        <dl className="footer-legal">
+          <div>
+            <dt>{copy.legal.operator}</dt>
+            <dd>B &amp; D DINAMIC, s.r.o.</dd>
+          </div>
+          <div>
+            <dt>{copy.legal.registeredOffice}</dt>
+            <dd>Perlová 1020/8, 110 00 Praha 1</dd>
+          </div>
+          <div>
+            <dt>{copy.legal.companyId}</dt>
+            <dd>26764776</dd>
+          </div>
+          <div>
+            <dt>{copy.legal.vatId}</dt>
+            <dd>CZ26764776</dd>
+          </div>
+        </dl>
+        <p className="footer-copyright">
+          {copy.footer} {copy.footerCredit}{" "}
+          <a href="https://fimadux.com" target="_blank" rel="noreferrer">
+            fimadux.com
+          </a>
+        </p>
       </footer>
+
+      {!cookieNoticeAccepted ? (
+        <div className="cookie-notice" role="status">
+          <p>{copy.cookieNotice.text}</p>
+          <button className="button button-primary" type="button" onClick={acceptCookieNotice}>
+            {copy.cookieNotice.accept}
+          </button>
+        </div>
+      ) : null}
 
       {activePhoto ? (
         <div className="lightbox" role="dialog" aria-modal="true" aria-label={activePhoto.title}>

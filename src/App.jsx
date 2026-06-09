@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  ArrowDown,
   ArrowLeft,
   ArrowRight,
+  ArrowUp,
   CalendarCheck,
   Camera,
   ChefHat,
@@ -1898,42 +1900,22 @@ function AdminPage() {
     setSyncMessage(synced ? "Zmena je ulozena na webu pro vsechna zarizeni." : "Zmena se ulozila jen v tomto prohlizeci. Pro zobrazeni na jinych zarizenich nastavte Vercel KV / Upstash.");
   };
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      return undefined;
+  const handleMoveItem = async (itemId, direction) => {
+    const currentIndex = items.findIndex((item) => item.id === itemId);
+    const nextIndex = currentIndex + direction;
+
+    if (currentIndex < 0 || nextIndex < 0 || nextIndex >= items.length) {
+      return;
     }
 
-    const list = document.querySelector(".admin-current-list");
-    if (!list) {
-      return undefined;
-    }
+    const nextItems = [...items];
+    [nextItems[currentIndex], nextItems[nextIndex]] = [nextItems[nextIndex], nextItems[currentIndex]];
 
-    const removeFromList = (event) => {
-      const button = event.target.closest("[data-remove-id]");
-      if (!button) {
-        return;
-      }
-
-      void handleRemoveItem(button.dataset.removeId);
-    };
-
-    const removeFromListByKey = (event) => {
-      const button = event.target.closest("[data-remove-id]");
-      if (!button || (event.key !== "Enter" && event.key !== " ")) {
-        return;
-      }
-
-      event.preventDefault();
-      void handleRemoveItem(button.dataset.removeId);
-    };
-
-    list.addEventListener("click", removeFromList);
-    list.addEventListener("keydown", removeFromListByKey);
-    return () => {
-      list.removeEventListener("click", removeFromList);
-      list.removeEventListener("keydown", removeFromListByKey);
-    };
-  }, [dateValue, isAuthenticated, items]);
+    setItems(nextItems);
+    setSyncMessage("Ukladam poradi menu...");
+    const synced = await saveDailyMenuItems(dateValue, nextItems);
+    setSyncMessage(synced ? "Poradi menu je ulozene na webu pro vsechna zarizeni." : "Poradi se ulozilo jen v tomto prohlizeci. Pro zobrazeni na jinych zarizenich nastavte Vercel KV / Upstash.");
+  };
 
   const handleLogout = () => {
     window.sessionStorage.removeItem(ADMIN_SESSION_KEY);
@@ -2058,22 +2040,41 @@ function AdminPage() {
 
           <div className="admin-current-list" aria-label="Uložené položky">
             {items.length > 0 ? (
-              items.map((item) => (
+              items.map((item, index) => (
                 <article key={item.id}>
                   <div>
                     <h2>{item.name}</h2>
                     <p>{item.description}</p>
                     <strong>{item.price}</strong>
                   </div>
-                  <button
-                    className="icon-button"
-                    type="button"
-                    aria-label={`Smazat ${item.name}`}
-                    data-remove-id={item.id}
-                    onClick={() => void handleRemoveItem(item.id)}
-                  >
-                    <Trash2 aria-hidden="true" />
-                  </button>
+                  <div className="admin-item-actions">
+                    <button
+                      className="icon-button"
+                      type="button"
+                      aria-label={`Posunout ${item.name} nahoru`}
+                      disabled={index === 0}
+                      onClick={() => void handleMoveItem(item.id, -1)}
+                    >
+                      <ArrowUp aria-hidden="true" />
+                    </button>
+                    <button
+                      className="icon-button"
+                      type="button"
+                      aria-label={`Posunout ${item.name} dolu`}
+                      disabled={index === items.length - 1}
+                      onClick={() => void handleMoveItem(item.id, 1)}
+                    >
+                      <ArrowDown aria-hidden="true" />
+                    </button>
+                    <button
+                      className="icon-button"
+                      type="button"
+                      aria-label={`Smazat ${item.name}`}
+                      onClick={() => void handleRemoveItem(item.id)}
+                    >
+                      <Trash2 aria-hidden="true" />
+                    </button>
+                  </div>
                 </article>
               ))
             ) : (

@@ -1396,6 +1396,18 @@ h3 {
   border-color: var(--line);
 }
 
+.admin-current-list .icon-button:disabled {
+  opacity: 0.34;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.admin-item-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 44px);
+  gap: 7px;
+}
+
 .admin-preview-card {
   position: sticky;
   top: 22px;
@@ -1512,8 +1524,8 @@ h3 {
   counter-reset: daily-print-item;
   display: grid;
   grid-column: 1 / -1;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 5%;
+  grid-template-columns: 1fr;
+  gap: 0;
   align-content: start;
   min-height: 0;
   margin-top: 1mm;
@@ -1522,10 +1534,10 @@ h3 {
 .print-menu-items.is-eight {
   align-self: stretch;
   height: auto;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(4, minmax(0, 1fr));
+  grid-auto-flow: row;
+  grid-template-rows: repeat(8, minmax(0, 1fr));
   align-content: stretch;
-  gap: 1.8mm 5%;
+  gap: 0;
 }
 
 .print-menu-items article {
@@ -1557,9 +1569,7 @@ h3 {
   line-height: 1;
 }
 
-.print-menu-items article:last-child,
-.print-menu-items.is-eight article:nth-child(4),
-.print-menu-items.is-eight article:nth-child(8) {
+.print-menu-items article:last-child {
   border-bottom: 0;
 }
 
@@ -1570,21 +1580,21 @@ h3 {
 }
 
 .print-menu-items.is-eight h3 {
-  font-size: 0.94rem;
+  font-size: 0.98rem;
 }
 
 .print-menu-items p,
 .print-empty p {
   margin-top: 0.8mm;
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   line-height: 1.22;
   overflow-wrap: anywhere;
 }
 
 .print-menu-items.is-eight p {
-  font-size: 0.66rem;
-  line-height: 1.2;
+  font-size: 0.78rem;
+  line-height: 1.22;
 }
 
 .print-menu-items strong {
@@ -1732,10 +1742,10 @@ h3 {
   .print-menu-items.is-eight {
     grid-column: 1 / -1;
     display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(4, minmax(0, 1fr));
-    gap: 1.2mm 8mm;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    gap: 0;
     align-self: stretch;
     align-content: stretch;
     margin-top: 1mm;
@@ -1745,8 +1755,8 @@ h3 {
 
   .print-menu-items article {
     min-height: 0;
-    padding: 1.6mm 0 1.6mm 6.2mm;
-    gap: 2.6mm;
+    padding: 1.25mm 0 1.25mm 6.4mm;
+    gap: 3mm;
     border-bottom: 0.2mm solid #cfcfcf;
   }
 
@@ -1760,14 +1770,13 @@ h3 {
     font-size: 6pt;
   }
 
-  .print-menu-items article:nth-child(4),
-  .print-menu-items article:nth-child(8) {
+  .print-menu-items article:last-child {
     border-bottom: 0;
   }
 
   .print-menu-items h3,
   .print-menu-items.is-eight h3 {
-    font-size: 10pt;
+    font-size: 10.6pt;
     line-height: 1.08;
   }
 
@@ -1775,13 +1784,13 @@ h3 {
   .print-menu-items.is-eight p {
     margin-top: 0.8mm;
     color: #333;
-    font-size: 7.2pt;
+    font-size: 8.6pt;
     line-height: 1.18;
   }
 
   .print-menu-items strong,
   .print-menu-items.is-eight strong {
-    font-size: 9pt;
+    font-size: 9.8pt;
   }
 
   .daily-print-content small {
@@ -2310,10 +2319,10 @@ h3 {
   .print-menu-items.is-eight {
     grid-column: 1 / -1 !important;
     display: grid !important;
-    grid-auto-flow: column !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    grid-template-rows: repeat(4, minmax(0, 1fr)) !important;
-    gap: 1.2mm 8mm !important;
+    grid-auto-flow: row !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: repeat(8, minmax(0, 1fr)) !important;
+    gap: 0 !important;
     align-self: stretch !important;
     align-content: stretch !important;
     min-height: 0 !important;
@@ -2323,8 +2332,8 @@ h3 {
 
   .print-menu-items article {
     min-height: 0 !important;
-    padding: 1.6mm 0 1.6mm 6.2mm !important;
-    gap: 2.6mm !important;
+    padding: 1.25mm 0 1.25mm 6.4mm !important;
+    gap: 3mm !important;
     border-bottom: 0.2mm solid #cfcfcf !important;
   }
 
@@ -2338,14 +2347,13 @@ h3 {
     font-size: 6pt !important;
   }
 
-  .print-menu-items article:nth-child(4),
-  .print-menu-items article:nth-child(8) {
+  .print-menu-items article:last-child {
     border-bottom: 0 !important;
   }
 
   .print-menu-items h3,
   .print-menu-items.is-eight h3 {
-    font-size: 10pt !important;
+    font-size: 10.6pt !important;
     line-height: 1.08 !important;
   }
 
@@ -2353,13 +2361,13 @@ h3 {
   .print-menu-items.is-eight p {
     margin-top: 0.8mm !important;
     color: #333 !important;
-    font-size: 7.2pt !important;
+    font-size: 8.6pt !important;
     line-height: 1.18 !important;
   }
 
   .print-menu-items strong,
   .print-menu-items.is-eight strong {
-    font-size: 9pt !important;
+    font-size: 9.8pt !important;
   }
 
   .daily-print-content small {

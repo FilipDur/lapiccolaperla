@@ -21,6 +21,7 @@ import {
   X
 } from "lucide-react";
 import { featuredPicks, menuCategories as baseMenuCategories } from "./data/menu";
+import { seededDailyMenus } from "./data/dailyMenuSeed";
 
 const imageAssets = import.meta.glob("../images/webp/**/*.webp", {
   eager: true,
@@ -1044,8 +1045,10 @@ const getLocalizedMenuCategories = (language) => {
 
 const DAILY_MENU_STORAGE_KEY = "la-piccola-perla-daily-menu";
 const DAILY_MENU_COOKIE_KEY = "la_piccola_perla_daily_menu";
+const DAILY_MENU_API_PATH = "/api/daily-menu";
 const COOKIE_NOTICE_STORAGE_KEY = "la-piccola-perla-cookie-notice";
 const ADMIN_SESSION_KEY = "la-piccola-perla-admin-session";
+const ADMIN_AUTH_STORAGE_KEY = "la-piccola-perla-admin-auth";
 const ADMIN_USER = "perla";
 const ADMIN_PASSWORD = "la perla";
 
@@ -1085,10 +1088,10 @@ const readStoredDailyMenus = () => {
 
 const loadDailyMenuItems = (dateValue) => {
   const menus = readStoredDailyMenus();
-  return Array.isArray(menus[dateValue]) ? menus[dateValue] : [];
+  return Array.isArray(menus[dateValue]) ? menus[dateValue] : seededDailyMenus[dateValue] || [];
 };
 
-const saveDailyMenuItems = (dateValue, items) => {
+const saveDailyMenuItemsLocal = (dateValue, items) => {
   const menus = readStoredDailyMenus();
 
   if (items.length > 0) {
@@ -1104,7 +1107,72 @@ const saveDailyMenuItems = (dateValue, items) => {
   }
 
   writeDailyMenuCookie(menus);
-  window.dispatchEvent(new Event("daily-menu-updated"));
+};
+
+const fetchDailyMenuItems = async (dateValue) => {
+  try {
+    const response = await fetch(`${DAILY_MENU_API_PATH}?date=${encodeURIComponent(dateValue)}`, {
+      headers: {
+        Accept: "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error("Daily menu API is not available.");
+    }
+
+    const data = await response.json();
+    const items = Array.isArray(data.items) ? data.items : [];
+    saveDailyMenuItemsLocal(dateValue, items);
+    return items;
+  } catch {
+    return loadDailyMenuItems(dateValue);
+  }
+};
+
+const getAdminAuthHeaders = () => {
+  try {
+    const auth = JSON.parse(window.sessionStorage?.getItem(ADMIN_AUTH_STORAGE_KEY) || "{}");
+
+    if (auth.username && auth.password) {
+      return {
+        "X-Admin-User": auth.username,
+        "X-Admin-Password": auth.password
+      };
+    }
+  } catch {
+    // Missing auth simply makes the API save fail and leaves local fallback intact.
+  }
+
+  return {};
+};
+
+const saveDailyMenuItems = async (dateValue, items) => {
+  saveDailyMenuItemsLocal(dateValue, items);
+
+  try {
+    const response = await fetch(DAILY_MENU_API_PATH, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        ...getAdminAuthHeaders()
+      },
+      body: JSON.stringify({ date: dateValue, items })
+    });
+
+    if (!response.ok) {
+      throw new Error("Daily menu API save failed.");
+    }
+
+    const data = await response.json();
+    const savedItems = Array.isArray(data.items) ? data.items : items;
+    saveDailyMenuItemsLocal(dateValue, savedItems);
+    return true;
+  } catch {
+    return false;
+  } finally {
+    window.dispatchEvent(new Event("daily-menu-updated"));
+  }
 };
 
 const getCookieNoticeAccepted = () => {
@@ -1212,14 +1280,30 @@ function PublicSite() {
   }, [menuOpen, activePhoto]);
 
   useEffect(() => {
-    const refreshDailyMenu = () => setDailyMenuForToday(loadDailyMenuItems(getTodayDate()));
+    if (language !== "cs") {
+      return undefined;
+    }
+
+    let isActive = true;
+    const refreshDailyMenu = async () => {
+      const items = await fetchDailyMenuItems(getTodayDate());
+
+      if (isActive) {
+        setDailyMenuForToday(items);
+      }
+    };
+
+    refreshDailyMenu();
     window.addEventListener("storage", refreshDailyMenu);
+    window.addEventListener("focus", refreshDailyMenu);
     window.addEventListener("daily-menu-updated", refreshDailyMenu);
     return () => {
+      isActive = false;
       window.removeEventListener("storage", refreshDailyMenu);
+      window.removeEventListener("focus", refreshDailyMenu);
       window.removeEventListener("daily-menu-updated", refreshDailyMenu);
     };
-  }, []);
+  }, [language]);
 
   useEffect(() => {
     const closeOnEscape = (event) => {
@@ -1654,12 +1738,15 @@ function DailyMenuSection({ items }) {
 }
 
 function AdminPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => window.sessionStorage.getItem(ADMIN_SESSION_KEY) === "true");
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => window.sessionStorage.getItem(ADMIN_SESSION_KEY) === "true" && Boolean(window.sessionStorage.getItem(ADMIN_AUTH_STORAGE_KEY))
+  );
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
   const [loginError, setLoginError] = useState("");
   const [dateValue, setDateValue] = useState(getTodayDate());
   const [items, setItems] = useState(() => loadDailyMenuItems(getTodayDate()));
   const [draft, setDraft] = useState({ name: "", description: "", price: "" });
+  const [syncMessage, setSyncMessage] = useState("");
 
   const weekend = isWeekendDate(dateValue);
 
@@ -1669,10 +1756,24 @@ function AdminPage() {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      setItems(loadDailyMenuItems(dateValue));
-      setDraft({ name: "", description: "", price: "" });
+    if (!isAuthenticated) {
+      return undefined;
     }
+
+    let isActive = true;
+    setItems(loadDailyMenuItems(dateValue));
+    setDraft({ name: "", description: "", price: "" });
+    setSyncMessage("");
+
+    fetchDailyMenuItems(dateValue).then((serverItems) => {
+      if (isActive) {
+        setItems(serverItems);
+      }
+    });
+
+    return () => {
+      isActive = false;
+    };
   }, [dateValue, isAuthenticated]);
 
   useEffect(() => {
@@ -1692,6 +1793,7 @@ function AdminPage() {
 
       if (username === ADMIN_USER && password === ADMIN_PASSWORD) {
         window.sessionStorage.setItem(ADMIN_SESSION_KEY, "true");
+        window.sessionStorage.setItem(ADMIN_AUTH_STORAGE_KEY, JSON.stringify({ username, password }));
         setIsAuthenticated(true);
         setLoginError("");
         return true;
@@ -1735,7 +1837,7 @@ function AdminPage() {
       return undefined;
     }
 
-    const addItemFromForm = () => {
+    const addItemFromForm = async () => {
       const formData = new FormData(form);
       const name = String(formData.get("dishName") || "").trim();
       const description = String(formData.get("dishDescription") || "").trim();
@@ -1756,14 +1858,16 @@ function AdminPage() {
       ];
 
       setItems(nextItems);
-      saveDailyMenuItems(dateValue, nextItems);
+      setSyncMessage("Ukladam denni menu...");
+      const synced = await saveDailyMenuItems(dateValue, nextItems);
+      setSyncMessage(synced ? "Denni menu je ulozene na webu pro vsechna zarizeni." : "Menu se ulozilo jen v tomto prohlizeci. Pro zobrazeni na jinych zarizenich nastavte Vercel KV / Upstash.");
       setDraft({ name: "", description: "", price: "" });
       return true;
     };
 
     const submitItem = (event) => {
       event.preventDefault();
-      addItemFromForm();
+      void addItemFromForm();
     };
 
     const submitPriceOnEnter = (event) => {
@@ -1772,7 +1876,7 @@ function AdminPage() {
       }
 
       event.preventDefault();
-      addItemFromForm();
+      void addItemFromForm();
     };
 
     const button = form.querySelector('button[type="submit"]');
@@ -1786,10 +1890,12 @@ function AdminPage() {
     };
   }, [dateValue, isAuthenticated, items, weekend]);
 
-  const handleRemoveItem = (itemId) => {
+  const handleRemoveItem = async (itemId) => {
     const nextItems = items.filter((item) => item.id !== itemId);
     setItems(nextItems);
-    saveDailyMenuItems(dateValue, nextItems);
+    setSyncMessage("Ukladam zmenu...");
+    const synced = await saveDailyMenuItems(dateValue, nextItems);
+    setSyncMessage(synced ? "Zmena je ulozena na webu pro vsechna zarizeni." : "Zmena se ulozila jen v tomto prohlizeci. Pro zobrazeni na jinych zarizenich nastavte Vercel KV / Upstash.");
   };
 
   useEffect(() => {
@@ -1808,7 +1914,7 @@ function AdminPage() {
         return;
       }
 
-      handleRemoveItem(button.dataset.removeId);
+      void handleRemoveItem(button.dataset.removeId);
     };
 
     const removeFromListByKey = (event) => {
@@ -1818,7 +1924,7 @@ function AdminPage() {
       }
 
       event.preventDefault();
-      handleRemoveItem(button.dataset.removeId);
+      void handleRemoveItem(button.dataset.removeId);
     };
 
     list.addEventListener("click", removeFromList);
@@ -1831,8 +1937,10 @@ function AdminPage() {
 
   const handleLogout = () => {
     window.sessionStorage.removeItem(ADMIN_SESSION_KEY);
+    window.sessionStorage.removeItem(ADMIN_AUTH_STORAGE_KEY);
     setIsAuthenticated(false);
     setLoginForm({ username: "", password: "" });
+    setSyncMessage("");
   };
 
   if (!isAuthenticated) {
@@ -1946,6 +2054,8 @@ function AdminPage() {
             <p className="admin-note">O víkendech se denní menu nepodává, proto je přidávání vypnuté.</p>
           ) : null}
 
+          {syncMessage ? <p className="admin-sync-note">{syncMessage}</p> : null}
+
           <div className="admin-current-list" aria-label="Uložené položky">
             {items.length > 0 ? (
               items.map((item) => (
@@ -1960,7 +2070,7 @@ function AdminPage() {
                     type="button"
                     aria-label={`Smazat ${item.name}`}
                     data-remove-id={item.id}
-                    onClick={() => handleRemoveItem(item.id)}
+                    onClick={() => void handleRemoveItem(item.id)}
                   >
                     <Trash2 aria-hidden="true" />
                   </button>

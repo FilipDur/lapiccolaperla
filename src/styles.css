@@ -1272,9 +1272,18 @@ h3 {
 .admin-login-card p,
 .admin-editor > p,
 .admin-note,
+.admin-sync-note,
 .admin-empty {
   margin-top: 14px;
   color: var(--muted);
+}
+
+.admin-sync-note {
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-weight: 800;
 }
 
 .admin-login-form,

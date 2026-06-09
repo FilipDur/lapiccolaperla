@@ -1,12 +1,16 @@
+import { createClient } from "redis";
 import { seededDailyMenus } from "../src/data/dailyMenuSeed.js";
 
 const STORAGE_KEY = "la-piccola-perla:daily-menu";
 const MAX_ITEMS = 12;
 
-const redisUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const redisToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const redisRestUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const redisRestToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+const redisConnectionUrl = process.env.KV_REDIS_URL || process.env.STORAGE_REDIS_URL || process.env.REDIS_URL;
 const adminUser = process.env.DAILY_MENU_ADMIN_USER || "perla";
 const adminPassword = process.env.DAILY_MENU_ADMIN_PASSWORD || "la perla";
+
+let redisClientPromise = null;
 
 const isValidDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(String(value || ""));
 
@@ -37,17 +41,17 @@ const cleanItems = (items) => {
     .filter((item) => item.name && item.description && item.price);
 };
 
-const redisCommand = async (command) => {
-  if (!redisUrl || !redisToken) {
-    const error = new Error("Daily menu storage is not configured.");
-    error.statusCode = 503;
-    throw error;
-  }
+const createStorageError = () => {
+  const error = new Error("Daily menu storage is not configured.");
+  error.statusCode = 503;
+  return error;
+};
 
-  const response = await fetch(redisUrl, {
+const redisRestCommand = async (command) => {
+  const response = await fetch(redisRestUrl, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${redisToken}`,
+      Authorization: `Bearer ${redisRestToken}`,
       "Content-Type": "application/json"
     },
     body: JSON.stringify(command)
@@ -62,6 +66,52 @@ const redisCommand = async (command) => {
   }
 
   return data.result;
+};
+
+const getRedisClient = async () => {
+  if (!redisConnectionUrl) {
+    throw createStorageError();
+  }
+
+  if (!redisClientPromise) {
+    const client = createClient({ url: redisConnectionUrl });
+    client.on("error", (error) => console.error("Daily menu Redis error:", error));
+    redisClientPromise = client.connect().then(() => client).catch((error) => {
+      redisClientPromise = null;
+      throw error;
+    });
+  }
+
+  return redisClientPromise;
+};
+
+const redisUrlCommand = async (command) => {
+  const client = await getRedisClient();
+  const [name, key, value] = command;
+
+  if (name === "GET") {
+    return client.get(key);
+  }
+
+  if (name === "SET") {
+    return client.set(key, value);
+  }
+
+  const error = new Error("Unsupported Redis command.");
+  error.statusCode = 500;
+  throw error;
+};
+
+const redisCommand = async (command) => {
+  if (redisRestUrl && redisRestToken) {
+    return redisRestCommand(command);
+  }
+
+  if (redisConnectionUrl) {
+    return redisUrlCommand(command);
+  }
+
+  throw createStorageError();
 };
 
 const readStoredMenus = async () => parseMenus(await redisCommand(["GET", STORAGE_KEY]));

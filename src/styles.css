@@ -1567,8 +1567,10 @@ h3 {
   left: 0;
   display: grid;
   place-items: center;
+  box-sizing: border-box;
   width: 5.2mm;
   height: 5.2mm;
+  padding-right: 0.45mm;
   color: var(--white);
   background: var(--forest);
   border-radius: 50%;
@@ -1773,6 +1775,7 @@ h3 {
     top: 50%;
     width: 4.6mm;
     height: 4.6mm;
+    padding-right: 0.4mm;
     color: #111;
     background: #fff;
     border: 0.35mm solid #111;
@@ -2351,6 +2354,7 @@ h3 {
     top: 50% !important;
     width: 4.6mm !important;
     height: 4.6mm !important;
+    padding-right: 0.4mm !important;
     color: #111 !important;
     background: #fff !important;
     border: 0.35mm solid #111 !important;

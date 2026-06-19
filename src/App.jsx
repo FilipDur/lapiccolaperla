@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowLeft,
@@ -8,6 +8,7 @@ import {
   Camera,
   ChefHat,
   Clock,
+  Download,
   ExternalLink,
   LogOut,
   MapPin,
@@ -1749,6 +1750,8 @@ function AdminPage() {
   const [items, setItems] = useState(() => loadDailyMenuItems(getTodayDate()));
   const [draft, setDraft] = useState({ name: "", description: "", price: "" });
   const [syncMessage, setSyncMessage] = useState("");
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+  const printSheetRef = useRef(null);
 
   const weekend = isWeekendDate(dateValue);
 
@@ -1925,6 +1928,35 @@ function AdminPage() {
     setSyncMessage("");
   };
 
+  const handleDownloadPdf = async () => {
+    if (!printSheetRef.current || isDownloadingPdf) {
+      return;
+    }
+
+    setIsDownloadingPdf(true);
+
+    try {
+      const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+        import("html2canvas"),
+        import("jspdf")
+      ]);
+      const canvas = await html2canvas(printSheetRef.current, {
+        backgroundColor: "#ffffff",
+        scale: Math.min(3, window.devicePixelRatio || 2),
+        useCORS: true
+      });
+      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+      pdf.addImage(canvas.toDataURL("image/jpeg", 0.96), "JPEG", 0, 0, 210, 297);
+      pdf.save(`denni-menu-${dateValue}.pdf`);
+    } catch (error) {
+      console.error("Daily menu PDF download failed:", error);
+      setSyncMessage("PDF se nepodařilo stáhnout. Zkuste prosím Tisk / PDF.");
+    } finally {
+      setIsDownloadingPdf(false);
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <main className="admin-page admin-login-page">
@@ -2085,13 +2117,17 @@ function AdminPage() {
 
         <section className="admin-preview-card" aria-label="Náhled denního menu">
           <div className="admin-preview-actions">
+            <button className="button button-light" type="button" onClick={handleDownloadPdf} disabled={isDownloadingPdf}>
+              <Download aria-hidden="true" />
+              {isDownloadingPdf ? "Připravuji..." : "Stáhnout PDF"}
+            </button>
             <button className="button button-light" type="button" onClick={() => window.print()}>
               <Printer aria-hidden="true" />
               Tisk / PDF
             </button>
           </div>
 
-          <div className="daily-print-sheet">
+          <div className="daily-print-sheet" ref={printSheetRef}>
             {[0, 1].map((copyIndex) => (
               <DailyPrintMenu
                 key={copyIndex}

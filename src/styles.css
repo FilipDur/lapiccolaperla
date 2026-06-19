@@ -1416,8 +1416,16 @@ h3 {
 
 .admin-preview-actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: flex-end;
   margin-bottom: 16px;
+}
+
+.admin-preview-actions .button:disabled {
+  opacity: 0.58;
+  cursor: wait;
+  transform: none;
 }
 
 .daily-print-sheet {

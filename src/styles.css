@@ -1563,7 +1563,7 @@ h3 {
 .print-menu-items article::before {
   content: counter(daily-print-item, decimal-leading-zero);
   position: absolute;
-  top: 2.5mm;
+  top: 50%;
   left: 0;
   display: grid;
   place-items: center;
@@ -1575,6 +1575,7 @@ h3 {
   font-size: 0.56rem;
   font-weight: 900;
   line-height: 1;
+  transform: translateY(-50%);
 }
 
 .print-menu-items article:last-child {
@@ -1769,13 +1770,14 @@ h3 {
   }
 
   .print-menu-items article::before {
-    top: 1.8mm;
+    top: 50%;
     width: 4.6mm;
     height: 4.6mm;
     color: #111;
     background: #fff;
     border: 0.35mm solid #111;
     font-size: 6pt;
+    transform: translateY(-50%);
   }
 
   .print-menu-items article:last-child {
@@ -2346,13 +2348,14 @@ h3 {
   }
 
   .print-menu-items article::before {
-    top: 1.8mm !important;
+    top: 50% !important;
     width: 4.6mm !important;
     height: 4.6mm !important;
     color: #111 !important;
     background: #fff !important;
     border: 0.35mm solid #111 !important;
     font-size: 6pt !important;
+    transform: translateY(-50%) !important;
   }
 
   .print-menu-items article:last-child {

@@ -1929,30 +1929,85 @@ function AdminPage() {
   };
 
   const handleDownloadPdf = async () => {
-    if (!printSheetRef.current || isDownloadingPdf) {
+    const sourceSheet = printSheetRef.current;
+
+    if (!sourceSheet || isDownloadingPdf) {
       return;
     }
 
     setIsDownloadingPdf(true);
+    let exportContainer = null;
 
     try {
       const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
         import("html2canvas"),
         import("jspdf")
       ]);
-      const canvas = await html2canvas(printSheetRef.current, {
+
+      exportContainer = document.createElement("div");
+      const exportSheet = sourceSheet.cloneNode(true);
+      Object.assign(exportContainer.style, {
+        position: "fixed",
+        top: "0",
+        left: "-10000px",
+        width: "210mm",
+        height: "297mm",
+        overflow: "hidden",
+        background: "#ffffff",
+        pointerEvents: "none"
+      });
+      Object.assign(exportSheet.style, {
+        width: "210mm",
+        height: "297mm",
+        minHeight: "297mm",
+        maxWidth: "none",
+        aspectRatio: "auto",
+        margin: "0",
+        border: "0",
+        boxShadow: "none",
+        background: "#ffffff"
+      });
+      exportContainer.appendChild(exportSheet);
+      document.body.appendChild(exportContainer);
+
+      await document.fonts?.ready;
+      await Promise.all(
+        Array.from(exportSheet.querySelectorAll("img")).map((image) => {
+          if (image.complete) {
+            return Promise.resolve();
+          }
+
+          return new Promise((resolve) => {
+            image.addEventListener("load", resolve, { once: true });
+            image.addEventListener("error", resolve, { once: true });
+          });
+        })
+      );
+
+      const canvas = await html2canvas(exportSheet, {
         backgroundColor: "#ffffff",
-        scale: Math.min(3, window.devicePixelRatio || 2),
+        scale: 2,
+        scrollX: 0,
+        scrollY: 0,
         useCORS: true
       });
       const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      const pageWidth = 210;
+      const pageHeight = 297;
+      const imageRatio = canvas.width / canvas.height;
+      const pageRatio = pageWidth / pageHeight;
+      const imageWidth = imageRatio > pageRatio ? pageWidth : pageHeight * imageRatio;
+      const imageHeight = imageRatio > pageRatio ? pageWidth / imageRatio : pageHeight;
+      const imageX = (pageWidth - imageWidth) / 2;
+      const imageY = (pageHeight - imageHeight) / 2;
 
-      pdf.addImage(canvas.toDataURL("image/jpeg", 0.96), "JPEG", 0, 0, 210, 297);
+      pdf.addImage(canvas.toDataURL("image/jpeg", 0.96), "JPEG", imageX, imageY, imageWidth, imageHeight);
       pdf.save(`denni-menu-${dateValue}.pdf`);
     } catch (error) {
       console.error("Daily menu PDF download failed:", error);
       setSyncMessage("PDF se nepodařilo stáhnout. Zkuste prosím Tisk / PDF.");
     } finally {
+      exportContainer?.remove();
       setIsDownloadingPdf(false);
     }
   };

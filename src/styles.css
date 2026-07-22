@@ -1098,6 +1098,12 @@ h3 {
   margin: 0;
 }
 
+.footer-legal a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .site-footer p {
   color: rgba(255, 255, 255, 0.66);
 }

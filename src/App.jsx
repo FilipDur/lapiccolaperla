@@ -232,7 +232,8 @@ const publicCopy = {
       operator: "Provozovatel",
       registeredOffice: "Sídlo",
       companyId: "IČO",
-      vatId: "DIČ"
+      vatId: "DIČ",
+      email: "E-mail"
     },
     lightbox: {
       close: "Zavřít galerii",
@@ -321,7 +322,8 @@ const publicCopy = {
       operator: "Operator",
       registeredOffice: "Registered office",
       companyId: "Company ID",
-      vatId: "VAT ID"
+      vatId: "VAT ID",
+      email: "E-mail"
     },
     lightbox: {
       close: "Close gallery",
@@ -424,7 +426,8 @@ const publicCopy = {
       operator: "Gestore",
       registeredOffice: "Sede legale",
       companyId: "Numero aziendale",
-      vatId: "Partita IVA"
+      vatId: "Partita IVA",
+      email: "E-mail"
     },
     lightbox: {
       close: "Chiudi galleria",
@@ -1648,6 +1651,12 @@ function PublicSite() {
           <div>
             <dt>{copy.legal.vatId}</dt>
             <dd>CZ26764776</dd>
+          </div>
+          <div>
+            <dt>{copy.legal.email}</dt>
+            <dd>
+              <a href="mailto:la.piccola.perla@email.cz">la.piccola.perla@email.cz</a>
+            </dd>
           </div>
         </dl>
         <p className="footer-copyright">

@@ -70,22 +70,22 @@ const seoByLanguage = {
     path: "/",
     htmlLang: "cs",
     locale: "cs_CZ",
-    title: "La Piccola Perla | Italska restaurace Praha 1",
-    description: "La Piccola Perla je italska restaurace v centru Prahy 1 u Staromestskeho namesti. Pasta, pizza, morske plody, vino, denni menu a online rezervace."
+    title: "Italská restaurace Praha 1 | La Piccola Perla",
+    description: "Italská restaurace v Praze 1 u Staroměstského náměstí. Užijte si pastu, pizzu, mořské plody a víno. Prohlédněte si menu a rezervujte stůl."
   },
   en: {
     path: "/en",
     htmlLang: "en",
     locale: "en_US",
-    title: "La Piccola Perla | Italian Restaurant in Prague Old Town",
-    description: "La Piccola Perla is an Italian restaurant in Prague 1 near Old Town Square. Pasta, pizza, seafood, wine and online table reservations."
+    title: "Italian Restaurant in Prague | La Piccola Perla",
+    description: "Italian restaurant in Prague Old Town near Old Town Square. Enjoy pasta, pizza, seafood and Italian wine. Explore the menu and book your table online."
   },
   it: {
     path: "/it",
     htmlLang: "it",
     locale: "it_IT",
-    title: "La Piccola Perla | Ristorante italiano a Praga 1",
-    description: "La Piccola Perla e un ristorante italiano nel centro di Praga 1 vicino alla Piazza della Citta Vecchia. Pasta, pizza, pesce, vino e prenotazioni online."
+    title: "Ristorante italiano a Praga | La Piccola Perla",
+    description: "Ristorante italiano nel centro storico di Praga, vicino alla Piazza della Città Vecchia. Pasta, pizza, pesce e vini italiani. Prenota online."
   }
 };
 
@@ -157,7 +157,7 @@ const applyAdminSeo = () => {
 const publicCopy = {
   cs: {
     locale: "cs-CZ",
-    title: "La Piccola Perla | Italská restaurace Praha 1",
+    title: "Italská restaurace Praha 1 | La Piccola Perla",
     navAria: "Hlavní navigace",
     footerAria: "Patička",
     languageAria: "Jazyk",
@@ -172,8 +172,9 @@ const publicCopy = {
       contact: "Kontakt"
     },
     hero: {
-      eyebrow: "Italská restaurace v srdci Starého Města",
-      text: "Místo pro poctivou pastu, víno a dlouhé večeře jen pár kroků od Staroměstského náměstí. Přijďte na oběd, rande nebo večer, který má chutnat jako Itálie.",
+      eyebrow: "La Piccola Perla · Staré Město",
+      title: "Italská restaurace v srdci Prahy",
+      text: "Poctivá pasta, křupavá pizza, mořské plody a italské víno jen pár kroků od Staroměstského náměstí. Přijďte na oběd, rande nebo dlouhou večeři v Praze 1.",
       reserve: "Rezervovat stůl",
       menu: "Projít menu"
     },
@@ -182,15 +183,16 @@ const publicCopy = {
       eyebrow: "Od roku 2012",
       title: "Italská energie v pražských uličkách",
       text: [
-        "La Piccola Perla vznikla z chuti přenést do Prahy atmosféru rodinných italských podniků: živý stůl, dobré víno, voňavou omáčku a servis, který nechá večer plynout.",
-        "Vaříme z italských surovin, s respektem k jednoduchosti a s důrazem na jídla, kvůli kterým se lidé rádi vracejí."
+        "La Piccola Perla vznikla z chuti přenést do centra Prahy atmosféru rodinných italských restaurací: živý stůl, dobré víno, voňavou omáčku a servis, který nechá večer plynout.",
+        "V Perlové ulici na Starém Městě vaříme z italských surovin, s respektem k jednoduchosti a s důrazem na jídla, kvůli kterým se hosté rádi vracejí."
       ],
+      imageAlts: ["Útulný interiér italské restaurace La Piccola Perla v Praze 1", "Tagliata di manzo v restauraci La Piccola Perla"],
       link: "Podívat se dovnitř"
     },
     experiences: {
       eyebrow: "Proč přijít",
-      title: "Večeře, která se dobře prodává sama",
-      text: "Kombinace fotogenického interiéru, italských klasik a rychlé online rezervace pomáhá hostům rozhodnout se hned.",
+      title: "Proč přijít do La Piccola Perla",
+      text: "Italské klasiky, pečlivě vybrané víno a útulný interiér v centru Prahy tvoří místo pro rychlý oběd i dlouhou večeři.",
       cards: [
         ["Ručně laděná kuchyně", "Pasta, rizota, mořské plody i pizza připravené ve stylu, který ctí italskou jednoduchost."],
         ["Víno k večeři i na večer", "Sklenky i lahve z Itálie, od lehkého prosecca až po velká červená z Toskánska."],
@@ -208,7 +210,7 @@ const publicCopy = {
     gallery: {
       eyebrow: "Galerie",
       title: "Fotky, které dělají chuť",
-      text: "Interiér, jídla, víno i dezert. Použité jsou všechny dostupné fotografie z projektu."
+      text: "Prohlédněte si náš interiér v Perlové ulici, italská jídla, víno i dezerty ještě před návštěvou."
     },
     reservationBlock: {
       eyebrow: "Rezervace a objednávky",
@@ -219,7 +221,7 @@ const publicCopy = {
     },
     contact: {
       eyebrow: "Kontakt",
-      title: "Najdete nás v Perlové ulici",
+      title: "Italská restaurace v Praze 1 na Starém Městě",
       addressTitle: "Adresa",
       phoneTitle: "Telefon",
       hoursTitle: "Otevírací doba",
@@ -248,7 +250,7 @@ const publicCopy = {
   },
   en: {
     locale: "en-US",
-    title: "La Piccola Perla | Italian Restaurant in Prague Old Town",
+    title: "Italian Restaurant in Prague | La Piccola Perla",
     navAria: "Main navigation",
     footerAria: "Footer navigation",
     languageAria: "Language",
@@ -262,8 +264,9 @@ const publicCopy = {
       contact: "Contact"
     },
     hero: {
-      eyebrow: "Italian restaurant in the heart of Old Town",
-      text: "A place for honest pasta, Italian wine and long dinners just a few steps from Old Town Square. Come for lunch, a date or an evening that tastes like Italy.",
+      eyebrow: "La Piccola Perla · Prague Old Town",
+      title: "Italian restaurant in the heart of Prague",
+      text: "Fresh pasta, crisp pizza, seafood and Italian wine just a few steps from Old Town Square. Join us for lunch, a date or a long dinner in Prague 1.",
       reserve: "Book a table",
       menu: "Explore menu"
     },
@@ -275,12 +278,13 @@ const publicCopy = {
         "La Piccola Perla was born from the desire to bring the atmosphere of family-run Italian restaurants to Prague: a lively table, good wine, fragrant sauce and service that lets the evening flow.",
         "We cook with Italian ingredients, respect for simplicity and a focus on dishes guests love coming back for."
       ],
+      imageAlts: ["Cosy interior of La Piccola Perla Italian restaurant in Prague", "Tagliata di manzo at La Piccola Perla"],
       link: "Step inside"
     },
     experiences: {
       eyebrow: "Why come",
-      title: "A dinner that sells itself",
-      text: "Photogenic interiors, Italian classics and quick online booking help guests decide right away.",
+      title: "Why visit La Piccola Perla",
+      text: "Italian classics, carefully selected wine and a cosy Prague Old Town interior make this a place for a quick lunch or a long dinner.",
       cards: [
         ["Carefully tuned kitchen", "Pasta, risotto, seafood and pizza prepared in a style that respects Italian simplicity."],
         ["Wine for dinner and the evening", "Italian glasses and bottles, from light prosecco to bold Tuscan reds."],
@@ -298,7 +302,7 @@ const publicCopy = {
     gallery: {
       eyebrow: "Gallery",
       title: "Photos that make you hungry",
-      text: "Interior, dishes, wine and dessert. All available project photos are used."
+      text: "Explore our Perlova Street interior, Italian dishes, wine and desserts before your visit."
     },
     reservationBlock: {
       eyebrow: "Reservations and orders",
@@ -309,7 +313,7 @@ const publicCopy = {
     },
     contact: {
       eyebrow: "Contact",
-      title: "Find us on Perlova Street",
+      title: "Italian restaurant in Prague 1 Old Town",
       addressTitle: "Address",
       phoneTitle: "Phone",
       hoursTitle: "Opening hours",
@@ -352,7 +356,7 @@ const publicCopy = {
   },
   it: {
     locale: "it-IT",
-    title: "La Piccola Perla | Ristorante Italiano a Praga",
+    title: "Ristorante italiano a Praga | La Piccola Perla",
     navAria: "Navigazione principale",
     footerAria: "Navigazione del footer",
     languageAria: "Lingua",
@@ -366,8 +370,9 @@ const publicCopy = {
       contact: "Contatti"
     },
     hero: {
-      eyebrow: "Ristorante italiano nel cuore della Città Vecchia",
-      text: "Un luogo per pasta sincera, vino italiano e lunghe cene a pochi passi dalla Piazza della Città Vecchia. Vieni per pranzo, per un appuntamento o per una serata che sappia d’Italia.",
+      eyebrow: "La Piccola Perla · Città Vecchia di Praga",
+      title: "Ristorante italiano nel cuore di Praga",
+      text: "Pasta, pizza croccante, pesce e vini italiani a pochi passi dalla Piazza della Città Vecchia. Vieni per pranzo, un appuntamento o una lunga cena a Praga 1.",
       reserve: "Prenota un tavolo",
       menu: "Sfoglia il menu"
     },
@@ -379,12 +384,13 @@ const publicCopy = {
         "La Piccola Perla nasce dal desiderio di portare a Praga l’atmosfera dei ristoranti italiani di famiglia: tavoli vivi, buon vino, sughi profumati e un servizio che lascia scorrere la serata.",
         "Cuciniamo con ingredienti italiani, rispetto per la semplicità e attenzione ai piatti per cui gli ospiti amano tornare."
       ],
+      imageAlts: ["Interno accogliente del ristorante italiano La Piccola Perla a Praga", "Tagliata di manzo alla La Piccola Perla"],
       link: "Guarda l’interno"
     },
     experiences: {
       eyebrow: "Perché venire",
-      title: "Una cena che si racconta da sola",
-      text: "Interni fotogenici, classici italiani e prenotazione online veloce aiutano gli ospiti a scegliere subito.",
+      title: "Perché scegliere La Piccola Perla",
+      text: "Classici italiani, vini selezionati e un interno accogliente nel centro storico di Praga: perfetto per un pranzo veloce o una lunga cena.",
       cards: [
         ["Cucina curata a mano", "Pasta, risotti, frutti di mare e pizza preparati con rispetto per la semplicità italiana."],
         ["Vino per cena e per la serata", "Calici e bottiglie dall’Italia, dal prosecco leggero ai grandi rossi toscani."],
@@ -402,7 +408,7 @@ const publicCopy = {
     gallery: {
       eyebrow: "Galleria",
       title: "Foto che fanno venire fame",
-      text: "Interni, piatti, vino e dolci. Sono utilizzate tutte le fotografie disponibili del progetto."
+      text: "Scopri gli interni di via Perlova, i piatti italiani, i vini e i dolci prima della tua visita."
     },
     reservationBlock: {
       eyebrow: "Prenotazioni e ordini",
@@ -413,7 +419,7 @@ const publicCopy = {
     },
     contact: {
       eyebrow: "Contatti",
-      title: "Ci trovi in via Perlova",
+      title: "Ristorante italiano a Praga 1, Città Vecchia",
       addressTitle: "Indirizzo",
       phoneTitle: "Telefono",
       hoursTitle: "Orari di apertura",
@@ -1400,7 +1406,7 @@ function PublicSite() {
         <section className="hero" id="hero" style={{ "--hero-image": `url(${heroPhotos[heroIndex].src})` }}>
           <div className="hero-copy">
             <span className="eyebrow">{copy.hero.eyebrow}</span>
-            <h1>La Piccola Perla</h1>
+            <h1>{copy.hero.title}</h1>
             <p>{copy.hero.text}</p>
             <div className="hero-actions">
               <a className="button button-primary" href="#reservation">
@@ -1458,8 +1464,8 @@ function PublicSite() {
               </a>
             </div>
             <div className="story-photos">
-              <img className="photo-main" src={getImage("_DSR0003.webp")} alt="Interiér restaurace La Piccola Perla" loading="lazy" />
-              <img className="photo-small" src={getImage("2.webp")} alt="Tagliata di manzo" loading="lazy" />
+              <img className="photo-main" src={getImage("_DSR0003.webp")} alt={copy.about.imageAlts[0]} loading="lazy" />
+              <img className="photo-small" src={getImage("2.webp")} alt={copy.about.imageAlts[1]} loading="lazy" />
             </div>
           </div>
         </section>

@@ -22,6 +22,36 @@
   ],
   "redirects": [
     {
+      "source": "/index-en",
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/index-en.html",
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/index-it",
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/index-it.html",
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/index-de",
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/index-de.html",
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {

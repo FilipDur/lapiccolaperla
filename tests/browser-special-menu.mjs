@@ -146,7 +146,9 @@ const assertPublicDishes = async (dishes, capture = false) => {
           const links = await page.locator(".desktop-nav a").evaluateAll((elements) => elements.map((element) => {
             const box = element.getBoundingClientRect();
             const style = getComputedStyle(element);
-            return { left: box.left, right: box.right, height: box.height, lineHeight: parseFloat(style.lineHeight), label: element.textContent };
+            const textRange = document.createRange();
+            textRange.selectNodeContents(element);
+            return { left: box.left, right: box.right, height: textRange.getBoundingClientRect().height, lineHeight: parseFloat(style.lineHeight), label: element.textContent };
           }));
           await page.locator(".site-header").screenshot({ path: join(artifactDirectory, `header-${language}-${width}.png`) });
           links.forEach((link, index) => {
@@ -161,6 +163,7 @@ const assertPublicDishes = async (dishes, capture = false) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.locator(".mobile-toggle").click();
     const mobileLink = page.locator(".mobile-menu a[href='#special-menu']");
+    await mobileLink.waitFor({ state: "visible" });
     assert.equal(await mobileLink.innerText(), titles[language]);
     await mobileLink.click();
     await eventually(async () => assert.equal(await page.locator(".mobile-menu").getAttribute("aria-hidden"), "true"));

@@ -1,0 +1,123 @@
+/* The special menu uses the shared two-copy A4 sheet and its measured text fit. */
+.special-print-sheet .daily-print-content.special-print-content {
+  grid-template-columns: minmax(0, 1fr) !important;
+  grid-template-rows: auto minmax(0, 1fr) auto !important;
+  gap: 4mm !important;
+  padding: 10mm 11mm !important;
+  color: var(--ink);
+}
+
+.special-print-content::before,
+.special-print-content::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.special-print-content::before {
+  inset: 5mm;
+  border: 0.25mm solid var(--forest);
+}
+
+.special-print-content::after {
+  inset: 6.2mm;
+  border: 0.15mm solid rgba(107, 127, 94, 0.25);
+}
+
+.special-print-content .special-print-heading {
+  display: grid;
+  justify-items: center;
+  padding-bottom: 5mm;
+  border-bottom: 0.25mm solid var(--forest);
+  text-align: center;
+}
+
+.special-print-heading > img {
+  width: 40mm;
+  max-width: 55%;
+  height: auto;
+  margin: 0 auto 6mm;
+}
+
+.special-print-content .special-print-heading > span {
+  color: var(--wine) !important;
+  font-size: 7pt !important;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+}
+
+.special-print-sheet .special-print-content h2 {
+  margin-top: 2mm !important;
+  color: var(--wine);
+  font-size: 26pt !important;
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.special-print-content .menu-print-items-viewport {
+  display: flex;
+  align-items: flex-start;
+}
+
+.special-print-content .print-menu-items.menu-print-items-adaptive {
+  width: 100%;
+  align-self: flex-start !important;
+  --menu-print-row-padding: 3mm;
+}
+
+.special-print-content .print-menu-items.menu-print-items-adaptive article {
+  align-items: baseline;
+  border-color: rgba(107, 127, 94, 0.3);
+}
+
+.special-print-content .print-menu-items.menu-print-items-adaptive h3 {
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.special-print-content .print-menu-items.menu-print-items-adaptive p {
+  color: #655b4f;
+}
+
+.special-print-content .print-menu-items.menu-print-items-adaptive strong {
+  color: var(--wine) !important;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.special-print-content-short .menu-print-items-viewport {
+  align-items: center;
+}
+
+.special-print-sheet .special-print-content-short .print-menu-items.menu-print-items-adaptive {
+  align-self: center !important;
+  --menu-print-title-size: 14pt;
+  --menu-print-description-size: 10pt;
+  --menu-print-price-size: 13pt;
+  --menu-print-row-padding: 5mm;
+}
+
+.special-print-sheet .special-print-content > small {
+  padding-top: 3mm;
+  border-top: 0.25mm solid var(--forest);
+  color: var(--wine) !important;
+  font-size: 7pt !important;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.025em;
+}
+
+@media print {
+  .special-print-sheet .special-print-content {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .special-print-sheet .print-menu-items.menu-print-items-adaptive p {
+    color: #655b4f !important;
+  }
+}

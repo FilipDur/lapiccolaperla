@@ -4,6 +4,7 @@ import { fetchSpecialMenuItems, saveSpecialMenuItems } from "../lib/specialMenu"
 import { specialMenuCopy } from "./SpecialMenuSection";
 import MenuPrintSheet, { MenuPrintItems } from "./MenuPrintSheet";
 import "./special-menu-editor.css";
+import "./special-menu-print.css";
 
 const languages = [{ code: "cs", label: "Čeština" }, { code: "en", label: "English" }, { code: "it", label: "Italiano" }];
 const emptyDraft = () => ({ cs: { name: "", description: "" }, en: { name: "", description: "" }, it: { name: "", description: "" }, price: "" });
@@ -191,9 +192,12 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
           <button className="button button-light" type="button" onClick={() => window.print()} disabled={unavailable || !items.length}><Printer aria-hidden="true" />Tisk / PDF</button>
         </div>
         <MenuPrintSheet className="special-print-sheet" ref={sheetRef} lang={language}>
-          <div className="daily-print-content">
-            <img src={logo} alt="La Piccola Perla" />
-            <div className="print-heading"><span>{copy.eyebrow}</span><h2>{copy.title}</h2></div>
+          <div className={`daily-print-content special-print-content${items.length <= 4 ? " special-print-content-short" : ""}`}>
+            <div className="print-heading special-print-heading">
+              <img src={logo} width="1125" height="175" alt="La Piccola Perla" />
+              <span>{copy.eyebrow}</span>
+              <h2>{copy.title}</h2>
+            </div>
             <MenuPrintItems className="special-print-items" items={items.map((item) => ({
               ...item,
               ...(language === "cs" ? {} : item.translations[language]),

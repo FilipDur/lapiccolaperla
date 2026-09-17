@@ -76,6 +76,9 @@ async function assertTwoCopiesAndBounds(kind, language, phase) {
     const contains = (outer, inner) => inner.left >= outer.left - 2 && inner.right <= outer.right + 2 && inner.top >= outer.top - 2 && inner.bottom <= outer.bottom + 2;
     copy.querySelectorAll("h2,h3,p,strong,small,img").forEach((element) => {
       const bounds = element.getBoundingClientRect();
+      if (element.matches(".print-menu-items h3, .print-menu-items p") && parseFloat(getComputedStyle(element).fontSize) < 5) {
+        issues.push(`Copy ${copyIndex + 1} has near-zero type: ${element.textContent.slice(0, 45)}`);
+      }
       if (!contains(frame, bounds)) issues.push(`Copy ${copyIndex + 1} outside frame: ${element.textContent.slice(0, 45)}`);
       if (element.closest(".print-menu-items") && !contains(viewport, bounds)) issues.push(`Copy ${copyIndex + 1} outside items viewport: ${element.textContent.slice(0, 45)}`);
     });

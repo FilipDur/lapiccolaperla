@@ -37,7 +37,8 @@ const imageAssets = import.meta.glob("../images/webp/**/*.webp", {
 
 const getImage = (fileName) => imageAssets[`../images/webp/${fileName}`];
 const getThumb = (fileName) => imageAssets[`../images/webp/thumbs/${fileName}`] || getImage(fileName);
-const logo = getImage("Logos.webp");
+const logo = "/logo-transparent.png";
+const printLogo = getImage("Logos.webp");
 
 const photoData = [
   { file: "_DSR0014.webp", title: "Večer u vinného baru", tone: "Interiér", featured: true },
@@ -1319,10 +1320,22 @@ function PublicSite() {
   }, []);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setHeroIndex((current) => (current + 1) % heroPhotos.length);
-    }, 5200);
-    return () => window.clearInterval(timer);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let timer;
+    const syncRotation = () => {
+      window.clearInterval(timer);
+      if (!reducedMotion.matches) {
+        timer = window.setInterval(() => {
+          setHeroIndex((current) => (current + 1) % heroPhotos.length);
+        }, 5200);
+      }
+    };
+    syncRotation();
+    reducedMotion.addEventListener("change", syncRotation);
+    return () => {
+      window.clearInterval(timer);
+      reducedMotion.removeEventListener("change", syncRotation);
+    };
   }, [heroPhotos.length]);
 
   useEffect(() => {
@@ -1417,7 +1430,7 @@ function PublicSite() {
         </div>
       </header>
 
-      <div className={`mobile-menu ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuOpen}>
+      <div className={`mobile-menu ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuOpen} inert={!menuOpen}>
         <button className="icon-button mobile-close" type="button" aria-label={copy.closeMenu} onClick={() => setMenuOpen(false)}>
           <X aria-hidden="true" />
         </button>
@@ -2192,7 +2205,7 @@ function AdminPage() {
 function DailyPrintMenu({ dateValue, items, weekend }) {
   return (
     <div className="daily-print-content">
-        <img src={logo} alt="La Piccola Perla" />
+        <img src={printLogo} alt="La Piccola Perla" />
         <div className="print-heading">
           <span>Polední nabídka</span>
           <h2>Denní menu</h2>

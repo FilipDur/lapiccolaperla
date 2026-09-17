@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "test": "node --test tests/*.test.js",
     "optimize-images": "node scripts/optimize-images.mjs",
     "preview": "vite preview"
   },

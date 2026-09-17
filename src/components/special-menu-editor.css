@@ -1,0 +1,46 @@
+.admin-menu-mode {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  max-width: 1540px;
+  margin: 0 auto 24px;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  border-radius: 4px;
+}
+
+.admin-menu-mode input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--wine);
+}
+
+.admin-menu-mode label { display: flex; gap: 12px; align-items: center; cursor: pointer; font-weight: 700; }
+.admin-menu-mode p { color: var(--muted); font-size: 0.9rem; }
+.admin-menu-mode input:focus-visible, .special-preview-actions select:focus-visible { outline: 2px solid var(--wine); outline-offset: 4px; }
+.special-admin-fields { display: grid; gap: 22px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.special-language-fields { display: grid; gap: 12px; min-width: 0; margin: 0; padding: 16px; border: 1px solid var(--line); border-radius: 4px; }
+.special-language-fields legend { padding: 0 8px; font-weight: 700; color: var(--wine); }
+.special-admin-form input, .special-admin-form textarea { width: 100%; min-width: 0; }
+.special-admin-form input:disabled, .special-admin-form textarea:disabled { opacity: 0.6; }
+.special-form-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.special-admin-error { margin-top: 16px; padding: 14px; color: #7a2c26; background: #fff0e8; border-left: 3px solid currentColor; }
+.special-admin-error .button { margin-top: 12px; }
+.admin-item-actions.special-item-actions { grid-template-columns: repeat(2, 44px); }
+.special-admin-workspace .admin-current-list h2 { overflow-wrap: anywhere; }
+.special-admin-workspace .admin-current-list article > div { min-width: 0; }
+.special-preview-actions { align-items: end; }
+.special-preview-actions label { display: grid; gap: 6px; margin-right: auto; font-size: 0.85rem; font-weight: 700; }
+.special-preview-actions select { padding: 10px 12px; font: inherit; border: 1px solid var(--line); border-radius: 4px; background: var(--white); color: var(--ink); }
+@media (max-width: 700px) {
+  .admin-menu-mode { align-items: start; flex-direction: column; gap: 6px; }
+  .special-admin-workspace .admin-current-list article { grid-template-columns: minmax(0, 1fr); }
+  .admin-item-actions.special-item-actions { grid-template-columns: repeat(4, 44px); }
+  .special-preview-actions { justify-content: start; }
+}
+@media print {
+  .admin-menu-mode { display: none !important; }
+  .special-admin-workspace .admin-preview-card { position: static; }
+}

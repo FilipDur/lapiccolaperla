@@ -1,0 +1,66 @@
+/* Keep the daily menu's paper, rotation and typography for both menu types.
+   Natural row heights and a measured font scale keep every allowed dish visible. */
+.daily-print-sheet .daily-print-content { grid-template-rows: auto minmax(0, 1fr) auto; }
+.daily-print-sheet .menu-print-items-viewport { grid-column: 1 / -1; min-height: 0; min-width: 0; }
+.daily-print-sheet .print-menu-items.menu-print-items-adaptive {
+  --menu-print-scale: 1;
+  --menu-print-title-size: 1rem;
+  --menu-print-description-size: 0.82rem;
+  --menu-print-price-size: 0.88rem;
+  --menu-print-row-padding: 2.5mm;
+  --menu-print-number-size: 5.2mm;
+  --menu-print-number-indent: 7.2mm;
+  display: grid !important;
+  grid-template-rows: none !important;
+  grid-auto-rows: auto !important;
+  align-content: start !important;
+  height: auto !important;
+  margin-top: 0 !important;
+  gap: 0 !important;
+}
+.daily-print-sheet .print-menu-items.menu-print-items-adaptive.is-eight {
+  --menu-print-title-size: 0.98rem;
+  --menu-print-description-size: 0.78rem;
+  --menu-print-price-size: 0.82rem;
+}
+.daily-print-sheet .print-menu-items.menu-print-items-adaptive article {
+  padding: calc(var(--menu-print-row-padding) * var(--menu-print-scale)) 0 calc(var(--menu-print-row-padding) * var(--menu-print-scale)) calc(var(--menu-print-number-indent) * var(--menu-print-scale)) !important;
+  gap: calc(3mm * var(--menu-print-scale)) !important;
+}
+.daily-print-sheet .print-menu-items.menu-print-items-adaptive article > div { min-width: 0; }
+.daily-print-sheet .print-menu-items.menu-print-items-adaptive article::before { content: none !important; }
+.daily-print-sheet .print-menu-items.menu-print-items-adaptive .menu-print-number {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  width: calc(var(--menu-print-number-size) * var(--menu-print-scale));
+  height: calc(var(--menu-print-number-size) * var(--menu-print-scale));
+  transform: translateY(-50%);
+}
+.daily-print-sheet .print-menu-items.menu-print-items-adaptive h3 {
+  font-size: calc(var(--menu-print-title-size) * var(--menu-print-scale)) !important;
+  line-height: 1.08 !important;
+  overflow-wrap: anywhere;
+}
+.daily-print-sheet .print-menu-items.menu-print-items-adaptive p {
+  margin-top: calc(0.8mm * var(--menu-print-scale)) !important;
+  font-size: calc(var(--menu-print-description-size) * var(--menu-print-scale)) !important;
+  line-height: 1.22 !important;
+}
+.daily-print-sheet .print-menu-items.menu-print-items-adaptive strong { font-size: calc(var(--menu-print-price-size) * var(--menu-print-scale)) !important; }
+
+@media print {
+  .daily-print-sheet .print-menu-items.menu-print-items-adaptive,
+  .daily-print-sheet .print-menu-items.menu-print-items-adaptive.is-eight {
+    --menu-print-title-size: 10.6pt;
+    --menu-print-description-size: 8.6pt;
+    --menu-print-price-size: 9.8pt;
+    --menu-print-row-padding: 1.25mm;
+    --menu-print-number-size: 4.6mm;
+    --menu-print-number-indent: 6.4mm;
+  }
+  .daily-print-sheet .print-menu-items.menu-print-items-adaptive p { line-height: 1.18 !important; }
+  .daily-print-sheet .menu-print-number circle { fill: #fff; stroke: #111; stroke-width: 1.5; }
+  .daily-print-sheet .menu-print-number text { fill: #111; }
+}

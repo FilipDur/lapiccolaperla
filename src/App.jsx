@@ -25,6 +25,10 @@ import {
 } from "lucide-react";
 import { featuredPicks, menuCategories as baseMenuCategories } from "./data/menu";
 import { seededDailyMenus } from "./data/dailyMenuSeed";
+import SpecialMenuSection, { getCompleteSpecialMenuItems, specialMenuCopy } from "./components/SpecialMenuSection";
+import SpecialMenuEditor from "./components/SpecialMenuEditor";
+import MenuPrintSheet, { MenuPrintItems } from "./components/MenuPrintSheet";
+import { fetchSpecialMenuItems, SPECIAL_MENU_REVISION_KEY, SPECIAL_MENU_UPDATED } from "./lib/specialMenu";
 
 const imageAssets = import.meta.glob("../images/webp/**/*.webp", {
   eager: true,
@@ -149,7 +153,7 @@ const applyPublicSeo = (language) => {
 
 const applyAdminSeo = () => {
   document.documentElement.lang = "cs";
-  document.title = "Administrace denniho menu | La Piccola Perla";
+  document.title = "Administrace menu | La Piccola Perla";
   setMetaTag("name", "robots", "noindex, nofollow");
   setLinkTag('link[rel="canonical"]', { rel: "canonical", href: `${SITE_URL}/admin` });
 };
@@ -581,11 +585,12 @@ const getLanguageFromLocation = () => {
   return "cs";
 };
 
-const getNavItems = (language, copy) => {
+const getNavItems = (language, copy, hasSpecialMenu = false) => {
   const items = language === "cs" ? [{ label: copy.nav.daily, href: "#daily-menu" }] : [];
 
   return [
     ...items,
+    ...(hasSpecialMenu ? [{ label: specialMenuCopy[language].navLabel, href: "#special-menu" }] : []),
     { label: copy.nav.about, href: "#about" },
     { label: copy.nav.menu, href: "#menu" },
     { label: copy.nav.gallery, href: "#gallery" },
@@ -1244,9 +1249,10 @@ function App() {
 function PublicSite() {
   const language = getLanguageFromLocation();
   const copy = publicCopy[language];
+  const [specialMenuItems, setSpecialMenuItems] = useState([]);
   const localizedPhotos = useMemo(() => getLocalizedPhotos(language), [language]);
   const menuCategories = useMemo(() => getLocalizedMenuCategories(language), [language]);
-  const navItems = useMemo(() => getNavItems(language, copy), [language, copy]);
+  const navItems = useMemo(() => getNavItems(language, copy, specialMenuItems.length > 0), [language, copy, specialMenuItems.length]);
   const experiences = useMemo(() => getExperiences(copy), [copy]);
   const stats = useMemo(() => getStats(copy), [copy]);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -1272,6 +1278,38 @@ function PublicSite() {
   useEffect(() => {
     applyPublicSeo(language);
   }, [language]);
+
+  useEffect(() => {
+    let controller;
+    let active = true;
+    const refresh = async () => {
+      controller?.abort();
+      const request = new AbortController();
+      controller = request;
+      try {
+        const items = await fetchSpecialMenuItems(request.signal);
+        if (active && !request.signal.aborted) setSpecialMenuItems(getCompleteSpecialMenuItems(items));
+      } catch {
+        if (active && !request.signal.aborted) setSpecialMenuItems([]);
+      }
+    };
+    const onStorage = (event) => {
+      if (event.key === SPECIAL_MENU_REVISION_KEY) void refresh();
+    };
+    void refresh();
+    const interval = window.setInterval(() => { if (!document.hidden) void refresh(); }, 60000);
+    window.addEventListener("focus", refresh);
+    window.addEventListener("storage", onStorage);
+    window.addEventListener(SPECIAL_MENU_UPDATED, refresh);
+    return () => {
+      active = false;
+      controller?.abort();
+      window.clearInterval(interval);
+      window.removeEventListener("focus", refresh);
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener(SPECIAL_MENU_UPDATED, refresh);
+    };
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 24);
@@ -1342,7 +1380,7 @@ function PublicSite() {
 
   return (
     <>
-      <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`}>
+      <header className={`site-header ${isScrolled ? "is-scrolled" : ""} ${specialMenuItems.length > 0 ? "has-special-menu" : ""}`}>
         <a className="brand" href="#hero" aria-label="La Piccola Perla">
           <img src={logo} alt="La Piccola Perla" />
         </a>
@@ -1449,6 +1487,7 @@ function PublicSite() {
         </section>
 
         {language === "cs" ? <DailyMenuSection items={dailyMenuForToday} /> : null}
+        <SpecialMenuSection items={specialMenuItems} language={language} />
 
         <section className="story-section section-pad" id="about">
           <div className="section-grid">
@@ -1766,6 +1805,8 @@ function AdminPage() {
   const [draft, setDraft] = useState({ name: "", description: "", price: "" });
   const [syncMessage, setSyncMessage] = useState("");
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+  const [isSpecial, setIsSpecial] = useState(false);
+  const [specialBusy, setSpecialBusy] = useState(false);
   const printSheetRef = useRef(null);
 
   const weekend = isWeekendDate(dateValue);
@@ -1776,7 +1817,7 @@ function AdminPage() {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated || isSpecial) {
       return undefined;
     }
 
@@ -1794,7 +1835,7 @@ function AdminPage() {
     return () => {
       isActive = false;
     };
-  }, [dateValue, isAuthenticated]);
+  }, [dateValue, isAuthenticated, isSpecial]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -1848,7 +1889,7 @@ function AdminPage() {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated || isSpecial) {
       return undefined;
     }
 
@@ -1908,7 +1949,7 @@ function AdminPage() {
       form.removeEventListener("keydown", submitPriceOnEnter);
       button?.removeEventListener("click", submitItem);
     };
-  }, [dateValue, isAuthenticated, items, weekend]);
+  }, [dateValue, isAuthenticated, isSpecial, items, weekend]);
 
   const handleRemoveItem = async (itemId) => {
     const nextItems = items.filter((item) => item.id !== itemId);
@@ -1951,78 +1992,13 @@ function AdminPage() {
     }
 
     setIsDownloadingPdf(true);
-    let exportContainer = null;
-
     try {
-      const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
-        import("html2canvas"),
-        import("jspdf")
-      ]);
-
-      exportContainer = document.createElement("div");
-      const exportSheet = sourceSheet.cloneNode(true);
-      Object.assign(exportContainer.style, {
-        position: "fixed",
-        top: "0",
-        left: "-10000px",
-        width: "210mm",
-        height: "297mm",
-        overflow: "hidden",
-        background: "#ffffff",
-        pointerEvents: "none"
-      });
-      Object.assign(exportSheet.style, {
-        width: "210mm",
-        height: "297mm",
-        minHeight: "297mm",
-        maxWidth: "none",
-        aspectRatio: "auto",
-        margin: "0",
-        border: "0",
-        boxShadow: "none",
-        background: "#ffffff"
-      });
-      exportContainer.appendChild(exportSheet);
-      document.body.appendChild(exportContainer);
-
-      await document.fonts?.ready;
-      await Promise.all(
-        Array.from(exportSheet.querySelectorAll("img")).map((image) => {
-          if (image.complete) {
-            return Promise.resolve();
-          }
-
-          return new Promise((resolve) => {
-            image.addEventListener("load", resolve, { once: true });
-            image.addEventListener("error", resolve, { once: true });
-          });
-        })
-      );
-
-      const canvas = await html2canvas(exportSheet, {
-        backgroundColor: "#ffffff",
-        scale: 2,
-        scrollX: 0,
-        scrollY: 0,
-        useCORS: true
-      });
-      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-      const pageWidth = 210;
-      const pageHeight = 297;
-      const imageRatio = canvas.width / canvas.height;
-      const pageRatio = pageWidth / pageHeight;
-      const imageWidth = imageRatio > pageRatio ? pageWidth : pageHeight * imageRatio;
-      const imageHeight = imageRatio > pageRatio ? pageWidth / imageRatio : pageHeight;
-      const imageX = (pageWidth - imageWidth) / 2;
-      const imageY = (pageHeight - imageHeight) / 2;
-
-      pdf.addImage(canvas.toDataURL("image/jpeg", 0.96), "JPEG", imageX, imageY, imageWidth, imageHeight);
-      pdf.save(`denni-menu-${dateValue}.pdf`);
+      const { downloadMenuPdf } = await import("./lib/menuPrint");
+      await downloadMenuPdf(sourceSheet, `denni-menu-${dateValue}.pdf`);
     } catch (error) {
       console.error("Daily menu PDF download failed:", error);
       setSyncMessage("PDF se nepodařilo stáhnout. Zkuste prosím Tisk / PDF.");
     } finally {
-      exportContainer?.remove();
       setIsDownloadingPdf(false);
     }
   };
@@ -2034,9 +2010,9 @@ function AdminPage() {
           <a className="admin-logo" href="/#hero" aria-label="Zpět na La Piccola Perla">
             <img src={logo} alt="La Piccola Perla" />
           </a>
-          <span className="eyebrow">Denní menu</span>
+          <span className="eyebrow">Administrace menu</span>
           <h1>Přihlášení</h1>
-          <p>Po přihlášení můžete upravit polední nabídku pro českou verzi webu.</p>
+          <p>Po přihlášení můžete upravit denní menu i speciální nabídku ve všech jazycích.</p>
 
           <form className="admin-login-form">
             <label>
@@ -2075,15 +2051,21 @@ function AdminPage() {
           <img src={logo} alt="La Piccola Perla" />
         </a>
         <div className="admin-topbar-actions">
-          <a className="button button-light" href="/#daily-menu">
+          <a className="button button-light" href={isSpecial ? "/#special-menu" : "/#daily-menu"}>
             Zpět na web
           </a>
-          <button className="icon-button" type="button" aria-label="Odhlásit se" onClick={handleLogout}>
+          <button className="icon-button" type="button" aria-label="Odhlásit se" onClick={handleLogout} disabled={specialBusy}>
             <LogOut aria-hidden="true" />
           </button>
         </div>
       </header>
 
+      <div className="admin-menu-mode">
+        <label><input type="checkbox" checked={isSpecial} onChange={(event) => setIsSpecial(event.target.checked)} disabled={specialBusy || isDownloadingPdf} />Speciální menu</label>
+        <p>{isSpecial ? "Upravujete nabídku pro všechny jazyky." : "Upravujete denní menu pro vybrané datum."}</p>
+      </div>
+
+      {isSpecial ? <SpecialMenuEditor logo={logo} getAuthHeaders={getAdminAuthHeaders} onBusyChange={setSpecialBusy} /> : (
       <div className="admin-workspace">
         <section className="admin-editor">
           <span className="eyebrow">Skrytá administrace</span>
@@ -2197,28 +2179,19 @@ function AdminPage() {
             </button>
           </div>
 
-          <div className="daily-print-sheet" ref={printSheetRef}>
-            {[0, 1].map((copyIndex) => (
-              <DailyPrintMenu
-                key={copyIndex}
-                dateValue={dateValue}
-                items={items}
-                weekend={weekend}
-              />
-            ))}
-          </div>
+          <MenuPrintSheet ref={printSheetRef} lang="cs">
+            <DailyPrintMenu dateValue={dateValue} items={items} weekend={weekend} />
+          </MenuPrintSheet>
         </section>
       </div>
+      )}
     </main>
   );
 }
 
 function DailyPrintMenu({ dateValue, items, weekend }) {
-  const printItemsClassName = `print-menu-items${items.length >= 7 ? " is-eight" : ""}`;
-
   return (
-    <div className="daily-print-preview">
-      <div className="daily-print-content">
+    <div className="daily-print-content">
         <img src={logo} alt="La Piccola Perla" />
         <div className="print-heading">
           <span>Polední nabídka</span>
@@ -2233,17 +2206,7 @@ function DailyPrintMenu({ dateValue, items, weekend }) {
             <p>Vyberte si prosím ze stálého menu.</p>
           </div>
         ) : items.length > 0 ? (
-          <div className={printItemsClassName}>
-            {items.map((item) => (
-              <article key={item.id}>
-                <div>
-                  <h3>{item.name}</h3>
-                  <p>{item.description}</p>
-                </div>
-                <strong>{item.price}</strong>
-              </article>
-            ))}
-          </div>
+          <MenuPrintItems items={items} />
         ) : (
           <div className="print-empty">
             <h3>Denní menu zatím dopisujeme.</h3>
@@ -2252,7 +2215,6 @@ function DailyPrintMenu({ dateValue, items, weekend }) {
         )}
 
         <small>La Piccola Perla | Perlová 412/1, Praha 1</small>
-      </div>
     </div>
   );
 }

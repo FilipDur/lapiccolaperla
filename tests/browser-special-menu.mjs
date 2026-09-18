@@ -201,13 +201,19 @@ try {
   assert.equal(fixture.items.length, 1);
   await assertPublicDishes([firstDish], true);
   pass("Admin checkbox publishes Czech, English and Italian content with localized public navigation and mobile layout");
-  await admin.getByLabel("Jazyk náhledu").selectOption("it");
-  assert.deepEqual(await admin.locator(".special-print-sheet h3").allTextContents(), [firstDish.it.name, firstDish.it.name]);
+  assert.equal(await admin.getByLabel("Jazyk náhledu").count(), 0, "The special menu always includes every language");
+  const specialSheet = admin.locator(".special-print-sheet[data-print-layout='single-a4']");
+  assert.equal(await specialSheet.locator(".special-print-page[data-print-copy='1']").count(), 1);
+  assert.equal(await specialSheet.locator("[data-print-copy]").count(), 1, "A special menu has one copy per A4 sheet");
+  assert.deepEqual(await specialSheet.locator("h2").allTextContents(), ["I nostri piatti speciali"]);
+  assert.deepEqual(await specialSheet.locator(".special-print-dish h3").allTextContents(), [firstDish.it.name, firstDish.cs.name, firstDish.en.name]);
+  assert.equal(await specialSheet.locator(".special-print-price").count(), 1);
+  assert.equal(await specialSheet.locator(".special-print-dish p").count(), 0, "Printed special menus show names and price without descriptions");
   await admin.screenshot({ path: join(artifactDirectory, "special-admin-desktop.png"), fullPage: true });
   const downloadEvent = admin.waitForEvent("download");
   await admin.getByRole("button", { name: "Stáhnout PDF", exact: true }).click();
   const download = await downloadEvent;
-  assert.equal(download.suggestedFilename(), "specialni-menu-it.pdf");
+  assert.equal(download.suggestedFilename(), "specialni-menu.pdf");
   const pdfPath = join(artifactDirectory, download.suggestedFilename());
   await download.saveAs(pdfPath);
   const pdf = await readFile(pdfPath);
@@ -219,7 +225,7 @@ try {
   assert.equal(await admin.locator(".special-admin-form").isVisible(), false);
   await admin.screenshot({ path: join(artifactDirectory, "special-print-preview.png"), fullPage: true });
   await admin.emulateMedia({ media: "screen" });
-  pass("Preview language, downloadable PDF and print styling work");
+  pass("One A4 preview combines Italian, Czech and English names with one price, and supports PDF download and printing");
 
   await admin.reload();
   await admin.getByRole("checkbox", { name: "Speciální menu", exact: true }).check();

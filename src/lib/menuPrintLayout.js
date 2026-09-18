@@ -1,7 +1,9 @@
-// Fit the complete menu list into each A5 copy. Measure its untransformed
-// layout so this works with the rotated preview, browser print and PDF export.
+// Fit the list into its print area for the preview, browser print and PDF export.
 export function fitMenuPrintSheet(sheet) {
   if (!sheet) return;
+  if (sheet.dataset.printLayout === "single-a4") {
+    sheet.style.setProperty("--special-page-scale", String(sheet.clientWidth / (210 * 96 / 25.4)));
+  }
   for (const list of sheet.querySelectorAll("[data-menu-print-fit]")) {
     const availableHeight = list.parentElement.clientHeight - 2;
     if (availableHeight <= 0) continue;

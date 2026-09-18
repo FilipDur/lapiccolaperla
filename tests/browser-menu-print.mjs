@@ -19,7 +19,7 @@ const testKinds = process.env.TEST_PRINT_KINDS?.split(",") || ["special", "daily
 const testCounts = process.env.TEST_PRINT_COUNTS?.split(",").map(Number) || [1, 8, 12];
 assert.ok(testKinds.every((kind) => ["daily", "special"].includes(kind)));
 assert.ok(testCounts.every((count) => [1, 8, 12].includes(count)));
-const artifactDirectory = process.env.TEST_ARTIFACT_DIRECTORY || join(tmpdir(), `perla-two-up-print-${Date.now()}`);
+const artifactDirectory = process.env.TEST_ARTIFACT_DIRECTORY || join(tmpdir(), `perla-menu-print-${Date.now()}`);
 await mkdir(artifactDirectory, { recursive: true });
 
 const fixtures = (count) => Array.from({ length: count }, (_, index) => {
@@ -59,43 +59,75 @@ await context.route(/https:\/\//, (route) => route.fulfill({ status: 204, body: 
 const page = await context.newPage();
 const results = [];
 
-async function assertTwoCopiesAndBounds(kind, language, phase) {
-  const copies = page.locator(".daily-print-sheet .daily-print-preview");
-  assert.equal(await copies.count(), 2, `${kind} ${phase} should contain two copies`);
-  const expected = items.map((item) => kind === "daily" || language === "cs" ? item : { ...item, ...item.translations[language] });
-  for (let index = 0; index < 2; index += 1) {
+async function assertCopiesAndBounds(kind, phase) {
+  const special = kind === "special";
+  const copies = page.locator(special ? ".special-print-sheet .special-print-page" : ".daily-print-sheet .daily-print-preview");
+  const copyCount = special ? 1 : 2;
+  assert.equal(await copies.count(), copyCount, `${kind} ${phase} should contain ${copyCount} complete ${copyCount === 1 ? "copy" : "copies"}`);
+  if (special) {
+    assert.equal(await page.locator(".special-print-sheet").getAttribute("data-print-layout"), "single-a4");
+    assert.equal(await copies.first().getAttribute("data-print-copy"), "1");
+    assert.deepEqual(await copies.locator("h2").allTextContents(), ["I nostri piatti speciali"]);
+    assert.equal(await copies.getByRole("img", { name: "La Piccola Perla", exact: true }).count(), 1);
+    assert.equal(await copies.locator(".special-print-art").evaluate((image) => image.complete && image.naturalWidth > 0), true);
+    assert.equal(await page.getByLabel("Jazyk náhledu").count(), 0);
+    assert.equal(await copies.locator(".special-print-items[data-menu-print-fit]").count(), 1);
+  }
+  for (let index = 0; index < copyCount; index += 1) {
     const copy = copies.nth(index);
-    assert.deepEqual(await copy.locator(".print-menu-items h3").allTextContents(), expected.map((item) => item.name));
-    assert.deepEqual(await copy.locator(".print-menu-items p").allTextContents(), expected.map((item) => item.description));
-    assert.equal(await copy.locator(".print-menu-items strong").count(), items.length);
+    if (special) {
+      assert.equal(await copy.locator(".special-print-dish").count(), items.length);
+      for (let dishIndex = 0; dishIndex < items.length; dishIndex += 1) {
+        const dish = copy.locator(".special-print-dish").nth(dishIndex);
+        const item = items[dishIndex];
+        assert.deepEqual(await dish.locator("h3").allTextContents(), [item.translations.it.name, item.name, item.translations.en.name]);
+        assert.equal(await dish.locator("strong.special-print-price").count(), 1);
+        assert.equal(await dish.locator("strong.special-print-price").innerText(), item.price);
+        assert.equal(await dish.locator("p").count(), 0, "Special print contains no dish descriptions");
+      }
+    } else {
+      assert.deepEqual(await copy.locator(".print-menu-items h3").allTextContents(), items.map((item) => item.name));
+      assert.deepEqual(await copy.locator(".print-menu-items p").allTextContents(), items.map((item) => item.description));
+      assert.equal(await copy.locator(".print-menu-items strong").count(), items.length);
+    }
   }
   const clipping = await copies.evaluateAll((elements) => elements.flatMap((copy, copyIndex) => {
     const issues = [];
     const frame = copy.getBoundingClientRect();
-    const viewport = (copy.querySelector(".menu-print-items-viewport") || copy.querySelector(".print-menu-items")).getBoundingClientRect();
+    const viewport = (copy.querySelector(".menu-print-items-viewport") || copy.querySelector(".print-menu-items, .special-print-items")).getBoundingClientRect();
     const contains = (outer, inner) => inner.left >= outer.left - 2 && inner.right <= outer.right + 2 && inner.top >= outer.top - 2 && inner.bottom <= outer.bottom + 2;
     copy.querySelectorAll("h2,h3,p,strong,small,img").forEach((element) => {
       const bounds = element.getBoundingClientRect();
-      if (element.matches(".print-menu-items h3, .print-menu-items p") && parseFloat(getComputedStyle(element).fontSize) < 5) {
+      if (element.matches(".print-menu-items h3, .print-menu-items p, .special-print-items h3") && parseFloat(getComputedStyle(element).fontSize) < 5) {
         issues.push(`Copy ${copyIndex + 1} has near-zero type: ${element.textContent.slice(0, 45)}`);
       }
       if (!contains(frame, bounds)) issues.push(`Copy ${copyIndex + 1} outside frame: ${element.textContent.slice(0, 45)}`);
-      if (element.closest(".print-menu-items") && !contains(viewport, bounds)) issues.push(`Copy ${copyIndex + 1} outside items viewport: ${element.textContent.slice(0, 45)}`);
+      if (element.closest(".print-menu-items, .special-print-items") && !contains(viewport, bounds)) issues.push(`Copy ${copyIndex + 1} outside items viewport: ${element.textContent.slice(0, 45)}`);
     });
     return issues;
   }));
   assert.deepEqual(clipping, [], `${kind}, ${items.length} dishes, ${phase}: no text clipping`);
 }
 
-function inspectPdf(path, verifyText) {
+function inspectPdf(path, verifyText, kind) {
   const inspection = JSON.parse(execFileSync(python, ["-c", "import json,sys; from pypdf import PdfReader; r=PdfReader(sys.argv[1]); print(json.dumps({'pages':len(r.pages),'size':[float(r.pages[0].mediabox.width),float(r.pages[0].mediabox.height)],'text':'\\n'.join(p.extract_text() or '' for p in r.pages)}))", path], { encoding: "utf8" }));
   assert.equal(inspection.pages, 1, `${path} must have exactly one page`);
   assert.ok(Math.abs(inspection.size[0] - 595.28) < 1.5 && Math.abs(inspection.size[1] - 841.89) < 1.5, `${path} must be portrait A4`);
   if (verifyText) {
+    const markerCount = kind === "special" ? 3 : 2;
     items.forEach((_, index) => {
       const marker = `DISH${String(index + 1).padStart(2, "0")}`;
-      assert.equal(inspection.text.split(marker).length - 1, 2, `Native PDF must contain ${marker} twice`);
+      assert.equal(inspection.text.split(marker).length - 1, markerCount, `Native ${kind} PDF must contain ${marker} ${markerCount} times`);
     });
+    if (kind === "special") {
+      const text = inspection.text.replace(/\s+/g, " ");
+      assert.equal(text.split("I nostri piatti speciali").length - 1, 1, "Special PDF contains its Italian heading once");
+      items.forEach((item) => {
+        for (const description of [item.description, item.translations.it.description, item.translations.en.description]) {
+          assert.equal(text.includes(description), false, "Special PDF must not contain dish descriptions");
+        }
+      });
+    }
   }
   execFileSync(pdftoppm, ["-singlefile", "-scale-to", "1800", "-png", path, path.replace(/\.pdf$/, "")], { stdio: "pipe" });
   return { pages: inspection.pages, size: inspection.size };
@@ -111,39 +143,44 @@ try {
     for (const count of testCounts) {
       items = fixtures(count);
       await page.reload();
-      const language = kind === "special" ? ({ 1: "cs", 8: "en", 12: "it" })[count] : "cs";
+      const language = kind === "special" ? "it-cs-en" : "cs";
       if (kind === "special") {
         await page.getByRole("checkbox", { name: "Speciální menu", exact: true }).check();
         await page.locator(".special-admin-workspace [name='name-cs']").waitFor();
-        await page.getByLabel("Jazyk náhledu").selectOption(language);
       } else {
         await page.locator("input[type='date']").fill("2026-09-17");
       }
-      await page.locator(".daily-print-sheet .daily-print-preview").first().locator(".print-menu-items article").nth(count - 1).waitFor();
+      const sheet = page.locator(kind === "special" ? ".special-print-sheet" : ".daily-print-sheet");
+      const dishes = kind === "special"
+        ? sheet.locator(".special-print-dish")
+        : sheet.locator(".daily-print-preview").first().locator(".print-menu-items article");
+      await dishes.nth(count - 1).waitFor();
       await page.evaluate(async () => { await document.fonts.ready; await new Promise(requestAnimationFrame); await new Promise(requestAnimationFrame); });
-      await assertTwoCopiesAndBounds(kind, language, "screen preview");
+      await assertCopiesAndBounds(kind, "screen preview");
       const stem = `${kind}-${count}-${language}`;
-      await page.locator(".daily-print-sheet").screenshot({ path: join(artifactDirectory, `${stem}-preview.png`) });
+      await sheet.screenshot({ path: join(artifactDirectory, `${stem}-preview.png`) });
 
       const downloaded = page.waitForEvent("download");
       await page.getByRole("button", { name: "Stáhnout PDF", exact: true }).click();
       const download = await downloaded;
+      if (kind === "special") assert.equal(download.suggestedFilename(), "specialni-menu.pdf");
       const downloadPath = join(artifactDirectory, `${stem}-download.pdf`);
       await download.saveAs(downloadPath);
-      const downloadedMetadata = inspectPdf(downloadPath, false);
+      const downloadedMetadata = inspectPdf(downloadPath, false, kind);
       await page.getByRole("button", { name: "Stáhnout PDF", exact: true }).waitFor();
 
       await page.emulateMedia({ media: "print" });
       await page.evaluate(() => window.dispatchEvent(new Event("beforeprint")));
       await page.evaluate(async () => { await new Promise(requestAnimationFrame); await new Promise(requestAnimationFrame); });
-      await assertTwoCopiesAndBounds(kind, language, "browser print");
+      await assertCopiesAndBounds(kind, "browser print");
       const nativePath = join(artifactDirectory, `${stem}-native.pdf`);
       await page.pdf({ path: nativePath, format: "A4", preferCSSPageSize: true, printBackground: true, displayHeaderFooter: false, margin: { top: 0, right: 0, bottom: 0, left: 0 } });
-      const nativeMetadata = inspectPdf(nativePath, true);
+      const nativeMetadata = inspectPdf(nativePath, true, kind);
       await page.emulateMedia({ media: "screen" });
       const result = { kind, count, language, download: downloadedMetadata, native: nativeMetadata };
       results.push(result);
-      console.log(`PASS ${kind} ${count} dishes (${language}): two complete copies, no clipping, downloaded and browser PDF each one A4 page`);
+      const layout = kind === "special" ? "one trilingual menu" : "two complete copies";
+      console.log(`PASS ${kind} ${count} dishes (${language}): ${layout}, no clipping, downloaded and browser PDF each one A4 page`);
     }
   }
   assert.deepEqual(errors, [], "No runtime errors");

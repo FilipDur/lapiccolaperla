@@ -1,115 +1,104 @@
-/* The special menu uses the shared two-copy A4 sheet and its measured text fit. */
-.special-print-sheet .daily-print-content.special-print-content {
-  grid-template-columns: minmax(0, 1fr) !important;
-  grid-template-rows: auto minmax(0, 1fr) auto !important;
-  gap: 4mm !important;
-  padding: 10mm 11mm !important;
-  color: var(--ink);
+.special-print-sheet {
+  --special-page-scale: 1;
+  position: relative;
+  width: min(100%, 210mm);
+  aspect-ratio: 210 / 297;
+  margin: 0 auto;
+  overflow: hidden;
+  color: #2c3528;
+  background: #fffdf8;
+  box-shadow: 0 12px 36px rgba(57, 41, 28, 0.12);
 }
 
-.special-print-content::before,
-.special-print-content::after {
-  content: "";
+.special-print-page { position: absolute; inset: 0; overflow: hidden; background: #fffdf8; }
+.special-print-page::before, .special-print-page::after { content: ""; position: absolute; pointer-events: none; }
+.special-print-page::before { inset: 3.4% 4.8%; border: 1px solid #8a9878; }
+.special-print-page::after { inset: 3.9% 5.5%; border: 1px solid rgba(138, 152, 120, 0.3); }
+.special-print-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; }
+.special-print-content {
   position: absolute;
-  pointer-events: none;
-}
-
-.special-print-content::before {
-  inset: 5mm;
-  border: 0.25mm solid var(--forest);
-}
-
-.special-print-content::after {
-  inset: 6.2mm;
-  border: 0.15mm solid rgba(107, 127, 94, 0.25);
-}
-
-.special-print-content .special-print-heading {
+  inset: 0;
   display: grid;
-  justify-items: center;
-  padding-bottom: 5mm;
-  border-bottom: 0.25mm solid var(--forest);
-  text-align: center;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: calc(5mm * var(--special-page-scale));
+  padding: 14% 22% 18% 18%;
 }
 
-.special-print-heading > img {
-  width: 40mm;
-  max-width: 55%;
-  height: auto;
-  margin: 0 auto 6mm;
-}
-
-.special-print-sheet .special-print-content h2 {
-  margin-top: 2mm !important;
-  color: var(--wine);
-  font-size: 26pt !important;
+.special-print-heading { display: grid; justify-items: center; text-align: center; }
+.special-print-heading > img { width: 45%; height: auto; margin-bottom: calc(9mm * var(--special-page-scale)); }
+.special-print-heading h2 {
+  color: #44543b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: calc(29pt * var(--special-page-scale));
   font-weight: 400;
-  line-height: 1.12;
+  line-height: 1.15;
   letter-spacing: -0.025em;
   text-wrap: balance;
 }
-
-.special-print-content .menu-print-items-viewport {
-  display: flex;
-  align-items: flex-start;
+.special-print-rule { width: 18%; height: 1px; margin-top: calc(6mm * var(--special-page-scale)); background: #a98757; }
+.special-print-content .menu-print-items-viewport { display: flex; align-items: flex-start; min-height: 0; min-width: 0; }
+.special-print-items {
+  --menu-print-scale: 1;
+  --special-name-size: 14pt;
+  --special-translation-size: 10.5pt;
+  --special-price-size: 13pt;
+  --special-row-space: 4.6mm;
+  flex: 0 0 100%;
+  min-width: 0;
+  align-self: flex-start;
 }
-
-.special-print-content .print-menu-items.menu-print-items-adaptive {
-  width: 100%;
-  align-self: flex-start !important;
-  --menu-print-row-padding: 3mm;
-}
-
-.special-print-content .print-menu-items.menu-print-items-adaptive article {
+.special-print-dish {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
-  border-color: rgba(107, 127, 94, 0.3);
+  gap: calc(5mm * var(--special-page-scale));
+  padding-block: calc(var(--special-row-space) * var(--special-page-scale) * var(--menu-print-scale));
+  border-bottom: 1px solid rgba(138, 152, 120, 0.3);
 }
-
-.special-print-content .print-menu-items.menu-print-items-adaptive h3 {
-  color: var(--ink);
-  font-weight: 400;
-}
-
-.special-print-content .print-menu-items.menu-print-items-adaptive p {
-  color: #655b4f;
-}
-
-.special-print-content .print-menu-items.menu-print-items-adaptive strong {
-  color: var(--wine) !important;
+.special-print-dish:last-child { border-bottom: 0; }
+.special-print-translations { min-width: 0; }
+.special-print-translations h3 {
+  color: #303c2c;
   font-family: Georgia, "Times New Roman", serif;
+  font-size: calc(var(--special-name-size) * var(--special-page-scale) * var(--menu-print-scale));
+  font-weight: 400;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.special-print-translations > div + div { margin-top: calc(1.1mm * var(--special-page-scale) * var(--menu-print-scale)); }
+.special-print-translations [lang="cs"] h3, .special-print-translations [lang="en"] h3 {
+  color: #635f53;
+  font-size: calc(var(--special-translation-size) * var(--special-page-scale) * var(--menu-print-scale));
+  line-height: 1.3;
+}
+.special-print-translations [lang="en"] h3 { font-style: italic; }
+.special-print-price {
+  color: #44543b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: calc(var(--special-price-size) * var(--special-page-scale) * var(--menu-print-scale));
   font-weight: 400;
   font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  white-space: nowrap;
 }
+.special-print-sheet-short .menu-print-items-viewport { align-items: center; }
+.special-print-sheet-short .special-print-items { align-self: center; --special-name-size: 17pt; --special-translation-size: 12pt; --special-price-size: 16pt; --special-row-space: 7mm; }
+.special-print-footer { width: 100%; padding-top: calc(5mm * var(--special-page-scale)); border-top: 1px solid #8a9878; text-align: center; }
+.special-print-footer small { color: #44543b; font: 400 calc(8pt * var(--special-page-scale))/1.5 Georgia, "Times New Roman", serif; }
 
-.special-print-content-short .menu-print-items-viewport {
-  align-items: center;
-}
-
-.special-print-sheet .special-print-content-short .print-menu-items.menu-print-items-adaptive {
-  align-self: center !important;
-  --menu-print-title-size: 14pt;
-  --menu-print-description-size: 10pt;
-  --menu-print-price-size: 13pt;
-  --menu-print-row-padding: 5mm;
-}
-
-.special-print-sheet .special-print-content > small {
-  padding-top: 3mm;
-  border-top: 0.25mm solid var(--forest);
-  color: var(--wine) !important;
-  font-size: 7pt !important;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.025em;
-}
+/* Fitting measures synchronously; transitions would leave stale font sizes. */
+.special-print-sheet, .special-print-sheet * { transition: none !important; animation: none !important; }
 
 @media print {
-  .special-print-sheet .special-print-content {
-    -webkit-print-color-adjust: exact;
+  .special-print-sheet {
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-width: none;
+    margin: 0;
+    box-shadow: none;
+    break-inside: avoid;
     print-color-adjust: exact;
-  }
-
-  .special-print-sheet .print-menu-items.menu-print-items-adaptive p {
-    color: #655b4f !important;
+    -webkit-print-color-adjust: exact;
   }
 }

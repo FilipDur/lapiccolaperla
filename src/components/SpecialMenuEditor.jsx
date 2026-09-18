@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowUp, Download, Pencil, Printer, Save, Trash2 } from "lucide-react";
 import { fetchSpecialMenuItems, saveSpecialMenuItems } from "../lib/specialMenu";
-import MenuPrintSheet, { MenuPrintItems } from "./MenuPrintSheet";
+import SpecialMenuPrintSheet from "./SpecialMenuPrintSheet";
 import "./special-menu-editor.css";
-import "./special-menu-print.css";
 
 const languages = [{ code: "cs", label: "Čeština" }, { code: "en", label: "English" }, { code: "it", label: "Italiano" }];
 const emptyDraft = () => ({ cs: { name: "", description: "" }, en: { name: "", description: "" }, it: { name: "", description: "" }, price: "" });
@@ -12,7 +11,6 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
   const [items, setItems] = useState([]);
   const [draft, setDraft] = useState(emptyDraft);
   const [editingId, setEditingId] = useState(null);
-  const [language, setLanguage] = useState("cs");
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
   const [retry, setRetry] = useState(0);
@@ -125,7 +123,7 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
     setError("");
     try {
       const { downloadSpecialMenuPdf } = await import("../lib/specialMenuPdf");
-      await downloadSpecialMenuPdf(sheetRef.current, `specialni-menu-${language}.pdf`);
+      await downloadSpecialMenuPdf(sheetRef.current, "specialni-menu.pdf");
     } catch {
       setError("PDF se nepodařilo stáhnout. Zkuste prosím Tisk / PDF.");
     } finally {
@@ -185,24 +183,11 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
       </section>
       <section className="admin-preview-card" aria-label="Náhled speciálního menu">
         <div className="admin-preview-actions special-preview-actions">
-          <label>Jazyk náhledu<select value={language} onChange={(event) => setLanguage(event.target.value)} disabled={busy}>{languages.map(({ code, label }) => <option value={code} key={code}>{label}</option>)}</select></label>
+          <p className="special-preview-format">Jeden list A4 · všechny tři jazyky</p>
           <button className="button button-light" type="button" onClick={downloadPdf} disabled={unavailable || !items.length}><Download aria-hidden="true" />{exporting ? "Připravuji…" : "Stáhnout PDF"}</button>
           <button className="button button-light" type="button" onClick={() => window.print()} disabled={unavailable || !items.length}><Printer aria-hidden="true" />Tisk / PDF</button>
         </div>
-        <MenuPrintSheet className="special-print-sheet" ref={sheetRef} lang={language}>
-          <div className={`daily-print-content special-print-content${items.length <= 4 ? " special-print-content-short" : ""}`}>
-            <div className="print-heading special-print-heading">
-              <img src={logo} width="1125" height="175" alt="La Piccola Perla" />
-              <h2 lang="it">I nostri piatti speciali</h2>
-            </div>
-            <MenuPrintItems className="special-print-items" items={items.map((item) => ({
-              ...item,
-              ...(language === "cs" ? {} : item.translations[language]),
-              price: language === "cs" ? item.price : item.price.replace(/Kč/g, "CZK")
-            }))} />
-            <small>La Piccola Perla | Perlová 412/1, Praha 1</small>
-          </div>
-        </MenuPrintSheet>
+        <SpecialMenuPrintSheet ref={sheetRef} logo={logo} items={items} />
       </section>
     </div>
   );

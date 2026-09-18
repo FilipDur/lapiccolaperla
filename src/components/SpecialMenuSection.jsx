@@ -61,6 +61,12 @@ export default function SpecialMenuSection({ items, language = "cs" }) {
         </header>
 
         <div className="special-menu-frame">
+          <span className="special-menu-art special-menu-art--top" aria-hidden="true">
+            <img src="/special-menu-botanicals.webp" alt="" width="1055" height="1491" loading="lazy" decoding="async" />
+          </span>
+          <span className="special-menu-art special-menu-art--bottom" aria-hidden="true">
+            <img src="/special-menu-botanicals.webp" alt="" width="1055" height="1491" loading="lazy" decoding="async" />
+          </span>
           <span className="special-menu-signature" aria-hidden="true">La Piccola Perla</span>
           <ul className="special-menu-list">
             {completeItems.map((item) => {

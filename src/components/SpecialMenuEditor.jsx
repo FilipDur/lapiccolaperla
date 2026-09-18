@@ -5,7 +5,7 @@ import SpecialMenuPrintSheet from "./SpecialMenuPrintSheet";
 import "./special-menu-editor.css";
 
 const languages = [{ code: "cs", label: "Čeština" }, { code: "en", label: "English" }, { code: "it", label: "Italiano" }];
-const emptyDraft = () => ({ cs: { name: "", description: "" }, en: { name: "", description: "" }, it: { name: "", description: "" }, price: "" });
+const emptyDraft = () => ({ cs: { name: "" }, en: { name: "" }, it: { name: "" }, price: "" });
 
 export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }) {
   const [items, setItems] = useState([]);
@@ -75,16 +75,15 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
     event.preventDefault();
     if (unavailable || (!editingId && items.length >= 12)) return;
     const price = draft.price.trim().replace(/\s+/g, " ");
-    if (!languages.every(({ code }) => draft[code].name.trim() && draft[code].description.trim()) || !/^\d+(?:[,.]\d{1,2})?$/.test(price) || Number(price.replace(",", ".")) <= 0) {
-      setError("Vyplňte název a popis ve všech třech jazycích a platnou cenu vyšší než nula.");
+    if (!languages.every(({ code }) => draft[code].name.trim()) || !/^\d+(?:[,.]\d{1,2})?$/.test(price) || Number(price.replace(",", ".")) <= 0) {
+      setError("Vyplňte název ve všech třech jazycích a platnou cenu vyšší než nula.");
       return;
     }
     const item = {
       id: editingId || window.crypto.randomUUID(),
       name: draft.cs.name.trim(),
-      description: draft.cs.description.trim(),
       price: `${price} Kč`,
-      translations: Object.fromEntries(["en", "it"].map((code) => [code, { name: draft[code].name.trim(), description: draft[code].description.trim() }]))
+      translations: Object.fromEntries(["en", "it"].map((code) => [code, { name: draft[code].name.trim() }]))
     };
     const nextItems = editingId ? items.map((current) => current.id === editingId ? item : current) : [...items, item];
     if (await persist(nextItems)) {
@@ -95,7 +94,7 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
 
   const editItem = (item) => {
     setEditingId(item.id);
-    setDraft({ cs: { name: item.name, description: item.description }, en: { ...item.translations.en }, it: { ...item.translations.it }, price: item.price.replace(/\s*(Kč|CZK)$/i, "") });
+    setDraft({ cs: { name: item.name }, en: { name: item.translations.en.name }, it: { name: item.translations.it.name }, price: item.price.replace(/\s*(Kč|CZK)$/i, "") });
     setError("");
     formRef.current?.querySelector("input")?.focus();
   };
@@ -149,9 +148,6 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
                 <label>Název jídla ({code.toUpperCase()})
                   <input name={`name-${code}`} lang={code} value={draft[code].name} onChange={(event) => updateDraft(code, "name", event.target.value)} required maxLength={120} />
                 </label>
-                <label>Popisek ({code.toUpperCase()})
-                  <textarea name={`description-${code}`} lang={code} rows={2} value={draft[code].description} onChange={(event) => updateDraft(code, "description", event.target.value)} required maxLength={260} />
-                </label>
               </fieldset>
             ))}
             <label>Cena pro všechny jazyky
@@ -169,7 +165,7 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
         <div className="admin-current-list" aria-label="Uložené speciální menu">
           {items.map((item, index) => (
             <article key={item.id}>
-              <div><h2>{item.name}</h2><p>{item.description}</p><strong>{item.price}</strong></div>
+              <div><h2>{item.name}</h2><strong>{item.price}</strong></div>
               <div className="admin-item-actions special-item-actions">
                 <button className="icon-button" type="button" aria-label={`Upravit ${item.name}`} disabled={unavailable} onClick={() => editItem(item)}><Pencil aria-hidden="true" /></button>
                 <button className="icon-button" type="button" aria-label={`Posunout ${item.name} nahoru`} disabled={unavailable || index === 0} onClick={() => moveItem(index, -1)}><ArrowUp aria-hidden="true" /></button>

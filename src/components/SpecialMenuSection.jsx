@@ -31,11 +31,9 @@ export const getCompleteSpecialMenuItems = (items) => (
   Array.isArray(items)
     ? items.filter((item) => item
       && hasText(item.name)
-      && hasText(item.description)
       && hasText(item.price)
       && ["en", "it"].every((language) => (
         hasText(item.translations?.[language]?.name)
-        && hasText(item.translations?.[language]?.description)
       )))
     : []
 );
@@ -77,7 +75,6 @@ export default function SpecialMenuSection({ items, language = "cs" }) {
                 <li className="special-menu-item" key={item.id}>
                   <div className="special-menu-dish">
                     <h3>{content.name}</h3>
-                    <p>{content.description}</p>
                   </div>
                   <strong className="special-menu-price">{price}</strong>
                 </li>

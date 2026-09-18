@@ -16,15 +16,15 @@ const artifactDirectory = process.env.TEST_ARTIFACT_DIRECTORY || join(tmpdir(), 
 await mkdir(artifactDirectory, { recursive: true });
 
 const firstDish = {
-  cs: { name: "Lanýžové risotto", description: "Krémové risotto s čerstvým lanýžem." },
-  en: { name: "Truffle risotto", description: "Creamy risotto with fresh truffle." },
-  it: { name: "Risotto al tartufo", description: "Risotto cremoso al tartufo fresco." },
+  cs: { name: "Lanýžové risotto" },
+  en: { name: "Truffle risotto" },
+  it: { name: "Risotto al tartufo" },
   price: "395"
 };
 const secondDish = {
-  cs: { name: "Mořský vlk", description: "Pečený mořský vlk se sezonní zeleninou." },
-  en: { name: "Sea bass", description: "Roast sea bass with seasonal vegetables." },
-  it: { name: "Branzino", description: "Branzino arrosto con verdure di stagione." },
+  cs: { name: "Mořský vlk" },
+  en: { name: "Sea bass" },
+  it: { name: "Branzino" },
   price: "485"
 };
 
@@ -114,7 +114,6 @@ const assertHiddenEverywhere = async () => {
 const fillDish = async (page, dish) => {
   for (const language of Object.keys(paths)) {
     await page.locator(`[name='name-${language}']`).fill(dish[language].name);
-    await page.locator(`[name='description-${language}']`).fill(dish[language].description);
   }
   await page.locator("[name='price']").fill(dish.price);
 };
@@ -131,7 +130,7 @@ const assertPublicDishes = async (dishes, capture = false) => {
     assert.equal(await section.locator("h2").innerText(), titles[language]);
     assert.equal(await page.locator(".desktop-nav a[href='#special-menu']").innerText(), titles[language]);
     assert.deepEqual(await section.locator(".special-menu-dish h3").allTextContents(), dishes.map((dish) => dish[language].name));
-    assert.deepEqual(await section.locator(".special-menu-dish p").allTextContents(), dishes.map((dish) => dish[language].description));
+    assert.equal(await section.locator(".special-menu-dish p").count(), 0, "Public special dishes contain names and prices without descriptions");
     assert.match(await section.locator(".special-menu-price").first().innerText(), language === "cs" ? /Kč/ : /CZK/);
     if (capture) await section.screenshot({ path: join(artifactDirectory, `special-${language}-desktop.png`) });
     if (capture) {
@@ -195,10 +194,13 @@ try {
   await eventually(async () => assert.equal(await admin.locator("[name='name-cs']").isEnabled(), true));
   pass("An initial API failure blocks editing until a successful retry");
   await admin.locator("[name='name-cs']").waitFor();
+  assert.equal(await admin.locator(".special-admin-form textarea, .special-admin-form [name^='description-']").count(), 0, "Special-menu entry requires only three names and a price");
   await fillDish(admin, firstDish);
   await save(admin);
   await eventually(async () => assert.equal(await admin.locator("[name='name-cs']").inputValue(), ""));
   assert.equal(fixture.items.length, 1);
+  assert.equal(Object.hasOwn(fixture.items[0], "description"), false);
+  for (const language of ["en", "it"]) assert.equal(Object.hasOwn(fixture.items[0].translations[language], "description"), false);
   await assertPublicDishes([firstDish], true);
   pass("Admin checkbox publishes Czech, English and Italian content with localized public navigation and mobile layout");
   assert.equal(await admin.getByLabel("Jazyk náhledu").count(), 0, "The special menu always includes every language");
@@ -206,6 +208,7 @@ try {
   assert.equal(await specialSheet.locator(".special-print-page[data-print-copy='1']").count(), 1);
   assert.equal(await specialSheet.locator("[data-print-copy]").count(), 1, "A special menu has one copy per A4 sheet");
   assert.deepEqual(await specialSheet.locator("h2").allTextContents(), ["I nostri piatti speciali"]);
+  assert.equal(await specialSheet.getByRole("img", { name: "La Piccola Perla", exact: true }).count(), 1);
   assert.deepEqual(await specialSheet.locator(".special-print-dish h3").allTextContents(), [firstDish.it.name, firstDish.cs.name, firstDish.en.name]);
   assert.equal(await specialSheet.locator(".special-print-price").count(), 1);
   assert.equal(await specialSheet.locator(".special-print-dish p").count(), 0, "Printed special menus show names and price without descriptions");
@@ -237,7 +240,7 @@ try {
   assert.equal((await save(admin)).status(), 503);
   await eventually(async () => assert.equal(await admin.locator("[name='name-cs']").inputValue(), secondDish.cs.name));
   for (const language of Object.keys(paths)) {
-    assert.equal(await admin.locator(`[name='description-${language}']`).inputValue(), secondDish[language].description);
+    assert.equal(await admin.locator(`[name='name-${language}']`).inputValue(), secondDish[language].name);
   }
   assert.equal(fixture.items.length, 1);
   await assertPublicDishes([firstDish]);

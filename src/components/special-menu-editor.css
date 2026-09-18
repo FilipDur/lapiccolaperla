@@ -23,8 +23,8 @@
 .special-admin-fields { display: grid; gap: 22px; min-width: 0; margin: 0; padding: 0; border: 0; }
 .special-language-fields { display: grid; gap: 12px; min-width: 0; margin: 0; padding: 16px; border: 1px solid var(--line); border-radius: 4px; }
 .special-language-fields legend { padding: 0 8px; font-weight: 700; color: var(--wine); }
-.special-admin-form input, .special-admin-form textarea { width: 100%; min-width: 0; }
-.special-admin-form input:disabled, .special-admin-form textarea:disabled { opacity: 0.6; }
+.special-admin-form input { width: 100%; min-width: 0; }
+.special-admin-form input:disabled { opacity: 0.6; }
 .special-form-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .special-admin-error { margin-top: 16px; padding: 14px; color: #7a2c26; background: #fff0e8; border-left: 3px solid currentColor; }
 .special-admin-error .button { margin-top: 12px; }

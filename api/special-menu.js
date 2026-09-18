@@ -40,15 +40,13 @@ const validateItems = (items) => {
       const translation = item.translations[language];
       if (!isRecord(translation)) throw invalidPayload(`Missing ${language} translation for item ${index + 1}.`);
       translations[language] = {
-        name: requiredText(translation.name, 120, `${language} name`),
-        description: requiredText(translation.description, 260, `${language} description`)
+        name: requiredText(translation.name, 120, `${language} name`)
       };
     }
 
     return {
       id,
       name: requiredText(item.name, 120, "Czech name"),
-      description: requiredText(item.description, 260, "Czech description"),
       price: requiredText(item.price, 40, "Price"),
       translations
     };
@@ -67,6 +65,7 @@ const readItems = async () => {
   if (!stored) return [];
   try {
     // Incomplete or corrupt stored data must never publish a partial menu.
+    // Normalization also omits legacy descriptions without rewriting stored data.
     return validateItems(JSON.parse(stored));
   } catch {
     return [];

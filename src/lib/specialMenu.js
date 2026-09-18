@@ -39,7 +39,7 @@ export async function saveSpecialMenuItems(items, authHeaders) {
   });
   if (!response.ok) {
     if (response.status === 401) throw new Error("Přihlášení vypršelo. Přihlaste se prosím znovu.");
-    if (response.status === 400) throw new Error("Vyplňte název a popis ve všech třech jazycích a cenu.");
+    if (response.status === 400) throw new Error("Vyplňte název ve všech třech jazycích a cenu.");
     throw new Error("Změnu se nepodařilo uložit na web. Zkuste to prosím znovu.");
   }
   if (!Array.isArray(data?.items)) throw new Error("Uložení se nepodařilo ověřit. Načtěte menu znovu.");

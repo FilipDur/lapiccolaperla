@@ -13,11 +13,10 @@ let importNumber = 0;
 const specialItem = () => ({
   id: "special-1",
   name: "Lanýžové rizoto",
-  description: "Rizoto s černým lanýžem a parmazánem",
   price: "390 Kč",
   translations: {
-    en: { name: "Truffle risotto", description: "Risotto with black truffle and Parmesan" },
-    it: { name: "Risotto al tartufo", description: "Risotto con tartufo nero e Parmigiano" }
+    en: { name: "Truffle risotto" },
+    it: { name: "Risotto al tartufo" }
   }
 });
 
@@ -87,7 +86,7 @@ test("an empty special menu stays empty with or without configured storage", asy
   }
 });
 
-test("special menu saves all languages, survives reload and clears independently of daily menus", async (context) => {
+test("names-only special menu saves all languages, survives reload and clears independently of daily menus", async (context) => {
   const { storage, special, daily, request } = await createHarness(context);
   const dailyItems = [{ id: "daily-1", name: "Polévka", description: "Rajčatová polévka", price: "80 Kč" }];
   const dailySave = await request(daily, "PUT", { date: "2099-01-01", items: dailyItems }, credentials);
@@ -107,6 +106,36 @@ test("special menu saves all languages, survives reload and clears independently
   assert.equal(clear.status, 200);
   assert.deepEqual((await request(special)).body, { items: [] });
   assert.equal(storage.get(DAILY_KEY), dailyStored);
+});
+
+test("legacy saved descriptions are omitted from GET without rewriting stored data", async (context) => {
+  const { storage, commands, special, request } = await createHarness(context);
+  const legacy = specialItem();
+  legacy.description = "Rizoto s černým lanýžem a parmazánem";
+  legacy.translations.en.description = "Risotto with black truffle and Parmesan";
+  legacy.translations.it.description = "Risotto con tartufo nero e Parmigiano";
+  const stored = JSON.stringify([legacy]);
+  storage.set(SPECIAL_KEY, stored);
+
+  const response = await request(special);
+  assert.equal(response.status, 200);
+  assert.deepEqual(response.body, { items: [specialItem()] });
+  assert.equal(storage.get(SPECIAL_KEY), stored);
+  assert.deepEqual(commands, [["GET", SPECIAL_KEY]]);
+});
+
+test("legacy description fields are ignored on save and never retained in canonical storage", async (context) => {
+  const { storage, special, request } = await createHarness(context);
+  const legacy = specialItem();
+  legacy.description = "A legacy description";
+  legacy.translations.en.description = " ";
+  legacy.translations.it.description = "a".repeat(261);
+
+  const response = await request(special, "PUT", { items: [legacy] }, credentials);
+  assert.equal(response.status, 200);
+  assert.deepEqual(response.body, { items: [specialItem()] });
+  assert.deepEqual(JSON.parse(storage.get(SPECIAL_KEY)), [specialItem()]);
+  assert.deepEqual((await request(special)).body, { items: [specialItem()] });
 });
 
 test("both write methods require the same administrator credentials as daily menu", async (context) => {
@@ -135,14 +164,16 @@ test("invalid submissions never replace the previously published menu", async (c
   const missingItalian = specialItem();
   delete missingItalian.translations.it;
   const blankEnglish = specialItem();
-  blankEnglish.translations.en.description = "  ";
+  blankEnglish.translations.en.name = "  ";
+  const longItalian = specialItem();
+  longItalian.translations.it.name = "a".repeat(121);
   const invalidBodies = [
     "{", "null", null, [], {}, { items: null }, { items: {} }, { items: [null] },
     { items: [{}] }, { items: [missingItalian] }, { items: [blankEnglish] },
     { items: [{ ...specialItem(), name: " " }] },
     { items: [{ ...specialItem(), price: { value: 390 } }] },
     { items: [{ ...specialItem(), name: "a".repeat(121) }] },
-    { items: [{ ...specialItem(), description: "a".repeat(261) }] },
+    { items: [longItalian] },
     { items: [{ ...specialItem(), price: "a".repeat(41) }] },
     { items: [specialItem(), specialItem()] },
     { items: Array.from({ length: 13 }, (_, index) => ({ ...specialItem(), id: `special-${index}` })) }

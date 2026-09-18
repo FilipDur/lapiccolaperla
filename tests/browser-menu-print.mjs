@@ -22,22 +22,22 @@ assert.ok(testCounts.every((count) => [1, 8, 12].includes(count)));
 const artifactDirectory = process.env.TEST_ARTIFACT_DIRECTORY || join(tmpdir(), `perla-menu-print-${Date.now()}`);
 await mkdir(artifactDirectory, { recursive: true });
 
-const fixtures = (count) => Array.from({ length: count }, (_, index) => {
+const fixtures = (count, kind) => Array.from({ length: count }, (_, index) => {
   const marker = `DISH${String(index + 1).padStart(2, "0")}`;
   const long = count > 1;
   return {
     id: `print-${index + 1}`,
     name: `${marker} ${long ? "Risotto s čerstvými hříbky, lanýžem, parmazánem a bylinkami podle tradičního italského receptu" : "Lanýžové risotto"}`,
-    description: long ? "Krémové italské risotto připravené z vybrané rýže, čerstvých hříbků a sezonních surovin, dokončené máslem, parmazánem a aromatickým lanýžem. Podáváme s pečenou zeleninou, čerstvými bylinkami a jemnou omáčkou podle tradiční receptury našeho šéfkuchaře." : "Krémové risotto s čerstvým lanýžem.",
+    ...(kind === "daily" ? { description: long ? "Krémové italské risotto připravené z vybrané rýže, čerstvých hříbků a sezonních surovin, dokončené máslem, parmazánem a aromatickým lanýžem. Podáváme s pečenou zeleninou, čerstvými bylinkami a jemnou omáčkou podle tradiční receptury našeho šéfkuchaře." : "Krémové risotto s čerstvým lanýžem." } : {}),
     price: `${395 + index * 10} Kč`,
     translations: {
       en: {
         name: `${marker} ${long ? "Creamy risotto with fresh porcini mushrooms, aromatic truffle, aged Parmesan cheese and seasonal herbs" : "Truffle risotto"}`,
-        description: long ? "Traditional Italian risotto with selected rice, fresh porcini mushrooms and seasonal ingredients, finished with butter, aged Parmesan and aromatic truffle. Served with roasted vegetables, fresh herbs and a delicate sauce prepared by our chef." : "Creamy risotto with fresh truffle."
+        ...(kind === "daily" ? { description: long ? "Traditional Italian risotto with selected rice, fresh porcini mushrooms and seasonal ingredients, finished with butter, aged Parmesan and aromatic truffle. Served with roasted vegetables, fresh herbs and a delicate sauce prepared by our chef." : "Creamy risotto with fresh truffle." } : {})
       },
       it: {
         name: `${marker} ${long ? "Risotto cremoso con funghi porcini freschi, tartufo aromatico, parmigiano stagionato ed erbe di stagione" : "Risotto al tartufo"}`,
-        description: long ? "Risotto italiano tradizionale con riso selezionato, funghi porcini freschi e ingredienti di stagione, mantecato con burro, parmigiano e tartufo aromatico. Servito con verdure arrosto, erbe fresche e una delicata salsa preparata secondo la ricetta dello chef." : "Risotto cremoso al tartufo fresco."
+        ...(kind === "daily" ? { description: long ? "Risotto italiano tradizionale con riso selezionato, funghi porcini freschi e ingredienti di stagione, mantecato con burro, parmigiano e tartufo aromatico. Servito con verdure arrosto, erbe fresche e una delicata salsa preparata secondo la ricetta dello chef." : "Risotto cremoso al tartufo fresco." } : {})
       }
     }
   };
@@ -45,7 +45,7 @@ const fixtures = (count) => Array.from({ length: count }, (_, index) => {
 
 const browser = await playwright.chromium.launch({ headless: true });
 const context = await browser.newContext({ viewport: { width: 1440, height: 1100 }, locale: "cs-CZ", reducedMotion: "reduce" });
-let items = fixtures(1);
+let items = fixtures(1, testKinds[0]);
 const errors = [];
 context.on("page", (page) => {
   page.on("pageerror", (error) => errors.push(error.message));
@@ -68,6 +68,7 @@ async function assertCopiesAndBounds(kind, phase) {
     assert.equal(await page.locator(".special-print-sheet").getAttribute("data-print-layout"), "single-a4");
     assert.equal(await copies.first().getAttribute("data-print-copy"), "1");
     assert.deepEqual(await copies.locator("h2").allTextContents(), ["I nostri piatti speciali"]);
+    assert.equal(await copies.getByRole("img", { name: "La Piccola Perla", exact: true }).count(), 1);
     assert.equal(await copies.getByRole("img", { name: "La Piccola Perla", exact: true }).count(), 1);
     assert.equal(await copies.locator(".special-print-art").evaluate((image) => image.complete && image.naturalWidth > 0), true);
     assert.equal(await page.getByLabel("Jazyk náhledu").count(), 0);
@@ -122,11 +123,6 @@ function inspectPdf(path, verifyText, kind) {
     if (kind === "special") {
       const text = inspection.text.replace(/\s+/g, " ");
       assert.equal(text.split("I nostri piatti speciali").length - 1, 1, "Special PDF contains its Italian heading once");
-      items.forEach((item) => {
-        for (const description of [item.description, item.translations.it.description, item.translations.en.description]) {
-          assert.equal(text.includes(description), false, "Special PDF must not contain dish descriptions");
-        }
-      });
     }
   }
   execFileSync(pdftoppm, ["-singlefile", "-scale-to", "1800", "-png", path, path.replace(/\.pdf$/, "")], { stdio: "pipe" });
@@ -141,7 +137,7 @@ try {
 
   for (const kind of testKinds) {
     for (const count of testCounts) {
-      items = fixtures(count);
+      items = fixtures(count, kind);
       await page.reload();
       const language = kind === "special" ? "it-cs-en" : "cs";
       if (kind === "special") {

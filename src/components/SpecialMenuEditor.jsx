@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowUp, Download, Pencil, Printer, Save, Trash2 } from "lucide-react";
 import { fetchSpecialMenuItems, saveSpecialMenuItems } from "../lib/specialMenu";
-import { specialMenuCopy } from "./SpecialMenuSection";
 import MenuPrintSheet, { MenuPrintItems } from "./MenuPrintSheet";
 import "./special-menu-editor.css";
 import "./special-menu-print.css";
@@ -134,7 +133,6 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
     }
   };
 
-  const copy = specialMenuCopy[language];
   return (
     <div className="admin-workspace special-admin-workspace" aria-busy={loading || saving}>
       <section className="admin-editor">
@@ -195,8 +193,7 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
           <div className={`daily-print-content special-print-content${items.length <= 4 ? " special-print-content-short" : ""}`}>
             <div className="print-heading special-print-heading">
               <img src={logo} width="1125" height="175" alt="La Piccola Perla" />
-              <span>{copy.eyebrow}</span>
-              <h2>{copy.title}</h2>
+              <h2 lang="it">I nostri piatti speciali</h2>
             </div>
             <MenuPrintItems className="special-print-items" items={items.map((item) => ({
               ...item,

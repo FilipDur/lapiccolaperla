@@ -39,14 +39,6 @@
   margin: 0 auto 6mm;
 }
 
-.special-print-content .special-print-heading > span {
-  color: var(--wine) !important;
-  font-size: 7pt !important;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  line-height: 1.5;
-}
-
 .special-print-sheet .special-print-content h2 {
   margin-top: 2mm !important;
   color: var(--wine);

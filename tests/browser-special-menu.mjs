@@ -195,6 +195,8 @@ try {
   pass("An initial API failure blocks editing until a successful retry");
   await admin.locator("[name='name-cs']").waitFor();
   assert.equal(await admin.locator(".special-admin-form textarea, .special-admin-form [name^='description-']").count(), 0, "Special-menu entry requires only three names and a price");
+  assert.deepEqual(await admin.locator(".special-admin-form legend").allTextContents(), ["Italiano", "Čeština", "English"], "Language groups appear in Italian, Czech and English order");
+  assert.deepEqual(await admin.locator(".special-admin-form input").evaluateAll((inputs) => inputs.map((input) => input.name)), ["name-it", "name-cs", "name-en", "price"], "Name inputs follow the printed language order, with a shared price last");
   await fillDish(admin, firstDish);
   await save(admin);
   await eventually(async () => assert.equal(await admin.locator("[name='name-cs']").inputValue(), ""));
@@ -211,6 +213,7 @@ try {
   assert.equal(await specialSheet.getByRole("img", { name: "La Piccola Perla", exact: true }).count(), 1);
   assert.deepEqual(await specialSheet.locator(".special-print-dish h3").allTextContents(), [firstDish.it.name, firstDish.cs.name, firstDish.en.name]);
   assert.equal(await specialSheet.locator(".special-print-price").count(), 1);
+  assert.equal(await specialSheet.locator(".menu-print-number").count(), 0, "Special dishes are printed without item numbers");
   assert.equal(await specialSheet.locator(".special-print-dish p").count(), 0, "Printed special menus show names and price without descriptions");
   await admin.screenshot({ path: join(artifactDirectory, "special-admin-desktop.png"), fullPage: true });
   const downloadEvent = admin.waitForEvent("download");

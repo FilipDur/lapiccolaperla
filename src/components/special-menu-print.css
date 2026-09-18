@@ -81,8 +81,7 @@
   line-height: 1.3;
   white-space: nowrap;
 }
-.special-print-sheet-short .menu-print-items-viewport { align-items: center; }
-.special-print-sheet-short .special-print-items { align-self: center; --special-name-size: 17pt; --special-translation-size: 12pt; --special-price-size: 16pt; --special-row-space: 7mm; }
+.special-print-sheet-short .special-print-items { --special-name-size: 17pt; --special-translation-size: 12pt; --special-price-size: 16pt; --special-row-space: 7mm; }
 .special-print-footer { width: 100%; padding-top: calc(5mm * var(--special-page-scale)); border-top: 1px solid #8a9878; text-align: center; }
 .special-print-footer small { color: #44543b; font: 400 calc(8pt * var(--special-page-scale))/1.5 Georgia, "Times New Roman", serif; }
 

@@ -4,7 +4,7 @@ import { fetchSpecialMenuItems, saveSpecialMenuItems } from "../lib/specialMenu"
 import SpecialMenuPrintSheet from "./SpecialMenuPrintSheet";
 import "./special-menu-editor.css";
 
-const languages = [{ code: "cs", label: "Čeština" }, { code: "en", label: "English" }, { code: "it", label: "Italiano" }];
+const languages = [{ code: "it", label: "Italiano" }, { code: "cs", label: "Čeština" }, { code: "en", label: "English" }];
 const emptyDraft = () => ({ cs: { name: "" }, en: { name: "" }, it: { name: "" }, price: "" });
 
 export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }) {
@@ -179,7 +179,7 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
       </section>
       <section className="admin-preview-card" aria-label="Náhled speciálního menu">
         <div className="admin-preview-actions special-preview-actions">
-          <p className="special-preview-format">Jeden list A4 · všechny tři jazyky</p>
+          <p className="special-preview-format">Jeden list A4 · italština → čeština → angličtina</p>
           <button className="button button-light" type="button" onClick={downloadPdf} disabled={unavailable || !items.length}><Download aria-hidden="true" />{exporting ? "Připravuji…" : "Stáhnout PDF"}</button>
           <button className="button button-light" type="button" onClick={() => window.print()} disabled={unavailable || !items.length}><Printer aria-hidden="true" />Tisk / PDF</button>
         </div>

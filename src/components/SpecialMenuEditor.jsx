@@ -33,7 +33,7 @@ export default function SpecialMenuEditor({ logo, getAuthHeaders, onBusyChange }
     const controller = new AbortController();
     setLoading(true);
     setLoadError("");
-    fetchSpecialMenuItems(controller.signal)
+    fetchSpecialMenuItems(controller.signal, { scope: "admin", authHeaders: getAuthHeaders() })
       .then(setItems)
       .catch((reason) => {
         if (!controller.signal.aborted) setLoadError(reason.message);

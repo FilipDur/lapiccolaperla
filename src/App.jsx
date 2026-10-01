@@ -28,7 +28,8 @@ import { seededDailyMenus } from "./data/dailyMenuSeed";
 import SpecialMenuSection, { getCompleteSpecialMenuItems, specialMenuCopy } from "./components/SpecialMenuSection";
 import SpecialMenuEditor from "./components/SpecialMenuEditor";
 import MenuPrintSheet, { MenuPrintItems } from "./components/MenuPrintSheet";
-import { fetchSpecialMenuItems, SPECIAL_MENU_REVISION_KEY, SPECIAL_MENU_UPDATED } from "./lib/specialMenu";
+import { fetchSpecialMenuItems, invalidateSpecialMenuReads, SPECIAL_MENU_REVISION_KEY, SPECIAL_MENU_UPDATED } from "./lib/specialMenu";
+import { DAILY_MENU_REVISION_KEY, invalidateDailyMenuReads, readDailyMenuItems, writeDailyMenuItems } from "./lib/dailyMenu";
 
 const imageAssets = import.meta.glob("../images/webp/**/*.webp", {
   eager: true,
@@ -1063,7 +1064,6 @@ const getLocalizedMenuCategories = (language) => {
 
 const DAILY_MENU_STORAGE_KEY = "la-piccola-perla-daily-menu";
 const DAILY_MENU_COOKIE_KEY = "la_piccola_perla_daily_menu";
-const DAILY_MENU_API_PATH = "/api/daily-menu";
 const COOKIE_NOTICE_STORAGE_KEY = "la-piccola-perla-cookie-notice";
 const ADMIN_SESSION_KEY = "la-piccola-perla-admin-session";
 const ADMIN_AUTH_STORAGE_KEY = "la-piccola-perla-admin-auth";
@@ -1127,20 +1127,9 @@ const saveDailyMenuItemsLocal = (dateValue, items) => {
   writeDailyMenuCookie(menus);
 };
 
-const fetchDailyMenuItems = async (dateValue) => {
+const fetchDailyMenuItems = async (dateValue, options) => {
   try {
-    const response = await fetch(`${DAILY_MENU_API_PATH}?date=${encodeURIComponent(dateValue)}`, {
-      headers: {
-        Accept: "application/json"
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error("Daily menu API is not available.");
-    }
-
-    const data = await response.json();
-    const items = Array.isArray(data.items) ? data.items : [];
+    const items = await readDailyMenuItems(dateValue, options);
     saveDailyMenuItemsLocal(dateValue, items);
     return items;
   } catch {
@@ -1169,22 +1158,13 @@ const saveDailyMenuItems = async (dateValue, items) => {
   saveDailyMenuItemsLocal(dateValue, items);
 
   try {
-    const response = await fetch(DAILY_MENU_API_PATH, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        ...getAdminAuthHeaders()
-      },
-      body: JSON.stringify({ date: dateValue, items })
-    });
-
-    if (!response.ok) {
-      throw new Error("Daily menu API save failed.");
-    }
-
-    const data = await response.json();
-    const savedItems = Array.isArray(data.items) ? data.items : items;
+    const savedItems = await writeDailyMenuItems(dateValue, items, getAdminAuthHeaders());
     saveDailyMenuItemsLocal(dateValue, savedItems);
+    try {
+      window.localStorage?.setItem(DAILY_MENU_REVISION_KEY, JSON.stringify({ date: dateValue, revision: `${Date.now()}-${Math.random()}` }));
+    } catch {
+      // Same-tab refresh still works when browser storage is unavailable.
+    }
     return true;
   } catch {
     return false;
@@ -1281,32 +1261,36 @@ function PublicSite() {
   }, [language]);
 
   useEffect(() => {
-    let controller;
+    const controller = new AbortController();
     let active = true;
     const refresh = async () => {
-      controller?.abort();
-      const request = new AbortController();
-      controller = request;
       try {
-        const items = await fetchSpecialMenuItems(request.signal);
-        if (active && !request.signal.aborted) setSpecialMenuItems(getCompleteSpecialMenuItems(items));
+        const items = await fetchSpecialMenuItems(controller.signal);
+        if (active && !controller.signal.aborted) setSpecialMenuItems(getCompleteSpecialMenuItems(items));
       } catch {
-        if (active && !request.signal.aborted) setSpecialMenuItems([]);
+        if (active && !controller.signal.aborted) setSpecialMenuItems([]);
       }
     };
     const onStorage = (event) => {
-      if (event.key === SPECIAL_MENU_REVISION_KEY) void refresh();
+      if (event.key === SPECIAL_MENU_REVISION_KEY) {
+        invalidateSpecialMenuReads();
+        void refresh();
+      }
+    };
+    const onFocus = () => {
+      invalidateSpecialMenuReads();
+      void refresh();
     };
     void refresh();
     const interval = window.setInterval(() => { if (!document.hidden) void refresh(); }, 60000);
-    window.addEventListener("focus", refresh);
+    window.addEventListener("focus", onFocus);
     window.addEventListener("storage", onStorage);
     window.addEventListener(SPECIAL_MENU_UPDATED, refresh);
     return () => {
       active = false;
-      controller?.abort();
+      controller.abort();
       window.clearInterval(interval);
-      window.removeEventListener("focus", refresh);
+      window.removeEventListener("focus", onFocus);
       window.removeEventListener("storage", onStorage);
       window.removeEventListener(SPECIAL_MENU_UPDATED, refresh);
     };
@@ -1348,22 +1332,40 @@ function PublicSite() {
     }
 
     let isActive = true;
+    const controller = new AbortController();
     const refreshDailyMenu = async () => {
-      const items = await fetchDailyMenuItems(getTodayDate());
+      const date = getTodayDate();
+      const items = await fetchDailyMenuItems(date, { signal: controller.signal });
 
-      if (isActive) {
+      if (isActive && date === getTodayDate()) {
         setDailyMenuForToday(items);
       }
     };
 
+    const onStorage = (event) => {
+      if (event.key === DAILY_MENU_REVISION_KEY) {
+        try {
+          const { date } = JSON.parse(event.newValue);
+          invalidateDailyMenuReads(date);
+        } catch {
+          return;
+        }
+      }
+      void refreshDailyMenu();
+    };
+    const onFocus = () => {
+      invalidateDailyMenuReads(getTodayDate());
+      void refreshDailyMenu();
+    };
     refreshDailyMenu();
-    window.addEventListener("storage", refreshDailyMenu);
-    window.addEventListener("focus", refreshDailyMenu);
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("focus", onFocus);
     window.addEventListener("daily-menu-updated", refreshDailyMenu);
     return () => {
       isActive = false;
-      window.removeEventListener("storage", refreshDailyMenu);
-      window.removeEventListener("focus", refreshDailyMenu);
+      controller.abort();
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("focus", onFocus);
       window.removeEventListener("daily-menu-updated", refreshDailyMenu);
     };
   }, [language]);
@@ -1839,7 +1841,7 @@ function AdminPage() {
     setDraft({ name: "", description: "", price: "" });
     setSyncMessage("");
 
-    fetchDailyMenuItems(dateValue).then((serverItems) => {
+    fetchDailyMenuItems(dateValue, { scope: "admin", authHeaders: getAdminAuthHeaders() }).then((serverItems) => {
       if (isActive) {
         setItems(serverItems);
       }

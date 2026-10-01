@@ -1,8 +1,10 @@
+import { invalidateMenuReads, readMenu } from "./menuReads.js";
+
 export const SPECIAL_MENU_UPDATED = "special-menu-updated";
 export const SPECIAL_MENU_REVISION_KEY = "la-piccola-perla-special-menu-revision";
 const API_PATH = "/api/special-menu";
 
-async function requestMenu(options = {}) {
+async function requestMenu(options = {}, onResponse) {
   const controller = new AbortController();
   const abort = () => controller.abort();
   const timeout = window.setTimeout(abort, 15000);
@@ -10,6 +12,7 @@ async function requestMenu(options = {}) {
   if (options.signal?.aborted) abort();
   try {
     const response = await fetch(API_PATH, { ...options, signal: controller.signal });
+    onResponse?.(response);
     const data = await response.json().catch(() => null);
     return { response, data };
   } catch {
@@ -20,15 +23,18 @@ async function requestMenu(options = {}) {
   }
 }
 
-export async function fetchSpecialMenuItems(signal) {
-  const { response, data } = await requestMenu({
-    cache: "no-store",
-    headers: { Accept: "application/json" },
-    signal
-  });
-  if (!response.ok) throw new Error("Speciální menu se nepodařilo načíst.");
-  if (!Array.isArray(data?.items)) throw new Error("Speciální menu se nepodařilo načíst.");
-  return data.items;
+export const invalidateSpecialMenuReads = () => invalidateMenuReads(API_PATH);
+
+export function fetchSpecialMenuItems(signal, options = {}) {
+  return readMenu(API_PATH, async () => {
+    const { response, data } = await requestMenu({
+      cache: "no-store",
+      headers: { Accept: "application/json" }
+    });
+    if (!response.ok) throw new Error("Speciální menu se nepodařilo načíst.");
+    if (!Array.isArray(data?.items)) throw new Error("Speciální menu se nepodařilo načíst.");
+    return data.items;
+  }, { ...options, signal });
 }
 
 export async function saveSpecialMenuItems(items, authHeaders) {
@@ -36,6 +42,9 @@ export async function saveSpecialMenuItems(items, authHeaders) {
     method: "PUT",
     headers: { "Content-Type": "application/json", ...authHeaders },
     body: JSON.stringify({ items })
+  }, (response) => {
+    // The write is confirmed by HTTP status; a slow response body must not keep old GETs alive.
+    if (response.ok) invalidateSpecialMenuReads();
   });
   if (!response.ok) {
     if (response.status === 401) throw new Error("Přihlášení vypršelo. Přihlaste se prosím znovu.");

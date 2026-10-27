@@ -109,20 +109,8 @@
   ],
   "rewrites": [
     {
-      "source": "/admin",
-      "destination": "/admin.html"
-    },
-    {
-      "source": "/en",
-      "destination": "/en.html"
-    },
-    {
-      "source": "/it",
-      "destination": "/it.html"
-    },
-    {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/"
     }
   ]
 }

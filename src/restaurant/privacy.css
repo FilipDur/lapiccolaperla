@@ -1,0 +1,114 @@
+.restaurant-site .privacy-page { padding: 0; }
+.restaurant-site .privacy-overview { display: grid; grid-template-columns: minmax(0,1fr) minmax(225px,.42fr); align-items: center; gap: 10%; padding-block: 0 46px; border-bottom: 1px solid var(--r-line); }
+.restaurant-site .privacy-overview-copy { max-width: 65ch; }
+.restaurant-site .privacy-overview-copy .privacy-lead { max-width: 33ch; color: var(--r-wine-deep); font: 400 clamp(27px,2.75vw,36px)/1.3 var(--r-serif); letter-spacing: -.02em; text-wrap: pretty; }
+.restaurant-site .privacy-overview-copy > p + p { max-width: 57ch; margin-top: 18px; font-size: 14px; line-height: 1.85; }
+.restaurant-site .privacy-overview time { display: block; margin-top: 24px; font-size: 11px; font-variant-numeric: tabular-nums; }
+.restaurant-site .privacy-facts { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--r-line); }
+.restaurant-site .privacy-facts li { position: relative; padding: 16px 0 16px 21px; border-bottom: 1px solid var(--r-line); color: var(--r-wine-deep); font-size: 12px; font-weight: 600; line-height: 1.65; }
+.restaurant-site .privacy-facts li::before { position: absolute; top: 23px; left: 0; width: 5px; height: 5px; border-radius: 50%; background: var(--r-wine); content: ''; }
+.restaurant-site .privacy-layout { display: grid; grid-template-columns: minmax(175px,.33fr) minmax(0,1fr); align-items: start; gap: 8%; padding-top: 50px; }
+.restaurant-site .privacy-sidebar { position: sticky; top: 130px; padding-top: 4px; }
+.restaurant-site .privacy-index-title { margin-bottom: 15px; color: var(--r-wine-deep); font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.restaurant-site .privacy-sidebar ul { display: flex; flex-direction: column; gap: 3px; list-style: none; margin: 0; padding: 0; }
+.restaurant-site .privacy-sidebar nav a { display: flex; align-items: center; min-height: 44px; max-width: 29ch; padding-block: 8px; font-size: 12px; line-height: 1.6; text-wrap: pretty; }
+.restaurant-site .privacy-sidebar nav a:hover { color: var(--r-wine); text-decoration: underline; text-underline-offset: 5px; }
+.restaurant-site .privacy-sidebar-contact { margin-top: 29px; padding-top: 24px; border-top: 1px solid var(--r-line); }
+.restaurant-site .privacy-sidebar-contact > p { font-size: 12px; }
+.restaurant-site .privacy-sidebar-contact > a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; color: var(--r-wine); font-size: 12px; font-weight: 700; }
+.restaurant-site .privacy-document { min-width: 0; max-width: 74ch; font-size: 14px; line-height: 1.9; }
+.restaurant-site .privacy-section { padding-block: 0 38px; scroll-margin-top: 130px; }
+.restaurant-site .privacy-section + .privacy-section { padding-top: 35px; border-top: 1px solid var(--r-line); }
+.restaurant-site .privacy-section h2 { margin-bottom: 22px; color: var(--r-wine-deep); font-size: clamp(29px,2.8vw,37px); line-height: 1.18; letter-spacing: -.025em; text-wrap: pretty; }
+.restaurant-site .privacy-section p + p { margin-top: 18px; }
+.restaurant-site .privacy-section h3 { margin-bottom: 8px; color: var(--r-wine-deep); font: 700 14px/1.6 var(--r-sans); letter-spacing: 0; }
+.restaurant-site .privacy-topic { margin-top: 26px; }
+.restaurant-site .privacy-controller { margin-block: 22px; padding: 24px 27px; background: #fffaf4; font-style: normal; }
+.restaurant-site .privacy-controller > strong { display: block; color: var(--r-wine-deep); font-size: 16px; font-weight: 700; }
+.restaurant-site .privacy-controller dl { margin: 16px 0; }
+.restaurant-site .privacy-controller dl > div { display: grid; grid-template-columns: minmax(120px,.6fr) 1fr; gap: 12px; margin-top: 5px; font-size: 12px; }
+.restaurant-site .privacy-controller dt { font-weight: 500; }
+.restaurant-site .privacy-controller dd { margin: 0; font-variant-numeric: tabular-nums; }
+.restaurant-site .privacy-contact-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0 26px; margin-block: 12px; }
+.restaurant-site .privacy-contact-links > a { display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; color: var(--r-wine); font-size: 13px; font-weight: 600; text-decoration: underline; text-decoration-color: #940b0b55; text-underline-offset: 5px; overflow-wrap: anywhere; }
+.restaurant-site .privacy-contact-links > a:hover { text-decoration-color: currentColor; }
+.restaurant-site .privacy-table-wrap { max-width: 100%; margin-block: 28px; overflow-x: auto; scrollbar-color: var(--r-wine) var(--r-ivory); scrollbar-width: thin; }
+.restaurant-site .privacy-storage-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.8; text-align: left; }
+.restaurant-site .privacy-storage-table caption { padding-bottom: 15px; color: var(--r-wine-deep); font-weight: 700; text-align: left; }
+.restaurant-site .privacy-storage-table thead { background: var(--r-wine-deep); color: var(--r-ivory); }
+.restaurant-site .privacy-storage-table th { font-weight: 600; }
+.restaurant-site .privacy-storage-table :where(th,td) { padding: 17px 15px; vertical-align: top; overflow-wrap: anywhere; }
+.restaurant-site .privacy-storage-table thead th:first-child { width: 30%; }
+.restaurant-site .privacy-storage-table thead th:nth-child(2) { width: 41%; }
+.restaurant-site .privacy-storage-table thead th:last-child { width: 29%; }
+.restaurant-site .privacy-storage-table tbody tr { border-bottom: 1px solid var(--r-line); }
+.restaurant-site .privacy-storage-table tbody th { color: var(--r-wine-deep); }
+.restaurant-site .privacy-storage-table code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 11px; font-weight: 500; word-break: break-word; }
+.restaurant-site .privacy-acknowledgement { margin-block: 24px; padding: 22px 26px; background: #be9b7b16; }
+.restaurant-site .privacy-source-links { display: flex; flex-wrap: wrap; gap: 0 25px; margin-top: 8px; }
+.restaurant-site .privacy-source-links a, .restaurant-site .privacy-authority-link { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; color: var(--r-wine); font-size: 12px; font-weight: 600; text-decoration: underline; text-decoration-color: #940b0b55; text-underline-offset: 5px; }
+.restaurant-site .privacy-source-links a:hover, .restaurant-site .privacy-authority-link:hover { text-decoration-color: currentColor; }
+.restaurant-site .privacy-rights-list { margin-block: 17px 22px; padding-left: 21px; }
+.restaurant-site .privacy-rights-list li { padding-left: 4px; margin-block: 6px; }
+.restaurant-site .privacy-rights-list li::marker { color: var(--r-wine); }
+.restaurant-site .privacy-admin { border-top: 1px solid var(--r-line); border-bottom: 1px solid var(--r-line); scroll-margin-top: 130px; }
+.restaurant-site .privacy-admin > summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 68px; padding-block: 20px; color: var(--r-wine-deep); font: 600 13px/1.6 var(--r-sans); cursor: pointer; list-style: none; }
+.restaurant-site .privacy-admin > summary::-webkit-details-marker { display: none; }
+.restaurant-site .privacy-admin > summary::marker { content: ''; }
+.restaurant-site .privacy-admin > summary:hover { color: var(--r-wine); }
+.restaurant-site .privacy-admin > summary:focus-visible { outline: 3px solid var(--r-wine); outline-offset: 5px; }
+.restaurant-site .privacy-admin > summary svg { transition: transform .2s ease; }
+.restaurant-site .privacy-admin[open] > summary svg { transform: rotate(180deg); }
+.restaurant-site .privacy-admin > div { padding-bottom: 24px; font-size: 12px; line-height: 1.9; overflow-wrap: anywhere; }
+.restaurant-site .privacy-admin ul { margin: 15px 0 0; padding-left: 18px; }
+.restaurant-site .privacy-admin li { margin-top: 12px; padding-left: 3px; }
+
+@media (max-width: 1000px) {
+  .restaurant-site .privacy-overview { gap: 6%; grid-template-columns: minmax(0,1fr) minmax(200px,.6fr); }
+  .restaurant-site .privacy-layout { gap: 5%; grid-template-columns: minmax(160px,.35fr) minmax(0,1fr); }
+  .restaurant-site .privacy-controller { padding-inline: 20px; }
+  .restaurant-site .privacy-controller dl > div { grid-template-columns: 1fr; gap: 0; margin-top: 10px; }
+  .restaurant-site .privacy-storage-table :where(th,td) { padding: 15px 10px; }
+}
+
+@media (max-width: 760px) {
+  .restaurant-site .privacy-page { padding-bottom: 55px; }
+  .restaurant-site .privacy-overview { grid-template-columns: 1fr; gap: 28px; padding-bottom: 32px; }
+  .restaurant-site .privacy-overview-copy .privacy-lead { max-width: 29ch; font-size: 29px; }
+  .restaurant-site .privacy-overview-copy > p + p { font-size: 13px; }
+  .restaurant-site .privacy-overview time { margin-top: 20px; }
+  .restaurant-site .privacy-facts li { padding-block: 13px; }
+  .restaurant-site .privacy-facts li::before { top: 20px; }
+  .restaurant-site .privacy-layout { display: block; padding-top: 28px; }
+  .restaurant-site .privacy-sidebar { position: static; padding-top: 0; padding-bottom: 28px; }
+  .restaurant-site .privacy-sidebar ul { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); column-gap: 20px; }
+  .restaurant-site .privacy-sidebar nav a { max-width: none; font-size: 11px; }
+  .restaurant-site .privacy-sidebar-contact { display: none; }
+  .restaurant-site .privacy-document { padding-top: 31px; border-top: 1px solid var(--r-line); font-size: 13px; }
+  .restaurant-site .privacy-section { padding-bottom: 30px; scroll-margin-top: 105px; }
+  .restaurant-site .privacy-section + .privacy-section { padding-top: 29px; }
+  .restaurant-site .privacy-section h2 { margin-bottom: 19px; font-size: 29px; }
+  .restaurant-site .privacy-section h3 { font-size: 13px; }
+  .restaurant-site .privacy-controller { margin-block: 20px; padding: 21px; }
+  .restaurant-site .privacy-controller > strong { font-size: 15px; }
+  .restaurant-site .privacy-contact-links { column-gap: 20px; }
+  .restaurant-site .privacy-contact-links > a { font-size: 12px; }
+  .restaurant-site .privacy-table-wrap { overflow: visible; }
+  .restaurant-site .privacy-storage-table { display: block; }
+  .restaurant-site .privacy-storage-table caption { display: block; }
+  .restaurant-site .privacy-storage-table thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .restaurant-site .privacy-storage-table tbody { display: block; border-top: 1px solid var(--r-line); }
+  .restaurant-site .privacy-storage-table tbody tr { display: block; padding-block: 16px; }
+  .restaurant-site .privacy-storage-table tbody :where(th,td) { display: block; width: 100%; padding: 6px 0; }
+  .restaurant-site .privacy-storage-table tbody :where(th,td)::before { display: block; margin-bottom: 4px; color: var(--r-ink); font-family: var(--r-sans); font-size: 10px; font-weight: 700; content: attr(data-label); }
+  .restaurant-site .privacy-storage-table code { font-size: 12px; }
+  .restaurant-site .privacy-acknowledgement { padding: 20px; }
+  .restaurant-site .privacy-source-links { column-gap: 20px; }
+  .restaurant-site .privacy-source-links a, .restaurant-site .privacy-authority-link { font-size: 11px; }
+  .restaurant-site .privacy-admin { scroll-margin-top: 105px; }
+  .restaurant-site .privacy-admin > summary { font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .restaurant-site .privacy-admin > summary svg { transition: none; }
+}

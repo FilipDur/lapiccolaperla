@@ -1,0 +1,38 @@
+.restaurant-site .cp-notice { position: fixed; z-index: 50; right: 24px; bottom: max(24px, env(safe-area-inset-bottom)); width: min(440px, calc(100% - 48px)); max-height: calc(100dvh - 48px); overflow-y: auto; padding: 26px 28px 24px; border: 1px solid var(--r-border-strong); background: var(--r-ivory); color: var(--r-ink); box-shadow: 0 12px 36px #4b38321a; }
+.restaurant-site .cp-notice-heading { display: flex; align-items: center; gap: 14px; padding-right: 22px; }
+.restaurant-site .cp-mark { display: grid; width: 44px; height: 44px; flex-shrink: 0; place-items: center; border: 1px solid var(--r-line); color: var(--r-wine); }
+.restaurant-site .cp-notice-heading p, .restaurant-site .cp-label { color: var(--r-muted); font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+.restaurant-site .cp-notice h2 { margin-top: 4px; color: var(--r-wine-deep); font-size: 28px; letter-spacing: -.02em; }
+.restaurant-site .cp-close { position: absolute; top: 5px; right: 5px; display: grid; width: 44px; height: 44px; place-items: center; color: var(--r-muted); }
+.restaurant-site .cp-close:hover { color: var(--r-wine); background: var(--r-surface); }
+.restaurant-site .cp-intro { margin: 18px 0 0; color: var(--r-ink); font-size: 13px; line-height: 1.8; }
+.restaurant-site .cp-notice-actions, .restaurant-site .cp-dialog-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; margin-top: 22px; }
+.restaurant-site .cp-details { display: inline-flex; align-items: center; min-height: 44px; color: var(--r-wine); font-size: 12px; font-weight: 600; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.restaurant-site .cp-details:hover { color: var(--r-wine-deep); }
+.restaurant-site .cp-notice .r-button, .restaurant-site .cp-dialog .r-button { min-height: 44px; padding: 11px 20px; gap: 14px; font-size: 12px; }
+.restaurant-site .cp-dialog { position: fixed; inset: 0; width: min(600px, calc(100% - 32px)); max-width: none; max-height: calc(100dvh - 32px); margin: auto; padding: 0; overflow-y: auto; overscroll-behavior: contain; border: 0; background: var(--r-ivory); color: var(--r-ink); }
+.restaurant-site .cp-dialog::backdrop { background: #2d1713a6; }
+.restaurant-site .cp-dialog-inner { position: relative; padding: 36px; }
+.restaurant-site .cp-dialog-mark { margin-bottom: 16px; color: var(--r-wine); }
+.restaurant-site .cp-dialog h2 { margin-top: 8px; color: var(--r-wine-deep); font-size: clamp(30px, 5vw, 40px); }
+.restaurant-site .cp-dialog .cp-intro { margin-top: 15px; }
+.restaurant-site .cp-categories { margin: 26px 0 0; }
+.restaurant-site .cp-categories > div { padding: 20px 0; border-top: 1px solid var(--r-line); }
+.restaurant-site .cp-categories dt { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; color: var(--r-wine-deep); font-size: 15px; font-weight: 600; }
+.restaurant-site .cp-categories dd { max-width: 60ch; margin: 8px 0 0; color: var(--r-muted); font-size: 12px; line-height: 1.8; }
+.restaurant-site .cp-status { display: inline-flex; padding: 3px 9px; border: 1px solid var(--r-line); color: var(--r-muted); font-size: 10px; font-weight: 500; letter-spacing: .015em; }
+.restaurant-site .cp-status-active { border-color: var(--r-wine-deep); color: var(--r-ivory); background: var(--r-wine-deep); }
+.restaurant-site .cp-note { padding-top: 17px; border-top: 1px solid var(--r-line); font-size: 11px; line-height: 1.8; }
+.restaurant-site .cp-dialog-actions { margin-top: 20px; }
+.restaurant-site .r-footer-bottom nav > button { min-height: 44px; font-size: inherit; text-align: left; }
+.restaurant-site .r-footer-bottom nav > a { display: inline-flex; align-items: center; min-height: 44px; }
+@media (max-width: 760px) {
+  .restaurant-site .cp-notice { right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); width: calc(100% - 24px); max-height: calc(100dvh - 24px); padding: 21px 22px 19px; }
+  .restaurant-site .cp-notice h2 { font-size: 27px; }
+  .restaurant-site .cp-notice .cp-intro { font-size: 12px; line-height: 1.75; }
+  .restaurant-site .cp-notice-actions { margin-top: 15px; }
+  .restaurant-site .cp-dialog-inner { padding: 28px 22px 24px; }
+  .restaurant-site .cp-dialog .cp-intro { font-size: 12px; }
+  .restaurant-site .cp-categories { margin-top: 22px; }
+  .restaurant-site .cp-dialog-actions { gap: 8px 18px; }
+}

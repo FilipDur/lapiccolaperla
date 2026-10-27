@@ -138,7 +138,7 @@ export const menuCategories = [
       { name: "Spinaci all'aglio", description: "Špenát s česnekem", price: "149 Kč" },
       { name: "Fagiolini verdi", description: "Zelené fazolky", price: "139 Kč" },
       { name: "Verdure alla griglia", description: "Grilovaná zelenina", price: "169 Kč" },
-      { name: "Focaccia", description: "Chléb focaccia", price: "99 Kč" }
+      { name: "Focaccia", description: "Tenký pizza chléb s olivovým olejem a oreganem", price: "99 Kč" }
     ]
   },
   {

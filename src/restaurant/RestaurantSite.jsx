@@ -266,7 +266,10 @@ export default function RestaurantSite({ language = "cs", copy = {}, menuCategor
         {["menu", "about", "gallery", "contact", "privacy"].map((page) => <a key={page} href={href(page)}>{t.pages[page]}</a>)}
         <button type="button" onClick={() => setCookieDetailsOpen(true)}>{privacyUi[activeLanguage].title}</button>
       </nav></div>
-      <div className="r-footer-legal"><span>{copy.legal?.operator || "Provozovatel"}: B &amp; D DINAMIC, s.r.o.</span><span>{copy.legal?.registeredOffice || "Sídlo"}: Perlová 1020/8, Praha 1</span><span>{copy.legal?.companyId || "IČO"}: 26764776 · {copy.legal?.vatId || "DIČ"}: CZ26764776</span><a href="mailto:la.piccola.perla@email.cz">la.piccola.perla@email.cz</a></div>
+      <div className="r-footer-legal">
+        <span>{copy.legal?.operator || "Provozovatel"}: B &amp; D DINAMIC, s.r.o.</span><span>{copy.legal?.registeredOffice || "Sídlo"}: Perlová 1020/8, Praha 1</span><span>{copy.legal?.companyId || "IČO"}: 26764776 · {copy.legal?.vatId || "DIČ"}: CZ26764776</span><a href="mailto:la.piccola.perla@email.cz">la.piccola.perla@email.cz</a>
+        <span>{{ cs: "Web spravuje", en: "Website managed by", it: "Gestione del sito" }[activeLanguage]} <strong>Fimadux</strong></span>
+      </div>
     </div></footer>
 
     <CookiePrivacy language={activeLanguage} noticeAccepted={cookieNoticeAccepted} onAcknowledge={onAcceptCookies} detailsOpen={cookieDetailsOpen} onOpenDetails={() => setCookieDetailsOpen(true)} onCloseDetails={() => setCookieDetailsOpen(false)} hideNotice={route.page === "privacy"} />

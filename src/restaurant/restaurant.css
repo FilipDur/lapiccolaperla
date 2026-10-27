@@ -458,9 +458,9 @@ html:has(.restaurant-site) { scrollbar-color: #be9b7b #fff4e6; }
 .restaurant-site .r-gallery-compact .r-gallery-photo:nth-child(2) { margin-top: 65px; }
 .restaurant-site .r-gallery-compact .r-gallery-photo:nth-child(n) > img { min-height: 0; height: auto; aspect-ratio: .9; }
 .restaurant-site .r-gallery-compact .r-gallery-photo:nth-child(2) > img { aspect-ratio: 1.1; }
-.restaurant-site .r-booking-editorial { display: grid; grid-template-columns: 1fr 1fr; background: #be9b7b20; border-block: 1px solid var(--r-line); }
-.restaurant-site .r-booking-visual { min-width: 0; min-height: 550px; }
-.restaurant-site .r-booking-photo { display: block; width: 100%; height: 100%; max-height: 650px; object-fit: cover; object-position: 50% 50%; }
+.restaurant-site .r-booking-editorial { display: grid; grid-template-columns: 1fr 1fr; background: #be9b7b20; border-top: 1px solid var(--r-line); }
+.restaurant-site .r-booking-visual { position: relative; min-width: 0; min-height: 550px; overflow: hidden; }
+.restaurant-site .r-booking-photo { position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-height: none; object-fit: cover; object-position: 50% 50%; }
 .restaurant-site .r-booking-inner { display: flex; align-items: flex-start; justify-content: center; flex-direction: column; padding: 70px clamp(40px,6.5vw,110px); }
 .restaurant-site .r-booking h2 { max-width: 10ch; margin-top: 17px; font-size: clamp(44px,4.7vw,68px); }
 .restaurant-site .r-booking-inner > p:not(.r-eyebrow) { max-width: 40ch; margin: 25px 0 30px; color: var(--r-ink); font-size: 15px; line-height: 1.85; }

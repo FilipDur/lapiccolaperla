@@ -19,7 +19,7 @@ const privacyCopy = {
     controllerIntro: "Správcem osobních údajů souvisejících s provozem tohoto webu a komunikací s restaurací je:",
     companyId: "IČO",
     registeredOffice: "Sídlo společnosti",
-    restaurant: "Restaurace La Piccola Perla se nachází na adrese Perlová 412/1, Praha 1. Tato adresa provozovny se liší od sídla společnosti.",
+    restaurant: "Restaurace La Piccola Perla se nachází na adrese Perlová 412/1, Praha 1. Tato adresa provozovny se liší od sídla společnosti. Technickou správu webu zajišťuje Fimadux.",
     processing: [
       { title: "Návštěva webu", text: "Hostingová služba Vercel při doručení stránky a ochraně provozu zpracovává technické údaje požadavku, například IP adresu, údaje o prohlížeči a navštívenou URL. Účelem je funkční a bezpečný web. Právním základem je náš oprávněný zájem na jeho provozu a zabezpečení podle čl. 6 odst. 1 písm. f) GDPR." },
       { title: "Váš e-mail nebo telefonát", text: "Pokud nám napíšete nebo zavoláte, pracujeme s kontaktními údaji a obsahem, které nám sami sdělíte, abychom odpověděli nebo domluvili rezervaci. Poskytnutí údajů je dobrovolné; bez potřebných kontaktních údajů vám však nemusíme být schopni odpovědět nebo rezervaci domluvit. U požadavků souvisejících s rezervací jde o kroky před uzavřením smlouvy nebo její plnění podle čl. 6 odst. 1 písm. b) GDPR; ostatní běžné dotazy vyřizujeme na základě oprávněného zájmu na komunikaci podle písm. f). Veřejný web nemá kontaktní formulář." },
@@ -68,7 +68,7 @@ const privacyCopy = {
     controllerIntro: "The controller for personal data connected with this website and communication with the restaurant is:",
     companyId: "Company ID",
     registeredOffice: "Registered office",
-    restaurant: "La Piccola Perla restaurant is located at Perlová 412/1, Prague 1. This restaurant address is different from the company’s registered office.",
+    restaurant: "La Piccola Perla restaurant is located at Perlová 412/1, Prague 1. This restaurant address is different from the company’s registered office. Fimadux provides technical administration of the website.",
     processing: [
       { title: "Visiting the website", text: "To deliver pages and protect the service, our hosting provider Vercel processes technical request data such as your IP address, browser information and the URL you visit. The purpose is a working, secure website. The legal basis is our legitimate interest in operating and securing it under Article 6(1)(f) GDPR." },
       { title: "Your email or phone call", text: "When you email or call us, we use the contact details and information you choose to provide to reply or arrange a booking. Providing this data is voluntary; without the necessary contact details, we may be unable to reply or arrange your booking. Requests connected with a booking are processed to take steps before a contract or perform it under Article 6(1)(b) GDPR; we handle other general enquiries based on our legitimate interest in communicating under Article 6(1)(f). There is no contact form on the public website." },
@@ -117,7 +117,7 @@ const privacyCopy = {
     controllerIntro: "Il titolare del trattamento dei dati personali relativi a questo sito e alle comunicazioni con il ristorante è:",
     companyId: "Numero di registrazione (IČO)",
     registeredOffice: "Sede legale",
-    restaurant: "Il ristorante La Piccola Perla si trova in Perlová 412/1, Praga 1. L’indirizzo del ristorante è diverso dalla sede legale della società.",
+    restaurant: "Il ristorante La Piccola Perla si trova in Perlová 412/1, Praga 1. L’indirizzo del ristorante è diverso dalla sede legale della società. La gestione tecnica del sito è affidata a Fimadux.",
     processing: [
       { title: "La visita al sito", text: "Per fornire le pagine e proteggere il servizio, il fornitore di hosting Vercel tratta dati tecnici della richiesta, ad esempio l’indirizzo IP, le informazioni sul browser e l’URL visitato. Lo scopo è garantire il funzionamento e la sicurezza del sito. La base giuridica è il nostro legittimo interesse alla sua gestione e protezione ai sensi dell’art. 6, par. 1, lett. f) GDPR." },
       { title: "Le vostre e-mail e telefonate", text: "Se ci scrivete o telefonate, utilizziamo i recapiti e le informazioni che ci comunicate volontariamente per rispondere o organizzare una prenotazione. Il conferimento dei dati è facoltativo; senza i recapiti necessari potremmo non essere in grado di rispondere o organizzare la prenotazione. Le richieste relative a una prenotazione si basano sulle misure precontrattuali o sull’esecuzione del contratto ai sensi dell’art. 6, par. 1, lett. b) GDPR; le altre domande generali sul nostro legittimo interesse alla comunicazione ai sensi della lett. f). Il sito pubblico non ha un modulo di contatto." },

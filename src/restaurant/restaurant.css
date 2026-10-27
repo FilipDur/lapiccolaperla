@@ -125,10 +125,10 @@
 .restaurant-site .r-google-word { color: var(--r-wine); font-size: 24px; font-weight: 600; letter-spacing: -.04em; }
 
 /* Quiet, rounded review cards; rail motion is controlled by the carousel. */
-.restaurant-site .r-reviews-section { border-top: 1px solid #e8e7e4; background: #f6f5f3; color: #202124; text-align: center; }
+.restaurant-site .r-reviews-section { background: var(--r-ivory); color: var(--r-ink); text-align: center; }
 .restaurant-site .r-reviews-section :where(a,button):focus-visible { outline-color: #3c4043; }
-.restaurant-site .r-reviews-heading h2 { margin: 0 0 14px; color: #202124; font: 700 clamp(26px, 2.6vw, 34px)/1.2 var(--r-sans); letter-spacing: -.035em; }
-.restaurant-site .r-reviews-heading .r-section-intro { margin: 0 auto; color: #5f6368; font-size: 15px; line-height: 25px; }
+.restaurant-site .r-reviews-heading h2 { margin: 0 0 14px; color: var(--r-wine); font: 700 clamp(26px, 2.6vw, 34px)/1.2 var(--r-sans); letter-spacing: -.035em; }
+.restaurant-site .r-reviews-heading .r-section-intro { margin: 0 auto; color: var(--r-muted); font-size: 15px; line-height: 25px; }
 .restaurant-site .r-rating-summary { display: inline-flex; flex-direction: column; align-items: center; gap: 8px; margin: 30px auto 22px; border-radius: 8px; }
 .restaurant-site .r-rating-title, .restaurant-site .r-rating-row { display: flex; justify-content: center; align-items: center; gap: 10px; }
 .restaurant-site .r-rating-title { color: #202124; font-size: 16px; line-height: 24px; }
@@ -216,6 +216,22 @@
 .restaurant-site .r-menu-state h2 { margin-bottom: 20px; color: var(--r-wine); font-size: 33px; }
 .restaurant-site .r-menu-state .r-text-link { margin-top: 18px; color: var(--r-wine); }
 .restaurant-site .r-menu-paper .r-allergy { text-align: center; }
+/* The daily offer reads like the restaurant's own printed menu. */
+.restaurant-site .r-daily-paper { padding: 0; overflow: hidden; border-color: var(--r-wine-deep); }
+.restaurant-site .r-daily-heading { padding: 32px 36px 28px; background: var(--r-wine-deep); color: var(--r-ivory); }
+.restaurant-site .r-daily-heading .r-eyebrow { color: var(--r-ivory); }
+.restaurant-site .r-daily-heading h2 { margin: 12px 0 24px; color: var(--r-ivory); font-size: clamp(32px, 3.25vw, 46px); font-style: italic; letter-spacing: -.025em; text-wrap: initial; }
+.restaurant-site .r-daily-date, .restaurant-site .r-daily-hours { display: flex; align-items: center; gap: 10px; }
+.restaurant-site .r-daily-date { padding-top: 18px; border-top: 1px solid #fff4e64d; font-size: 14px; font-weight: 600; }
+.restaurant-site .r-daily-hours { margin-top: 8px; font-size: 12px; }
+.restaurant-site .r-daily-menu-content { padding: 12px 36px 28px; }
+.restaurant-site .r-daily-paper .r-menu-row { align-items: baseline; gap: 22px; padding-block: 24px; }
+.restaurant-site .r-daily-paper .r-menu-row h3 { color: var(--r-wine-deep); font: 400 clamp(20px, 1.8vw, 25px)/1.28 var(--r-serif); letter-spacing: -.015em; overflow-wrap: anywhere; }
+.restaurant-site .r-daily-paper .r-menu-row p { margin-top: 7px; font-size: 13px; line-height: 1.7; }
+.restaurant-site .r-daily-paper .r-menu-price { max-width: none; color: var(--r-wine); font: 400 23px/1.3 var(--r-serif); white-space: nowrap; }
+.restaurant-site .r-daily-footer { padding-top: 26px; text-align: center; }
+.restaurant-site .r-daily-footer > span { color: var(--r-wine); font: italic 28px/1.2 var(--r-serif); }
+.restaurant-site .r-daily-footer .r-allergy { max-width: 44ch; margin: 13px auto 0; }
 .restaurant-site .r-special-layout { display: grid; grid-template-columns: .8fr 1.2fr; align-items: start; gap: 7%; }
 .restaurant-site .r-special-photo { width: 100%; aspect-ratio: .85; object-fit: cover; }
 .restaurant-site .r-menu-paper-heading > .r-special-script { margin-top: 0; color: var(--r-wine); font: italic 35px/1.15 var(--r-serif); letter-spacing: 0; }
@@ -356,6 +372,15 @@
   .restaurant-site .r-daily-aside > img { aspect-ratio: 1.55; }
   .restaurant-site .r-daily-aside > p:last-child { max-width: none; font-size: 32px; }
   .restaurant-site .r-menu-paper { padding: 27px 22px 24px; }
+  .restaurant-site .r-daily-paper { padding: 0; }
+  .restaurant-site .r-daily-heading { padding: 26px 22px 23px; }
+  .restaurant-site .r-daily-heading h2 { margin-block: 12px 22px; font-size: clamp(30px, 7.5vw, 42px); }
+  .restaurant-site .r-daily-date { gap: 8px; font-size: 13px; }
+  .restaurant-site .r-daily-hours { gap: 8px; font-size: 11px; }
+  .restaurant-site .r-daily-menu-content { padding: 4px 22px 25px; }
+  .restaurant-site .r-daily-paper .r-menu-row { gap: 14px; padding-block: 21px; }
+  .restaurant-site .r-daily-paper .r-menu-row h3 { font-size: 20px; }
+  .restaurant-site .r-daily-paper .r-menu-price { font-size: 20px; }
   .restaurant-site .r-menu-paper-heading > p { font-size: 13px; }
   .restaurant-site .r-menu-state h2 { font-size: 31px; }
   .restaurant-site .r-menu-state { font-size: 14px; }

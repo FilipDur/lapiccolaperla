@@ -65,7 +65,21 @@ function DailyMenu({ items, status, today, t, language, photo }) {
   const valid = !Number.isNaN(date.getTime());
   const weekend = valid && [0, 6].includes(date.getUTCDay());
   const dateText = valid ? new Intl.DateTimeFormat("cs-CZ", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Prague" }).format(date) : "";
-  return <div className="r-container r-section r-daily-layout"><div className="r-daily-aside"><Picture photo={photo} /><p className="r-eyebrow">Buon appetito</p><p>{t.daily}</p></div><section className="r-menu-paper" aria-label="Aktuální denní menu"><div className="r-menu-paper-heading"><CalendarDays size={23} strokeWidth={1.25} /><p>{dateText}</p><span>{t.dailyNote}</span></div>{weekend ? <div className="r-menu-state"><h2>O víkendech denní menu nepodáváme.</h2><p>Rádi vám připravíme něco z našeho stálého jídelního lístku. Na denní menu se těšíme zase v pondělí.</p><a className="r-text-link" href={routeHref("menu", language)}>Prohlédnout jídelní lístek<ArrowRight size={18} /></a></div> : status === "loading" ? <p className="r-menu-state" role="status">{t.loading}</p> : status === "error" ? <p className="r-menu-state" role="alert">{t.loadError}</p> : items.length ? <MenuRows items={items} /> : <div className="r-menu-state"><h2>Dnešní menu právě připravujeme.</h2><p>Jakmile bude nabídka hotová, najdete ji tady. Mezitím se podívejte na náš stálý jídelní lístek.</p><a className="r-text-link" href={routeHref("menu", language)}>Jídelní lístek<ArrowRight size={18} /></a></div>}<p className="r-allergy">{t.allergy}</p></section></div>;
+  return <div className="r-container r-section r-daily-layout">
+    <div className="r-daily-aside"><Picture photo={photo} /><p className="r-eyebrow">Buon appetito</p><p>{t.daily}</p></div>
+    <section className="r-menu-paper r-daily-paper" aria-label="Aktuální denní menu">
+      <header className="r-daily-heading">
+        <p className="r-eyebrow">La Piccola Perla</p>
+        <h2 lang="it">Il menù del giorno</h2>
+        {valid && <p className="r-daily-date"><CalendarDays size={18} strokeWidth={1.5} aria-hidden="true" /><time dateTime={today}>{dateText}</time></p>}
+        <p className="r-daily-hours"><Clock size={15} strokeWidth={1.5} aria-hidden="true" />{t.dailyNote}</p>
+      </header>
+      <div className="r-daily-menu-content">
+        {weekend ? <div className="r-menu-state"><h2>O víkendech denní menu nepodáváme.</h2><p>Rádi vám připravíme něco z našeho stálého jídelního lístku. Na denní menu se těšíme zase v pondělí.</p><a className="r-text-link" href={routeHref("menu", language)}>Prohlédnout jídelní lístek<ArrowRight size={18} /></a></div> : status === "loading" ? <p className="r-menu-state" role="status">{t.loading}</p> : status === "error" ? <p className="r-menu-state" role="alert">{t.loadError}</p> : items.length ? <MenuRows items={items} /> : <div className="r-menu-state"><h2>Dnešní menu právě připravujeme.</h2><p>Jakmile bude nabídka hotová, najdete ji tady. Mezitím se podívejte na náš stálý jídelní lístek.</p><a className="r-text-link" href={routeHref("menu", language)}>Jídelní lístek<ArrowRight size={18} /></a></div>}
+        <footer className="r-daily-footer"><span lang="it">Buon appetito!</span><p className="r-allergy">{t.allergy}</p></footer>
+      </div>
+    </section>
+  </div>;
 }
 
 function ContactDetails({ t, copy, large = false }) {

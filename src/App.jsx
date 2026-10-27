@@ -1,34 +1,24 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowDown,
-  ArrowLeft,
-  ArrowRight,
   ArrowUp,
-  CalendarCheck,
-  Camera,
-  ChefHat,
-  Clock,
   Download,
-  ExternalLink,
   LogOut,
-  MapPin,
-  Menu as MenuIcon,
   Phone,
   Printer,
   Save,
-  ShoppingBag,
-  Star,
   Trash2,
-  Utensils,
   Wine,
   X
 } from "lucide-react";
-import { featuredPicks, menuCategories as baseMenuCategories } from "./data/menu";
+import { menuCategories as baseMenuCategories } from "./data/menu";
 import { seededDailyMenus } from "./data/dailyMenuSeed";
-import SpecialMenuSection, { getCompleteSpecialMenuItems, specialMenuCopy } from "./components/SpecialMenuSection";
 import SpecialMenuEditor from "./components/SpecialMenuEditor";
 import MenuPrintSheet, { MenuPrintItems } from "./components/MenuPrintSheet";
-import { fetchSpecialMenuItems, invalidateSpecialMenuReads, SPECIAL_MENU_REVISION_KEY, SPECIAL_MENU_UPDATED } from "./lib/specialMenu";
+import RestaurantSite from "./restaurant/RestaurantSite.jsx";
+import { parseRoute } from "./restaurant/routes.js";
+import { usePublicMenus } from "./lib/usePublicMenus.js";
+import { getRestaurantDate } from "./lib/restaurantDate.js";
 import { DAILY_MENU_REVISION_KEY, invalidateDailyMenuReads, readDailyMenuItems, writeDailyMenuItems } from "./lib/dailyMenu";
 
 const imageAssets = import.meta.glob("../images/webp/**/*.webp", {
@@ -41,6 +31,16 @@ const getThumb = (fileName) => imageAssets[`../images/webp/thumbs/${fileName}`] 
 const logo = "/logo-transparent.png";
 const printLogo = getImage("Logos.webp");
 
+// Keep original identifiers for localized captions and lightbox navigation.
+// The originals remain available; retouched photos have separate web/thumbnail assets.
+const retouchedPhotos = {
+  "_DSR0003.webp": "retouched/entrance-v1.webp",
+  "_DSR0014.webp": "retouched/winebar-v1.webp",
+  "4.webp": "retouched/seafood-pasta-v1.webp",
+  "1.webp": "retouched/pizza-v1.webp",
+  "_DSR0090.webp": "retouched/berry-dessert-v1.webp"
+};
+
 const photoData = [
   { file: "_DSR0014.webp", title: "Večer u vinného baru", tone: "Interiér", featured: true },
   { file: "_DSR0003.webp", title: "Prostřený sál v Perlové", tone: "Atmosféra", featured: true },
@@ -52,24 +52,36 @@ const photoData = [
   { file: "_DSR0076.webp", title: "Scallopina di vitello alla valdostana", tone: "Specialita" },
   { file: "_DSR0080.webp", title: "Smažené kalamáry", tone: "Mořské plody", featured: true },
   { file: "_DSR0090.webp", title: "Dezert s ovocem", tone: "Dolce" },
-  { file: "1.webp", title: "Signature talíř", tone: "Kuchyně" },
+  { file: "1.webp", title: "Pizza s prosciuttem a rukolou", tone: "Kuchyně" },
   { file: "2.webp", title: "Tagliata di manzo", tone: "Maso" },
   { file: "3.webp", title: "Calamaretti alla griglia", tone: "Mořské plody" },
-  { file: "4.webp", title: "Chef selection", tone: "Menu" },
+  { file: "4.webp", title: "Těstoviny s mořskými plody", tone: "Kuchyně" },
   { file: "5.webp", title: "Soufflé", tone: "Dolce" },
   { file: "6.webp", title: "Výběr italských chutí", tone: "La Perla" }
-].map((photo, index) => ({
-  ...photo,
-  id: photo.file,
-  index,
-  src: getImage(photo.file),
-  thumbSrc: getThumb(photo.file)
-}));
+].map((photo, index) => {
+  const editedFile = retouchedPhotos[photo.file];
+  const imageFile = editedFile && getImage(editedFile) ? editedFile : photo.file;
+  return {
+    ...photo,
+    id: photo.file,
+    index,
+    src: getImage(imageFile),
+    thumbSrc: getThumb(imageFile)
+  };
+});
 
 const languageCodes = ["cs", "en", "it"];
 const SITE_URL = "https://lapiccolaperla.cz";
 const SEO_IMAGE_URL = `${SITE_URL}/og-la-piccola-perla.webp`;
 const LANGUAGE_PREFERENCE_KEY = "la-piccola-perla-language";
+
+const saveStoredLanguage = (language) => {
+  try {
+    window.localStorage?.setItem(LANGUAGE_PREFERENCE_KEY, language);
+  } catch {
+    // URL-based language selection also works without local storage.
+  }
+};
 
 const seoByLanguage = {
   cs: {
@@ -353,7 +365,8 @@ const publicCopy = {
       "_DSR0048.webp": ["Espresso and a shot of grappa", "After lunch"],
       "_DSR0080.webp": ["Fried calamari", "Seafood"],
       "_DSR0090.webp": ["Fruit dessert", "Dolce"],
-      "1.webp": ["Signature plate", "Kitchen"],
+      "1.webp": ["Pizza with prosciutto and rocket", "Kitchen"],
+      "4.webp": ["Seafood pasta", "Kitchen"],
       "2.webp": ["Tagliata di manzo", "Meat"],
       "3.webp": ["Calamaretti alla griglia", "Seafood"],
       "5.webp": ["Soufflé", "Dolce"],
@@ -459,7 +472,8 @@ const publicCopy = {
       "_DSR0048.webp": ["Espresso e bicchierino di grappa", "Dopo pranzo"],
       "_DSR0080.webp": ["Calamari fritti", "Frutti di mare"],
       "_DSR0090.webp": ["Dessert alla frutta", "Dolce"],
-      "1.webp": ["Piatto signature", "Cucina"],
+      "1.webp": ["Pizza con prosciutto e rucola", "Cucina"],
+      "4.webp": ["Pasta ai frutti di mare", "Cucina"],
       "2.webp": ["Tagliata di manzo", "Carne"],
       "3.webp": ["Calamaretti alla griglia", "Frutti di mare"],
       "5.webp": ["Soufflé", "Dolce"],
@@ -467,166 +481,6 @@ const publicCopy = {
     }
   }
 };
-
-const languageLinks = [
-  { code: "cs", label: "CZ", href: "/" },
-  { code: "en", label: "EN", href: "/en" },
-  { code: "it", label: "IT", href: "/it" }
-];
-
-const getLanguageFromHostname = () => {
-  const hostname = window.location.hostname.toLowerCase();
-
-  if (hostname.startsWith("en.")) {
-    return "en";
-  }
-
-  if (hostname.startsWith("it.")) {
-    return "it";
-  }
-
-  if (hostname.startsWith("cs.")) {
-    return "cs";
-  }
-
-  return null;
-};
-
-const getLanguageFromPath = () => {
-  const path = window.location.pathname.toLowerCase().replace(/\/$/, "");
-
-  if (path.includes("index-en") || path === "/en") {
-    return "en";
-  }
-
-  if (path.includes("index-it") || path === "/it") {
-    return "it";
-  }
-
-  if (path.includes("index-de")) {
-    return "it";
-  }
-
-  return null;
-};
-
-const getStoredLanguage = () => {
-  try {
-    const storedLanguage = window.localStorage?.getItem(LANGUAGE_PREFERENCE_KEY);
-    return languageCodes.includes(storedLanguage) ? storedLanguage : null;
-  } catch {
-    return null;
-  }
-};
-
-const saveStoredLanguage = (language) => {
-  try {
-    window.localStorage?.setItem(LANGUAGE_PREFERENCE_KEY, language);
-  } catch {
-    // Language choice is a convenience only; navigation still works without storage.
-  }
-};
-
-const getBrowserPreferredLanguage = () => {
-  const primaryLanguage = (navigator.languages?.[0] || navigator.language || "").toLowerCase();
-
-  if (primaryLanguage.startsWith("it")) {
-    return "it";
-  }
-
-  if (primaryLanguage.startsWith("cs")) {
-    return "cs";
-  }
-
-  return primaryLanguage ? "en" : null;
-};
-
-const isLikelyCrawler = () => /bot|crawler|spider|crawling|google|bing|yandex|duckduck|baidu|facebookexternalhit|twitterbot|linkedinbot/i.test(navigator.userAgent || "");
-
-const getLanguageRedirectTarget = () => {
-  const path = window.location.pathname.replace(/\/$/, "") || "/";
-  const isRootPath = path === "/";
-
-  if (!isRootPath || isLikelyCrawler() || getLanguageFromHostname() || getLanguageFromPath()) {
-    return null;
-  }
-
-  const params = new URLSearchParams(window.location.search);
-
-  if (languageCodes.includes(params.get("lang"))) {
-    return null;
-  }
-
-  const preferredLanguage = getStoredLanguage() || getBrowserPreferredLanguage();
-
-  if (!preferredLanguage || preferredLanguage === "cs") {
-    return null;
-  }
-
-  return `${seoByLanguage[preferredLanguage].path}${window.location.search || ""}${window.location.hash || ""}`;
-};
-
-const getLanguageFromLocation = () => {
-  const params = new URLSearchParams(window.location.search);
-  const queryLanguage = params.get("lang");
-  const hostLanguage = getLanguageFromHostname();
-  const pathLanguage = getLanguageFromPath();
-
-  if (hostLanguage) {
-    return hostLanguage;
-  }
-
-  if (languageCodes.includes(queryLanguage)) {
-    return queryLanguage;
-  }
-
-  if (pathLanguage) {
-    return pathLanguage;
-  }
-
-  return "cs";
-};
-
-const getNavItems = (language, copy, hasSpecialMenu = false) => {
-  const items = language === "cs" ? [{ label: copy.nav.daily, href: "#daily-menu" }] : [];
-
-  return [
-    ...items,
-    ...(hasSpecialMenu ? [{ label: specialMenuCopy[language].navLabel, href: "#special-menu" }] : []),
-    { label: copy.nav.about, href: "#about" },
-    { label: copy.nav.menu, href: "#menu" },
-    { label: copy.nav.gallery, href: "#gallery" },
-    { label: copy.nav.contact, href: "#contact" }
-  ];
-};
-
-const getExperiences = (copy) => [
-  {
-    icon: ChefHat,
-    title: copy.experiences.cards[0][0],
-    text: copy.experiences.cards[0][1],
-    image: getImage("3.webp")
-  },
-  {
-    icon: Wine,
-    title: copy.experiences.cards[1][0],
-    text: copy.experiences.cards[1][1],
-    image: getImage("_DSR0076.webp")
-  },
-  {
-    icon: Utensils,
-    title: copy.experiences.cards[2][0],
-    text: copy.experiences.cards[2][1],
-    image: getImage("_DSR0023.webp")
-  }
-];
-
-const getStats = (copy) => [
-  { value: "4.5", label: copy.stats[0], icon: Star },
-  { value: "6 000+", label: copy.stats[1], icon: Camera },
-  { value: "11-23", label: copy.stats[2], icon: Clock },
-  { value: "Praha 1", label: copy.stats[3], icon: MapPin }
-];
 
 const getLocalizedPhotos = (language) => {
   const copy = publicCopy[language];
@@ -742,7 +596,7 @@ const menuLocalization = {
         "Baked sea bream or sea bass",
         "Mixed grilled fish and seafood"
       ],
-      sides: ["French fries", "Roasted potatoes", "Spinach with garlic", "Green beans", "Grilled vegetables", "Focaccia bread"],
+      sides: ["French fries", "Roasted potatoes", "Spinach with garlic", "Green beans", "Grilled vegetables", "Thin pizza bread with olive oil and oregano"],
       desserts: [
         "Classic Italian tiramisu",
         "Delicate panna cotta",
@@ -935,7 +789,7 @@ const menuLocalization = {
         "Orata o branzino al forno",
         "Misto di pesce e frutti di mare alla griglia"
       ],
-      sides: ["Patatine fritte", "Patate al forno", "Spinaci all’aglio", "Fagiolini verdi", "Verdure alla griglia", "Pane focaccia"],
+      sides: ["Patatine fritte", "Patate al forno", "Spinaci all’aglio", "Fagiolini verdi", "Verdure alla griglia", "Focaccia sottile con olio d’oliva e origano"],
       desserts: [
         "Tiramisù classico italiano",
         "Panna cotta delicata",
@@ -1067,8 +921,6 @@ const DAILY_MENU_COOKIE_KEY = "la_piccola_perla_daily_menu";
 const COOKIE_NOTICE_STORAGE_KEY = "la-piccola-perla-cookie-notice";
 const ADMIN_SESSION_KEY = "la-piccola-perla-admin-session";
 const ADMIN_AUTH_STORAGE_KEY = "la-piccola-perla-admin-auth";
-const ADMIN_USER = "perla";
-const ADMIN_PASSWORD = "la perla";
 
 const parseDailyMenuData = (value) => {
   try {
@@ -1203,11 +1055,7 @@ const formatPrice = (value) => {
   return cleanValue ? `${cleanValue} Kč` : "";
 };
 
-const getTodayDate = () => {
-  const now = new Date();
-  const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
-  return localDate.toISOString().slice(0, 10);
-};
+const getTodayDate = getRestaurantDate;
 
 const isWeekendDate = (dateValue) => {
   const day = new Date(`${dateValue}T12:00:00`).getDay();
@@ -1223,589 +1071,39 @@ const formatDate = (dateValue) =>
   }).format(new Date(`${dateValue}T12:00:00`));
 
 function App() {
-  const isAdminRoute = typeof window !== "undefined" && window.location.pathname.replace(/\/$/, "") === "/admin";
+  const isAdminRoute = typeof window !== "undefined" && ["/admin", "/admin.html"].includes(window.location.pathname.replace(/\/$/, ""));
   return isAdminRoute ? <AdminPage /> : <PublicSite />;
 }
 
 function PublicSite() {
-  const language = getLanguageFromLocation();
+  const [language, setLanguage] = useState(() => parseRoute(window.location.pathname, window.location.hash).language);
   const copy = publicCopy[language];
-  const [specialMenuItems, setSpecialMenuItems] = useState([]);
-  const localizedPhotos = useMemo(() => getLocalizedPhotos(language), [language]);
+  const photos = useMemo(() => getLocalizedPhotos(language), [language]);
   const menuCategories = useMemo(() => getLocalizedMenuCategories(language), [language]);
-  const navItems = useMemo(() => getNavItems(language, copy, specialMenuItems.length > 0), [language, copy, specialMenuItems.length]);
-  const experiences = useMemo(() => getExperiences(copy), [copy]);
-  const stats = useMemo(() => getStats(copy), [copy]);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [heroIndex, setHeroIndex] = useState(0);
-  const [activeCategoryId, setActiveCategoryId] = useState(baseMenuCategories[0].id);
-  const [activePhotoIndex, setActivePhotoIndex] = useState(null);
-  const [dailyMenuForToday, setDailyMenuForToday] = useState(() => loadDailyMenuItems(getTodayDate()));
+  const menus = usePublicMenus(language);
   const [cookieNoticeAccepted, setCookieNoticeAccepted] = useState(getCookieNoticeAccepted);
-
-  const heroPhotos = useMemo(() => localizedPhotos.filter((photo) => photo.featured), [localizedPhotos]);
-  const activeCategory = menuCategories.find((category) => category.id === activeCategoryId) || menuCategories[0];
-  const activePhoto = activePhotoIndex === null ? null : localizedPhotos[activePhotoIndex];
-
-  useEffect(() => {
-    const redirectTarget = getLanguageRedirectTarget();
-
-    if (redirectTarget) {
-      window.location.replace(redirectTarget);
-    }
+  const handleLanguageSelect = useCallback((code) => {
+    if (!languageCodes.includes(code)) return;
+    saveStoredLanguage(code);
+    setLanguage(code);
   }, []);
-
-  useEffect(() => {
-    applyPublicSeo(language);
-  }, [language]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    let active = true;
-    const refresh = async () => {
-      try {
-        const items = await fetchSpecialMenuItems(controller.signal);
-        if (active && !controller.signal.aborted) setSpecialMenuItems(getCompleteSpecialMenuItems(items));
-      } catch {
-        if (active && !controller.signal.aborted) setSpecialMenuItems([]);
-      }
-    };
-    const onStorage = (event) => {
-      if (event.key === SPECIAL_MENU_REVISION_KEY) {
-        invalidateSpecialMenuReads();
-        void refresh();
-      }
-    };
-    const onFocus = () => {
-      invalidateSpecialMenuReads();
-      void refresh();
-    };
-    void refresh();
-    const interval = window.setInterval(() => { if (!document.hidden) void refresh(); }, 60000);
-    window.addEventListener("focus", onFocus);
-    window.addEventListener("storage", onStorage);
-    window.addEventListener(SPECIAL_MENU_UPDATED, refresh);
-    return () => {
-      active = false;
-      controller.abort();
-      window.clearInterval(interval);
-      window.removeEventListener("focus", onFocus);
-      window.removeEventListener("storage", onStorage);
-      window.removeEventListener(SPECIAL_MENU_UPDATED, refresh);
-    };
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let timer;
-    const syncRotation = () => {
-      window.clearInterval(timer);
-      if (!reducedMotion.matches) {
-        timer = window.setInterval(() => {
-          setHeroIndex((current) => (current + 1) % heroPhotos.length);
-        }, 5200);
-      }
-    };
-    syncRotation();
-    reducedMotion.addEventListener("change", syncRotation);
-    return () => {
-      window.clearInterval(timer);
-      reducedMotion.removeEventListener("change", syncRotation);
-    };
-  }, [heroPhotos.length]);
-
-  useEffect(() => {
-    document.body.classList.toggle("is-locked", menuOpen || activePhoto !== null);
-  }, [menuOpen, activePhoto]);
-
-  useEffect(() => {
-    if (language !== "cs") {
-      return undefined;
-    }
-
-    let isActive = true;
-    const controller = new AbortController();
-    const refreshDailyMenu = async () => {
-      const date = getTodayDate();
-      const items = await fetchDailyMenuItems(date, { signal: controller.signal });
-
-      if (isActive && date === getTodayDate()) {
-        setDailyMenuForToday(items);
-      }
-    };
-
-    const onStorage = (event) => {
-      if (event.key === DAILY_MENU_REVISION_KEY) {
-        try {
-          const { date } = JSON.parse(event.newValue);
-          invalidateDailyMenuReads(date);
-        } catch {
-          return;
-        }
-      }
-      void refreshDailyMenu();
-    };
-    const onFocus = () => {
-      invalidateDailyMenuReads(getTodayDate());
-      void refreshDailyMenu();
-    };
-    refreshDailyMenu();
-    window.addEventListener("storage", onStorage);
-    window.addEventListener("focus", onFocus);
-    window.addEventListener("daily-menu-updated", refreshDailyMenu);
-    return () => {
-      isActive = false;
-      controller.abort();
-      window.removeEventListener("storage", onStorage);
-      window.removeEventListener("focus", onFocus);
-      window.removeEventListener("daily-menu-updated", refreshDailyMenu);
-    };
-  }, [language]);
-
-  useEffect(() => {
-    const closeOnEscape = (event) => {
-      if (event.key === "Escape") {
-        setMenuOpen(false);
-        setActivePhotoIndex(null);
-      }
-    };
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, []);
-
-  const selectPhoto = (index) => setActivePhotoIndex(index);
-  const showPreviousPhoto = () => setActivePhotoIndex((current) => (current === 0 ? localizedPhotos.length - 1 : current - 1));
-  const showNextPhoto = () => setActivePhotoIndex((current) => (current === localizedPhotos.length - 1 ? 0 : current + 1));
-  const handleLanguageSelect = (languageCode) => {
-    saveStoredLanguage(languageCode);
-    setMenuOpen(false);
-  };
   const acceptCookieNotice = () => {
     saveCookieNoticeAccepted();
     setCookieNoticeAccepted(true);
   };
 
   return (
-    <>
-      <header className={`site-header ${isScrolled ? "is-scrolled" : ""} ${specialMenuItems.length > 0 ? "has-special-menu" : ""}`}>
-        <a className="brand" href="#hero" aria-label="La Piccola Perla">
-          <img src={logo} alt="La Piccola Perla" />
-        </a>
-
-        <nav className="desktop-nav" aria-label={copy.navAria}>
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="header-actions">
-          <div className="language-switch" aria-label={copy.languageAria}>
-            {languageLinks.map((item) => (
-              <a key={item.code} className={language === item.code ? "is-active" : ""} href={item.href} onClick={() => handleLanguageSelect(item.code)}>
-                {item.label}
-              </a>
-            ))}
-          </div>
-          <a className="button button-primary header-cta" href="#reservation">
-            <CalendarCheck aria-hidden="true" />
-            {copy.reservation}
-          </a>
-          <button
-            className="icon-button mobile-toggle"
-            type="button"
-            aria-label={copy.openMenu}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(true)}
-          >
-            <MenuIcon aria-hidden="true" />
-          </button>
-        </div>
-      </header>
-
-      <div className={`mobile-menu ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuOpen} inert={!menuOpen}>
-        <button className="icon-button mobile-close" type="button" aria-label={copy.closeMenu} onClick={() => setMenuOpen(false)}>
-          <X aria-hidden="true" />
-        </button>
-        <img className="mobile-logo" src={logo} alt="La Piccola Perla" />
-        {navItems.map((item) => (
-          <a key={item.href} href={item.href} onClick={() => setMenuOpen(false)}>
-            {item.label}
-          </a>
-        ))}
-        <div className="mobile-language-switch" aria-label={copy.languageAria}>
-          {languageLinks.map((item) => (
-            <a key={item.code} className={language === item.code ? "is-active" : ""} href={item.href} onClick={() => handleLanguageSelect(item.code)}>
-              {item.label}
-            </a>
-          ))}
-        </div>
-        <a className="button button-primary" href="#reservation" onClick={() => setMenuOpen(false)}>
-          <CalendarCheck aria-hidden="true" />
-          {copy.reservation}
-        </a>
-      </div>
-
-      <main>
-        <section className="hero" id="hero" style={{ "--hero-image": `url(${heroPhotos[heroIndex].src})` }}>
-          <div className="hero-copy">
-            <span className="eyebrow">{copy.hero.eyebrow}</span>
-            <h1>{copy.hero.title}</h1>
-            <p>{copy.hero.text}</p>
-            <div className="hero-actions">
-              <a className="button button-primary" href="#reservation">
-                <CalendarCheck aria-hidden="true" />
-                {copy.hero.reserve}
-              </a>
-              <a className="button button-light" href="#menu">
-                <Utensils aria-hidden="true" />
-                {copy.hero.menu}
-              </a>
-            </div>
-          </div>
-
-          <div className="hero-photo-strip" aria-label="Ukázka restaurace">
-            {heroPhotos.map((photo, index) => (
-              <button
-                key={photo.id}
-                className={index === heroIndex ? "is-active" : ""}
-                type="button"
-                aria-label={photo.title}
-                onClick={() => setHeroIndex(index)}
-              >
-                <img src={photo.thumbSrc} alt="" />
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <section className="stats-band" aria-label="Hlavní informace">
-          {stats.map((item) => {
-            const Icon = item.icon;
-            return (
-              <div className="stat-item" key={item.label}>
-                <Icon aria-hidden="true" />
-                <strong>{item.value}</strong>
-                <span>{item.label}</span>
-              </div>
-            );
-          })}
-        </section>
-
-        {language === "cs" ? <DailyMenuSection items={dailyMenuForToday} /> : null}
-        <SpecialMenuSection items={specialMenuItems} language={language} />
-
-        <section className="story-section section-pad" id="about">
-          <div className="section-grid">
-            <div className="story-copy">
-              <span className="eyebrow">{copy.about.eyebrow}</span>
-              <h2>{copy.about.title}</h2>
-              {copy.about.text.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-              <a className="text-link" href="#gallery">
-                {copy.about.link}
-                <ArrowRight aria-hidden="true" />
-              </a>
-            </div>
-            <div className="story-photos">
-              <img className="photo-main" src={getImage("_DSR0003.webp")} alt={copy.about.imageAlts[0]} loading="lazy" />
-              <img className="photo-small" src={getImage("2.webp")} alt={copy.about.imageAlts[1]} loading="lazy" />
-            </div>
-          </div>
-        </section>
-
-        <section className="experience-section section-pad" aria-label={copy.experiences.eyebrow}>
-          <div className="section-heading">
-            <span className="eyebrow">{copy.experiences.eyebrow}</span>
-            <h2>{copy.experiences.title}</h2>
-            <p>{copy.experiences.text}</p>
-          </div>
-          <div className="experience-grid">
-            {experiences.map((item) => {
-              const Icon = item.icon;
-              return (
-                <article className="experience-card" key={item.title}>
-                  <img src={item.image} alt="" loading="lazy" />
-                  <div>
-                    <Icon aria-hidden="true" />
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </section>
-
-        <section className="menu-section section-pad" id="menu">
-          <div className="section-heading align-left">
-            <span className="eyebrow">{copy.menu.eyebrow}</span>
-            <h2>{copy.menu.title}</h2>
-            <p>{copy.menu.text}</p>
-            <div className="featured-picks" aria-label={copy.menu.picksAria}>
-              {featuredPicks.map((pick) => (
-                <span key={pick}>{pick}</span>
-              ))}
-            </div>
-          </div>
-
-          <div className="menu-layout">
-            <div className="menu-tabs" role="tablist" aria-label={copy.menu.tabsAria}>
-              {menuCategories.map((category) => (
-                <button
-                  key={category.id}
-                  className={category.id === activeCategory.id ? "is-active" : ""}
-                  type="button"
-                  role="tab"
-                  aria-selected={category.id === activeCategory.id}
-                  onClick={() => setActiveCategoryId(category.id)}
-                >
-                  <span>{category.label}</span>
-                  <small>{category.items.length}</small>
-                </button>
-              ))}
-            </div>
-
-            <div className="menu-panel" role="tabpanel">
-              <div className="menu-panel-head">
-                <span>{activeCategory.accent}</span>
-                <h3>{activeCategory.label}</h3>
-              </div>
-              <div className="menu-items">
-                {activeCategory.items.map((item) => (
-                  <article className="menu-item" key={`${activeCategory.id}-${item.name}`}>
-                    <div>
-                      <h4>{item.name}</h4>
-                      {item.description ? <p>{item.description}</p> : null}
-                    </div>
-                    <strong>{item.price}</strong>
-                  </article>
-                ))}
-              </div>
-              <p className="allergy-note">{copy.menu.allergy}</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="gallery-section section-pad" id="gallery">
-          <div className="section-heading">
-            <span className="eyebrow">{copy.gallery.eyebrow}</span>
-            <h2>{copy.gallery.title}</h2>
-            <p>{copy.gallery.text}</p>
-          </div>
-          <div className="gallery-grid">
-            {localizedPhotos.map((photo, index) => (
-              <button
-                key={photo.id}
-                className={`gallery-tile tile-${(index % 7) + 1}`}
-                type="button"
-                onClick={() => selectPhoto(index)}
-              >
-                <img src={photo.thumbSrc} alt={photo.title} loading="lazy" />
-                <span>
-                  <small>{photo.tone}</small>
-                  {photo.title}
-                </span>
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <section className="reservation-section" id="reservation" style={{ "--reservation-image": `url(${getImage("_DSR0014.webp")})` }}>
-          <div>
-            <span className="eyebrow">{copy.reservationBlock.eyebrow}</span>
-            <h2>{copy.reservationBlock.title}</h2>
-            <p>{copy.reservationBlock.text}</p>
-            <div className="reservation-actions">
-              <a
-                className="button button-primary"
-                href="https://la-piccola-perla.choiceqr.com/takeaway/booking"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <CalendarCheck aria-hidden="true" />
-                {copy.reservationBlock.book}
-                <ExternalLink aria-hidden="true" />
-              </a>
-              <a
-                className="button button-light"
-                href="https://la-piccola-perla.choiceqr.com/takeaway/section:menu/polevky"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <ShoppingBag aria-hidden="true" />
-                {copy.reservationBlock.order}
-                <ExternalLink aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section className="contact-section section-pad" id="contact">
-          <div className="section-heading">
-            <span className="eyebrow">{copy.contact.eyebrow}</span>
-            <h2>{copy.contact.title}</h2>
-          </div>
-          <div className="contact-grid">
-            <article>
-              <MapPin aria-hidden="true" />
-              <h3>{copy.contact.addressTitle}</h3>
-              <p>{copy.contact.address[0]}<br />{copy.contact.address[1]}</p>
-            </article>
-            <article>
-              <Phone aria-hidden="true" />
-              <h3>{copy.contact.phoneTitle}</h3>
-              <p><a href="tel:+420224282537">+420 224 282 537</a></p>
-            </article>
-            <article>
-              <Clock aria-hidden="true" />
-              <h3>{copy.contact.hoursTitle}</h3>
-              <p>{copy.contact.hours[0]}<br />{copy.contact.hours[1]}</p>
-            </article>
-          </div>
-          <div className="map-shell">
-            <iframe
-              title="Mapa La Piccola Perla"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d640.0638563384214!2d14.4213246!3d50.0835457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470b94ec2af230ed%3A0x309375df444c7c4!2sLa%20Piccola%20Perla!5e0!3m2!1sen!2scz!4v1689091234567!5m2!1sen!2scz"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
-        </section>
-      </main>
-
-      <footer className="site-footer">
-        <img src={logo} alt="La Piccola Perla" />
-        <nav aria-label={copy.footerAria}>
-          {navItems.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
-            </a>
-          ))}
-          <a href="#reservation">{copy.reservation}</a>
-        </nav>
-        <dl className="footer-legal">
-          <div>
-            <dt>{copy.legal.operator}</dt>
-            <dd>B &amp; D DINAMIC, s.r.o.</dd>
-          </div>
-          <div>
-            <dt>{copy.legal.registeredOffice}</dt>
-            <dd>Perlová 1020/8, 110 00 Praha 1</dd>
-          </div>
-          <div>
-            <dt>{copy.legal.companyId}</dt>
-            <dd>26764776</dd>
-          </div>
-          <div>
-            <dt>{copy.legal.vatId}</dt>
-            <dd>CZ26764776</dd>
-          </div>
-          <div>
-            <dt>{copy.legal.email}</dt>
-            <dd>
-              <a href="mailto:la.piccola.perla@email.cz">la.piccola.perla@email.cz</a>
-            </dd>
-          </div>
-        </dl>
-        <p className="footer-copyright">
-          {copy.footer} {copy.footerCredit}{" "}
-          <a href="https://fimadux.com" target="_blank" rel="noreferrer">
-            fimadux.com
-          </a>
-        </p>
-      </footer>
-
-      {!cookieNoticeAccepted ? (
-        <div className="cookie-notice" role="status">
-          <p>{copy.cookieNotice.text}</p>
-          <button className="button button-primary" type="button" onClick={acceptCookieNotice}>
-            {copy.cookieNotice.accept}
-          </button>
-        </div>
-      ) : null}
-
-      {activePhoto ? (
-        <div className="lightbox" role="dialog" aria-modal="true" aria-label={activePhoto.title}>
-          <button className="icon-button lightbox-close" type="button" aria-label={copy.lightbox.close} onClick={() => setActivePhotoIndex(null)}>
-            <X aria-hidden="true" />
-          </button>
-          <button className="icon-button lightbox-prev" type="button" aria-label={copy.lightbox.previous} onClick={showPreviousPhoto}>
-            <ArrowLeft aria-hidden="true" />
-          </button>
-          <img src={activePhoto.src} alt={activePhoto.title} />
-          <div className="lightbox-caption">
-            <span>{activePhoto.tone}</span>
-            <strong>{activePhoto.title}</strong>
-          </div>
-          <button className="icon-button lightbox-next" type="button" aria-label={copy.lightbox.next} onClick={showNextPhoto}>
-            <ArrowRight aria-hidden="true" />
-          </button>
-        </div>
-      ) : null}
-    </>
-  );
-}
-
-function DailyMenuSection({ items }) {
-  const today = getTodayDate();
-  const weekend = isWeekendDate(today);
-
-  return (
-    <section className="daily-menu-section section-pad" id="daily-menu" aria-label="Denní menu">
-      <div className="daily-menu-shell">
-        <div
-          className="daily-menu-visual"
-          style={{ "--daily-menu-image": `url(${getImage("_DSR0080.webp")})` }}
-        >
-          <span className="eyebrow">Polední nabídka</span>
-          <h2>Denní menu</h2>
-          <p>{formatDate(today)}</p>
-        </div>
-
-        <div className="daily-menu-panel">
-          <div className="daily-menu-meta">
-            <span><Clock aria-hidden="true" /> 11:00-14:30</span>
-            <span><CalendarCheck aria-hidden="true" /> Pouze Po-Pá</span>
-          </div>
-
-          {weekend ? (
-            <div className="daily-menu-empty">
-              <h3>O víkendech denní menu nepodáváme.</h3>
-              <p>Vyberte si prosím z našeho stálého menu nebo si rezervujte stůl na všední den.</p>
-            </div>
-          ) : items.length > 0 ? (
-            <div className="daily-menu-list">
-              {items.map((item) => (
-                <article className="daily-menu-item" key={item.id}>
-                  <div>
-                    <h3>{item.name}</h3>
-                    <p>{item.description}</p>
-                  </div>
-                  <strong>{item.price}</strong>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <div className="daily-menu-empty">
-              <h3>Denní menu z dnešního dne zatím dopisujeme.</h3>
-              <p>Prosíme, chvíli počkejte. Jakmile bude nabídka hotová, objeví se tady.</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
+    <RestaurantSite
+      language={language}
+      applyLanguageSeo={applyPublicSeo}
+      copy={copy}
+      photos={photos}
+      menuCategories={menuCategories}
+      {...menus}
+      onLanguageSelect={handleLanguageSelect}
+      cookieNoticeAccepted={cookieNoticeAccepted}
+      onAcceptCookies={acceptCookieNotice}
+    />
   );
 }
 
@@ -1815,6 +1113,8 @@ function AdminPage() {
   );
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
   const [loginError, setLoginError] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const loginRequestRef = useRef(null);
   const [dateValue, setDateValue] = useState(getTodayDate());
   const [items, setItems] = useState(() => loadDailyMenuItems(getTodayDate()));
   const [draft, setDraft] = useState({ name: "", description: "", price: "" });
@@ -1852,56 +1152,53 @@ function AdminPage() {
     };
   }, [dateValue, isAuthenticated, isSpecial]);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      return undefined;
+  useEffect(() => () => {
+    loginRequestRef.current?.abort();
+    loginRequestRef.current = null;
+  }, []);
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    if (loginRequestRef.current) return;
+    const username = loginForm.username.trim().toLowerCase();
+    const password = loginForm.password;
+    if (!username || !password) {
+      setLoginError("Vyplňte jméno a heslo.");
+      return;
     }
-
-    const form = document.querySelector(".admin-login-form");
-    if (!form) {
-      return undefined;
-    }
-
-    const loginFromForm = () => {
-      const formData = new FormData(form);
-      const username = String(formData.get("username") || "").trim().toLowerCase();
-      const password = String(formData.get("password") || "");
-
-      if (username === ADMIN_USER && password === ADMIN_PASSWORD) {
-        window.sessionStorage.setItem(ADMIN_SESSION_KEY, "true");
-        window.sessionStorage.setItem(ADMIN_AUTH_STORAGE_KEY, JSON.stringify({ username, password }));
-        setIsAuthenticated(true);
-        setLoginError("");
-        return true;
-      }
-
-      return false;
-    };
-
-    const submitLogin = (event) => {
-      event.preventDefault();
-
-      if (loginFromForm()) {
+    const controller = new AbortController();
+    loginRequestRef.current = controller;
+    const timeout = window.setTimeout(() => controller.abort(), 12000);
+    setIsLoggingIn(true);
+    setLoginError("");
+    try {
+      const response = await fetch("/api/admin-auth", {
+        method: "POST",
+        headers: { "X-Admin-User": username, "X-Admin-Password": password },
+        cache: "no-store",
+        signal: controller.signal
+      });
+      if (loginRequestRef.current !== controller) return;
+      if (response.status === 401) {
+        setLoginError("Zadané jméno nebo heslo nesedí.");
         return;
       }
-
-      setLoginError("Zadané jméno nebo heslo nesedí.");
-    };
-
-    const loginWhenComplete = () => {
-      loginFromForm();
-    };
-
-    const button = form.querySelector('button[type="submit"]');
-    form.addEventListener("submit", submitLogin);
-    form.addEventListener("input", loginWhenComplete);
-    button?.addEventListener("click", submitLogin);
-    return () => {
-      form.removeEventListener("submit", submitLogin);
-      form.removeEventListener("input", loginWhenComplete);
-      button?.removeEventListener("click", submitLogin);
-    };
-  }, [isAuthenticated]);
+      if (!response.ok || (await response.json()).authenticated !== true) throw new Error("Authentication unavailable");
+      if (loginRequestRef.current !== controller) return;
+      window.sessionStorage.setItem(ADMIN_SESSION_KEY, "true");
+      window.sessionStorage.setItem(ADMIN_AUTH_STORAGE_KEY, JSON.stringify({ username, password }));
+      setIsAuthenticated(true);
+      setLoginForm({ username: "", password: "" });
+    } catch {
+      if (loginRequestRef.current === controller) setLoginError("Přihlášení se nepodařilo ověřit. Zkuste to prosím znovu.");
+    } finally {
+      window.clearTimeout(timeout);
+      if (loginRequestRef.current === controller) {
+        loginRequestRef.current = null;
+        setIsLoggingIn(false);
+      }
+    }
+  };
 
   useEffect(() => {
     if (!isAuthenticated || isSpecial) {
@@ -2029,12 +1326,13 @@ function AdminPage() {
           <h1>Přihlášení</h1>
           <p>Po přihlášení můžete upravit denní menu i speciální nabídku ve všech jazycích.</p>
 
-          <form className="admin-login-form">
+          <form className="admin-login-form" onSubmit={handleLogin} aria-busy={isLoggingIn}>
             <label>
               Jméno
               <input
                 name="username"
                 autoComplete="username"
+                disabled={isLoggingIn}
                 value={loginForm.username}
                 onChange={(event) => setLoginForm((current) => ({ ...current, username: event.target.value }))}
               />
@@ -2045,13 +1343,14 @@ function AdminPage() {
                 name="password"
                 type="password"
                 autoComplete="current-password"
+                disabled={isLoggingIn}
                 value={loginForm.password}
                 onChange={(event) => setLoginForm((current) => ({ ...current, password: event.target.value }))}
               />
             </label>
-            {loginError ? <p className="admin-error">{loginError}</p> : null}
-            <button className="button button-primary" type="submit">
-              Přihlásit se
+            {loginError ? <p className="admin-error" role="alert">{loginError}</p> : null}
+            <button className="button button-primary" type="submit" disabled={isLoggingIn}>
+              {isLoggingIn ? "Ověřuji přihlášení…" : "Přihlásit se"}
             </button>
           </form>
         </section>

@@ -1,0 +1,179 @@
+/* A varied, food-led menu; prices and descriptions remain the original data. */
+.restaurant-site .rm-hero { display: grid; grid-template-columns: 1fr 1fr; align-items: center; min-height: 490px; padding-block: 45px 58px; gap: 20px; }
+.restaurant-site .rm-hero h1 { margin-top: 22px; font-size: clamp(48px, 5.3vw, 78px); color: var(--r-wine-deep); }
+.restaurant-site .rm-hero h1 em { display: block; color: var(--r-wine); font-weight: 400; }
+.restaurant-site .rm-hero-intro { max-width: 37ch; margin: 26px 0 16px; font-size: 15px; }
+.restaurant-site .rm-hero-art { position: relative; min-width: 0; height: 390px; }
+.restaurant-site .rm-hero-circle { position: absolute; width: 72%; aspect-ratio: 1; max-height: 350px; top: 10px; right: 7%; border-radius: 50% 50% 12% 50%; background: var(--r-wine-deep); }
+.restaurant-site .rm-hero-dish { position: absolute; width: 112%; max-width: none; left: -9%; top: 6%; height: 90%; object-fit: contain; filter: drop-shadow(0 22px 15px #4b38322b); transform: rotate(-9deg); }
+.restaurant-site .rm-hero-signature { position: absolute; top: 12px; left: 0; font: italic 36px/.95 var(--r-serif); color: var(--r-wine); transform: rotate(-9deg); }
+.restaurant-site .rm-hero-caption { position: absolute; bottom: -26px; right: 9%; text-align: right; font-size: 12px; line-height: 1.7; }
+.restaurant-site .rm-hero-caption > span { font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+.restaurant-site .rm-offers { display: grid; grid-template-columns: minmax(0,.65fr) minmax(0,1.35fr); gap: 24px; align-items: stretch; margin-bottom: 60px; }
+.restaurant-site .rm-offers-home { margin-top: 54px; margin-bottom: 70px; }
+.restaurant-site .rm-offer-topline { display: flex; align-items: center; gap: 17px; min-height: 29px; margin-bottom: 26px; }
+.restaurant-site .rm-offer-index { flex-shrink: 0; color: var(--r-wine); font: italic 25px/1 var(--r-serif); }
+.restaurant-site .rm-offer-kicker { font-size: 9px; font-weight: 600; line-height: 1.7; text-transform: uppercase; letter-spacing: .13em; }
+.restaurant-site .rm-offers h2 { color: var(--r-wine-deep); font-size: clamp(32px,3.1vw,42px); letter-spacing: -.035em; }
+.restaurant-site .rm-lunch { display: flex; flex-direction: column; align-items: stretch; min-width: 0; padding: 32px; border: 1px solid var(--r-line); background: #be9b7b12; }
+.restaurant-site .rm-lunch-signature { display: block; margin-block: auto; padding-block: 32px; color: var(--r-wine); font: italic 35px/1.15 var(--r-serif); }
+.restaurant-site .rm-lunch:hover { border-color: var(--r-champagne); background: #be9b7b24; }
+.restaurant-site .rm-lunch-link, .restaurant-site .rm-special-link { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 45px; font-size: 12px; font-weight: 600; color: var(--r-wine-deep); }
+.restaurant-site .rm-offer-arrow { display: grid; flex-shrink: 0; place-items: center; width: 42px; height: 42px; border: 1px solid var(--r-border-strong); border-radius: 50%; }
+.restaurant-site .rm-special { position: relative; display: flex; flex-direction: column; min-width: 0; padding: 32px; border: 1px solid var(--r-line); color: var(--r-ink); background: #fffbf5; }
+.restaurant-site .rm-special::before { position: absolute; top: -1px; left: 32px; width: 66px; height: 3px; background: var(--r-wine); content: ''; }
+.restaurant-site .rm-special-content { flex: 1; min-width: 0; }
+.restaurant-site .rm-special-with-photo .rm-special-content { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,.64fr); align-items: center; gap: 24px; }
+.restaurant-site .rm-special-copy { min-width: 0; }
+.restaurant-site .rm-special h2 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.restaurant-site .rm-special ul { list-style: none; margin: 24px 0 0; padding: 0; }
+.restaurant-site .rm-special li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 11px 0; border-top: 1px solid var(--r-line); font-size: 12px; line-height: 1.6; }
+.restaurant-site .rm-special li > span { min-width: 0; overflow-wrap: break-word; }
+.restaurant-site .rm-special li strong { flex-shrink: 0; color: var(--r-wine-deep); font-size: 11px; font-weight: 600; white-space: nowrap; }
+.restaurant-site .rm-special-photo { min-width: 0; align-self: center; text-align: center; }
+.restaurant-site .rm-special-photo img { width: 120%; max-width: none; height: auto; margin-left: -10%; transform: rotate(-7deg); filter: drop-shadow(0 12px 12px #4b38321a); }
+.restaurant-site .rm-special-photo figcaption { position: relative; margin-top: 10px; color: var(--r-wine-deep); font: italic 18px/1.3 var(--r-serif); }
+.restaurant-site .rm-special-photo small { display: block; margin-top: 8px; color: var(--r-muted); font: 400 9px/1.6 var(--r-sans); }
+.restaurant-site .rm-special-link { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--r-line); }
+.restaurant-site .rm-special-link:hover { color: var(--r-wine); }
+.restaurant-site .rm-special-status { max-width: 45ch; min-height: 78px; margin-top: 24px; font-size: 13px; line-height: 1.8; }
+.restaurant-site .rm-special :where(a,button):focus-visible { outline-color: var(--r-wine); }
+.restaurant-site .rm-category-bar { position: sticky; top: 96px; z-index: 30; border-block: 1px solid var(--r-line); background: #fff4e6f5; backdrop-filter: blur(12px); scroll-margin-top: 14px; }
+.restaurant-site .rm-category-bar > div { display: flex; gap: 8px; overflow-x: auto; padding-block: 12px; scrollbar-width: thin; }
+.restaurant-site .rm-category-bar a { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-height: 42px; padding: 8px 17px; border: 1px solid transparent; border-radius: 24px; font-size: 12px; line-height: 1.4; white-space: nowrap; }
+.restaurant-site .rm-category-bar a:hover { border-color: var(--r-line); }
+.restaurant-site .rm-category-bar a[aria-current] { background: var(--r-wine-deep); color: var(--r-ivory); }
+.restaurant-site .rm-chapters { padding-block: 68px 85px; }
+.restaurant-site .rm-chapter { margin-bottom: 76px; scroll-margin-top: 94px; }
+.restaurant-site .rm-chapter-heading { position: relative; isolation: isolate; margin-bottom: 26px; padding: 36px 46px; border: 0; background: var(--r-wine-deep); color: var(--r-ivory); }
+.restaurant-site .rm-chapter-heading > div { position: relative; z-index: 1; padding-left: 70px; }
+.restaurant-site .rm-chapter-number { position: absolute; left: 0; top: 0; color: var(--r-champagne); font: italic 34px/1.2 var(--r-serif); }
+.restaurant-site .rm-chapter-heading > img { transform: rotate(var(--rm-photo-angle, -7deg)); transform-origin: center; }
+.restaurant-site .rm-chapter-salads, .restaurant-site .rm-chapter-meat { --rm-photo-angle: 6deg; }
+.restaurant-site .rm-chapter-pasta, .restaurant-site .rm-chapter-sides { --rm-photo-angle: -10deg; }
+.restaurant-site .rm-chapter-wine { --rm-photo-angle: -4deg; }
+.restaurant-site .rm-chapter-spirits { --rm-photo-angle: 4deg; }
+.restaurant-site .rm-chapter-heading :is(h2,.r-eyebrow) { color: var(--r-ivory); }
+.restaurant-site .rm-chapter-heading h2 { margin-top: 7px; font-size: 43px; }
+.restaurant-site .rm-illustrated-dish { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 8px 14px; margin-top: 23px; padding-bottom: 6px; border-bottom: 1px solid currentColor; font-size: 12px; line-height: 1.6; }
+.restaurant-site .rm-illustrated-dish strong { white-space: nowrap; font-size: 11px; font-weight: 500; }
+.restaurant-site .rm-illustrated-dish svg { align-self: center; }
+.restaurant-site .rm-image-note { display: block; margin-top: 8px; font-size: 9px; opacity: .7; }
+.restaurant-site .rm-chapter-photo { scroll-margin-top: 126px; }
+.restaurant-site .rm-chapter-photo > .rm-chapter-heading { display: flex; align-items: center; justify-content: space-between; min-height: 330px; gap: 25px; }
+.restaurant-site .rm-chapter-photo .rm-chapter-heading > div { width: 50%; padding-left: 0; }
+.restaurant-site .rm-chapter-photo .rm-chapter-number { position: static; display: block; margin-bottom: 16px; font-size: 20px; }
+.restaurant-site .rm-chapter-photo .rm-chapter-heading > img { position: absolute; width: 56%; height: 123%; max-height: none; right: -3%; top: -14%; object-fit: contain; filter: drop-shadow(0 12px 12px #4b38321a); }
+.restaurant-site .rm-chapter-drinks .rm-chapter-heading > img, .restaurant-site .rm-chapter-spirits .rm-chapter-heading > img { top: 0; height: 100%; padding: 20px; }
+.restaurant-site .rm-dishes { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 0 60px; }
+.restaurant-site .rm-dish { min-width: 0; padding: 19px 0; border-bottom: 1px solid var(--r-line); scroll-margin-top: 94px; }
+.restaurant-site .rm-dish:target { background: #be9b7b26; box-shadow: 12px 0 #be9b7b26, -12px 0 #be9b7b26; }
+.restaurant-site .rm-dish-line { display: flex; align-items: baseline; gap: 12px; }
+.restaurant-site .rm-dish h3 { font: 600 14px/1.65 var(--r-sans); text-wrap: initial; }
+.restaurant-site .rm-dish-line > span { flex: 1; min-width: 10px; border-bottom: 1px dotted var(--r-border-strong); opacity: .65; }
+.restaurant-site .rm-dish strong { flex-shrink: 0; max-width: 95px; color: var(--r-wine-deep); font-size: 13px; line-height: 1.6; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+.restaurant-site .rm-dish p { max-width: 90%; margin-top: 4px; font-size: 12px; line-height: 1.75; }
+.restaurant-site .rm-chapter-featured > .rm-chapter-heading { display: flex; align-items: center; justify-content: space-between; min-height: 330px; margin-bottom: 16px; padding: 36px 46px; border: 0; background: var(--r-wine-deep); }
+.restaurant-site .rm-chapter-featured .rm-chapter-heading > div { width: 55%; padding-left: 0; z-index: 1; }
+.restaurant-site .rm-chapter-featured .rm-chapter-number { position: static; display: block; margin-bottom: 16px; font-size: 20px; }
+.restaurant-site .rm-chapter-featured .rm-chapter-heading h2 { font-size: clamp(40px, 4.5vw, 62px); }
+.restaurant-site .rm-chapter-description { max-width: 30ch; margin-top: 17px; font-size: 14px; line-height: 1.6; }
+.restaurant-site .rm-chapter-featured .rm-chapter-heading > img { position: absolute; width: 56%; height: 123%; right: -3%; top: -14%; object-fit: contain; filter: drop-shadow(0 18px 16px #4b38321c); pointer-events: none; }
+.restaurant-site .rm-chapter-pasta > .rm-chapter-heading { background: var(--r-wine-deep); color: var(--r-ivory); }
+.restaurant-site .rm-chapter-pasta .rm-chapter-heading :is(h2,.r-eyebrow) { color: var(--r-ivory); }
+.restaurant-site .rm-chapter-pizza > .rm-chapter-heading { min-height: 320px; justify-content: flex-end; background: var(--r-wine-deep); }
+.restaurant-site .rm-chapter-pizza .rm-chapter-heading > div { width: 44%; }
+.restaurant-site .rm-chapter-pizza .rm-chapter-heading > img { left: -5%; right: auto; width: 61%; transform: rotate(-12deg); }
+.restaurant-site .rm-chapter-salads, .restaurant-site .rm-chapter-sides { padding: 0; background: transparent; }
+.restaurant-site .rm-chapter-sides .rm-dishes { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0 30px; }
+.restaurant-site .rm-chapter-desserts { display: grid; grid-template-columns: .9fr 1.1fr; gap: 7%; align-items: start; }
+.restaurant-site .rm-chapter-desserts > .rm-chapter-heading { display: block; min-height: 650px; padding: 35px 25px; background: var(--r-wine-deep); }
+.restaurant-site .rm-chapter-desserts .rm-chapter-heading > div { width: 100%; }
+.restaurant-site .rm-chapter-desserts .rm-chapter-heading > img { width: 120%; height: 330px; right: -10%; top: 305px; }
+.restaurant-site .rm-chapter-desserts .rm-dishes { grid-template-columns: 1fr; }
+.restaurant-site .rm-chapter-wine > .rm-chapter-heading { display: flex; min-height: 410px; align-items: center; padding: 40px; border: 0; background: var(--r-wine-deep); color: var(--r-ivory); overflow: hidden; }
+.restaurant-site .rm-chapter-wine .rm-chapter-heading > div { width: 60%; z-index: 1; padding-left: 60px; }
+.restaurant-site .rm-chapter-wine .rm-chapter-heading :is(h2,.r-eyebrow) { color: var(--r-ivory); }
+.restaurant-site .rm-chapter-wine .rm-chapter-description { display: flex; align-items: center; gap: 10px; }
+.restaurant-site .rm-chapter-wine .rm-chapter-heading > img { position: absolute; right: 0; top: 0; width: 45%; height: 100%; padding: 12px; object-fit: contain; filter: drop-shadow(0 14px 10px #0002); }
+.restaurant-site .rm-chapter-heading a:focus-visible { outline-color: var(--r-ivory); }
+.restaurant-site .rm-allergy { padding: 24px; border-block: 1px solid var(--r-line); text-align: center; font-size: 12px; }
+@media (max-width: 1100px) {
+  .restaurant-site .rm-category-bar { top: 92px; }
+  .restaurant-site .rm-hero-art { height: 330px; }
+  .restaurant-site .rm-hero-circle { top: 30px; }
+  .restaurant-site .rm-offers { grid-template-columns: minmax(0,.7fr) minmax(0,1.3fr); gap: 18px; }
+  .restaurant-site .rm-lunch, .restaurant-site .rm-special { padding: 26px; }
+  .restaurant-site .rm-offers h2 { font-size: 32px; }
+  .restaurant-site .rm-special::before { left: 26px; }
+  .restaurant-site .rm-special-with-photo .rm-special-content { grid-template-columns: minmax(0,1fr) minmax(0,.55fr); gap: 16px; }
+  .restaurant-site .rm-special-photo figcaption { font-size: 16px; }
+  .restaurant-site .rm-dishes { gap: 0 32px; }
+  .restaurant-site .rm-chapter-sides .rm-dishes { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 760px) {
+  .restaurant-site .rm-category-bar { top: 84px; }
+  .restaurant-site .rm-hero { grid-template-columns: 1fr; gap: 0; padding-block: 40px 20px; min-height: 0; }
+  .restaurant-site .rm-hero h1 { font-size: clamp(46px,10vw,68px); margin-top: 15px; }
+  .restaurant-site .rm-hero-intro { font-size: 14px; margin-block: 20px 8px; }
+  .restaurant-site .rm-hero-art { height: 270px; margin-top: 5px; }
+  .restaurant-site .rm-hero-circle { width: 66%; max-width: 260px; top: 20px; right: 8%; }
+  .restaurant-site .rm-hero-dish { width: 100%; left: -3%; top: 0; height: 100%; }
+  .restaurant-site .rm-hero-signature { top: 12px; left: 0; font-size: 26px; }
+  .restaurant-site .rm-hero-caption { bottom: 0; right: 0; font-size: 10px; }
+  .restaurant-site .rm-hero-caption > span { font-size: 8px; }
+  .restaurant-site .rm-offers { grid-template-columns: 1fr; gap: 18px; margin-bottom: 36px; }
+  .restaurant-site .rm-offer-topline { margin-bottom: 19px; gap: 14px; }
+  .restaurant-site .rm-offer-index { font-size: 22px; }
+  .restaurant-site .rm-lunch { padding: 24px; }
+  .restaurant-site .rm-lunch-signature { padding-block: 20px 16px; font-size: 29px; }
+  .restaurant-site .rm-special { padding: 24px; }
+  .restaurant-site .rm-special::before { left: 24px; }
+  .restaurant-site .rm-offers h2 { font-size: 34px; }
+  .restaurant-site .rm-special-with-photo .rm-special-content { grid-template-columns: minmax(0,1fr); gap: 16px; }
+  .restaurant-site .rm-special-photo { width: min(250px,85%); margin-inline: auto; }
+  .restaurant-site .rm-special-photo img { width: 110%; margin-left: -5%; }
+  .restaurant-site .rm-special-photo figcaption { margin-top: 0; font-size: 18px; }
+  .restaurant-site .rm-special ul { margin-top: 22px; }
+  .restaurant-site .rm-special li { gap: 14px; padding-block: 12px; }
+  .restaurant-site .rm-special-link { margin-top: 20px; }
+  .restaurant-site .rm-category-bar > div { padding-block: 8px; width: calc(100% - 32px); gap: 4px; }
+  .restaurant-site .rm-category-bar a { min-height: 42px; padding-inline: 14px; }
+  .restaurant-site .rm-chapters { padding-block: 40px 48px; }
+  .restaurant-site .rm-chapter { margin-bottom: 48px; scroll-margin-top: 69px; }
+  .restaurant-site .rm-chapter-heading { padding-bottom: 20px; margin-bottom: 8px; }
+  .restaurant-site .rm-chapter-heading > div { padding-left: 45px; }
+  .restaurant-site .rm-chapter-number { font-size: 25px; }
+  .restaurant-site .rm-chapter-heading h2 { font-size: 37px; }
+  .restaurant-site .rm-chapter-photo > .rm-chapter-heading { display: flex; flex-direction: column; gap: 0; min-height: 0; padding: 25px 25px 0; }
+  .restaurant-site .rm-chapter-photo .rm-chapter-heading > div { width: 100%; }
+  .restaurant-site .rm-chapter-photo .rm-chapter-number { margin-bottom: 8px; }
+  .restaurant-site .rm-chapter-photo .rm-chapter-heading > img { position: relative; display: block; width: 120%; height: 230px; top: auto; right: auto; margin-top: 18px; }
+  .restaurant-site .rm-illustrated-dish { margin-top: 16px; }
+  .restaurant-site .rm-dishes { grid-template-columns: 1fr; }
+  .restaurant-site .rm-dish { padding-block: 17px; scroll-margin-top: 69px; }
+  .restaurant-site .rm-dish-line { gap: 9px; }
+  .restaurant-site .rm-dish h3 { font-size: 14px; }
+  .restaurant-site .rm-dish p { max-width: 100%; }
+  .restaurant-site .rm-chapter-featured > .rm-chapter-heading { display: flex; flex-direction: column; min-height: 0; padding: 25px 25px 0; margin-bottom: 10px; }
+  .restaurant-site .rm-chapter-featured .rm-chapter-heading > div { width: 100%; }
+  .restaurant-site .rm-chapter-featured .rm-chapter-number { margin-bottom: 8px; }
+  .restaurant-site .rm-chapter-featured .rm-chapter-heading h2 { font-size: 40px; }
+  .restaurant-site .rm-chapter-description { font-size: 13px; margin-top: 12px; }
+  .restaurant-site .rm-chapter-featured .rm-chapter-heading > img { position: relative; width: 120%; height: 230px; top: auto; bottom: auto; right: auto; left: auto; margin-top: 12px; }
+  .restaurant-site .rm-chapter-pizza > .rm-chapter-heading { min-height: 0; }
+  .restaurant-site .rm-chapter-pizza .rm-chapter-heading > img { width: 125%; }
+  .restaurant-site .rm-chapter-salads, .restaurant-site .rm-chapter-sides { padding: 0; }
+  .restaurant-site .rm-chapter-sides .rm-dishes { grid-template-columns: 1fr; }
+  .restaurant-site .rm-chapter-desserts { display: block; }
+  .restaurant-site .rm-chapter-desserts > .rm-chapter-heading { min-height: 0; }
+  .restaurant-site .rm-chapter-desserts .rm-chapter-heading > img { width: 120%; height: 230px; }
+  .restaurant-site .rm-chapter-wine > .rm-chapter-heading { display: flex; flex-direction: column; min-height: 0; padding: 28px 22px 0; }
+  .restaurant-site .rm-chapter-wine .rm-chapter-heading > div { width: 100%; padding-left: 0; }
+  .restaurant-site .rm-chapter-wine .rm-chapter-number { position: static; display: block; margin-bottom: 8px; }
+  .restaurant-site .rm-chapter-wine .rm-chapter-heading > img { position: relative; width: 100%; height: 320px; margin-top: 20px; object-fit: cover; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .restaurant-site .rm-hero-dish { animation: rm-arrive .8s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes rm-arrive { from { opacity: 0; transform: translateY(18px) rotate(-9deg); } to { opacity: 1; transform: translateY(0) rotate(-9deg); } }
+}

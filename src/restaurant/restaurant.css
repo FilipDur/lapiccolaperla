@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap');
-
 .restaurant-site {
   --r-ivory: #fff4e6;
   --r-wine: #940b0b;
@@ -268,9 +266,6 @@
 .restaurant-site .r-footer-bottom nav a { display: inline-flex; min-height: 32px; align-items: center; }
 .restaurant-site .r-footer-legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; padding: 0 0 27px; color: var(--r-muted); font-size: 11px; line-height: 1.8; }
 .restaurant-site .r-footer-legal a { text-decoration: underline; text-underline-offset: 3px; }
-.restaurant-site .r-cookie-notice { position: fixed; right: 22px; bottom: 22px; z-index: 50; display: flex; max-width: 545px; align-items: center; gap: 22px; padding: 21px 24px; border: 1px solid var(--r-line); border-radius: 3px; background: var(--r-paper); color: var(--r-wine); box-shadow: 0 10px 40px #67140b17; }
-.restaurant-site .r-cookie-notice > p { margin: 0; font-size: 12px; line-height: 1.8; }
-.restaurant-site .r-cookie-notice .r-button { min-height: 44px; padding: 11px 19px; font-size: 12px; }
 .restaurant-site .r-lightbox { position: fixed; inset: 0; width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; padding: 60px 95px; border: 0; background: #4b3832f7; color: white; }
 .restaurant-site .r-lightbox[open] { display: flex; justify-content: center; align-items: center; }
 .restaurant-site .r-lightbox::backdrop { background: #4b3832; }
@@ -403,9 +398,6 @@
   .restaurant-site .r-footer-top > .r-text-link { font-size: 12px; margin-left: auto; gap: 10px; }
   .restaurant-site .r-footer-bottom { align-items: start; flex-direction: column; gap: 8px; padding-block: 20px; }
   .restaurant-site .r-footer-bottom nav { gap: 24px; flex-wrap: wrap; }
-  .restaurant-site .r-cookie-notice { right: 12px; bottom: 12px; left: 12px; max-width: none; gap: 16px; padding: 16px; }
-  .restaurant-site .r-cookie-notice > p { font-size: 12px; line-height: 1.7; }
-  .restaurant-site .r-cookie-notice .r-button { padding-inline: 14px; font-size: 11px; }
   .restaurant-site .r-lightbox { padding: 70px 16px 95px; }
   .restaurant-site .r-lightbox figure > img { max-height: calc(100dvh - 210px); }
   .restaurant-site .r-lightbox figcaption { font-size: 12px; }

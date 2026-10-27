@@ -73,16 +73,6 @@ const photoData = [
 const languageCodes = ["cs", "en", "it"];
 const SITE_URL = "https://lapiccolaperla.cz";
 const SEO_IMAGE_URL = `${SITE_URL}/og-la-piccola-perla.webp`;
-const LANGUAGE_PREFERENCE_KEY = "la-piccola-perla-language";
-
-const saveStoredLanguage = (language) => {
-  try {
-    window.localStorage?.setItem(LANGUAGE_PREFERENCE_KEY, language);
-  } catch {
-    // URL-based language selection also works without local storage.
-  }
-};
-
 const seoByLanguage = {
   cs: {
     path: "/",
@@ -1030,10 +1020,6 @@ const getCookieNoticeAccepted = () => {
     return true;
   }
 
-  if (typeof navigator !== "undefined" && navigator.cookieEnabled === false) {
-    return true;
-  }
-
   try {
     return window.localStorage?.getItem(COOKIE_NOTICE_STORAGE_KEY) === "accepted";
   } catch {
@@ -1082,9 +1068,16 @@ function PublicSite() {
   const menuCategories = useMemo(() => getLocalizedMenuCategories(language), [language]);
   const menus = usePublicMenus(language);
   const [cookieNoticeAccepted, setCookieNoticeAccepted] = useState(getCookieNoticeAccepted);
+  useEffect(() => {
+    try {
+      // The URL determines the language; remove the old, unused preference.
+      window.localStorage?.removeItem("la-piccola-perla-language");
+    } catch {
+      // Public pages still work when browser storage is unavailable.
+    }
+  }, []);
   const handleLanguageSelect = useCallback((code) => {
     if (!languageCodes.includes(code)) return;
-    saveStoredLanguage(code);
     setLanguage(code);
   }, []);
   const acceptCookieNotice = () => {

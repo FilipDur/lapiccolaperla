@@ -6,7 +6,7 @@ import { getRestaurantDate } from '../src/lib/restaurantDate.js';
 
 test('public links resolve to the same page in every supported language', () => {
   for (const language of ['cs', 'en', 'it']) {
-    for (const page of ['home', 'menu', 'special', 'about', 'gallery', 'contact']) {
+    for (const page of ['home', 'menu', 'special', 'about', 'gallery', 'contact', 'privacy']) {
       const href = routeHref(page, language);
       assert.deepEqual(parseRoute(href), { page, language }, href);
       assert.deepEqual(parseRoute(`${href}/`), { page, language }, `${href}/`);

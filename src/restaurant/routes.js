@@ -1,6 +1,6 @@
 export const restaurantRoutes = Object.freeze({
   home: "", menu: "menu", daily: "denni-menu", special: "specialni-menu",
-  about: "o-nas", gallery: "galerie", contact: "kontakt"
+  about: "o-nas", gallery: "galerie", contact: "kontakt", privacy: "ochrana-soukromi"
 });
 
 const hashPages = {

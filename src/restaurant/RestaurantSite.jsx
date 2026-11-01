@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ArrowRight, ArrowLeft, Menu, X, Phone, MapPin, Clock, CalendarDays, ChevronDown, Plus, Pause, Play } from "lucide-react";
 import { parseRoute, routeHref } from "./routes.js";
+import { applyPageSeo, getRedirectUrl } from "./seo.js";
 import { usePhotoDepth } from "./usePhotoDepth.js";
 import GoogleReviews from "./GoogleReviews.jsx";
 import RestaurantMenu, { MenuOffers } from "./RestaurantMenu.jsx";
 import SpecialMenuPage from "./SpecialMenuPage.jsx";
-import CookiePrivacy, { privacyUi } from "./CookiePrivacy.jsx";
+import CookiePrivacy, { PrivacySettingsButton } from "./CookiePrivacy.jsx";
 import PrivacyPage from "./PrivacyPage.jsx";
 import "@fontsource/dm-serif-display/400.css";
 import "@fontsource/dm-serif-display/400-italic.css";
@@ -17,7 +18,6 @@ import "./restaurant.css";
 
 const BOOKING = "https://la-piccola-perla.choiceqr.com/takeaway/booking";
 const GOOGLE = "https://www.google.com/maps?cid=218766933573814212";
-const SITE_URL = "https://lapiccolaperla.cz";
 const UI = {
   cs: {
     pages: { home: "Úvod", menu: "Jídelní lístek", daily: "Denní menu", special: "Speciální menu", about: "O restauraci", gallery: "Galerie", contact: "Kontakt", privacy: "Ochrana soukromí", notFound: "Stránka nenalezena" },
@@ -94,8 +94,8 @@ function ContactDetails({ t, copy, large = false }) {
   return <div className={`r-contact-details${large ? " r-contact-large" : ""}`}><div><MapPin size={21} strokeWidth={1.5} /><p className="r-detail-label">{t.address}</p><p>Perlová 412/1<br />110 00 Praha 1</p><a className="r-text-link" href={GOOGLE} target="_blank" rel="noopener noreferrer">{t.map}<ArrowUpRight size={17} /></a></div><div><Clock size={21} strokeWidth={1.5} /><p className="r-detail-label">{t.hours}</p><p>11:00–23:00</p></div><div><Phone size={21} strokeWidth={1.5} /><p className="r-detail-label">{t.phone}</p><a className="r-contact-phone" href="tel:+420224282537">+420 224 282 537</a><a className="r-text-link" href={BOOKING} target="_blank" rel="noopener noreferrer">{t.reserve}<ArrowUpRight size={17} /></a></div></div>;
 }
 
-export default function RestaurantSite({ language = "cs", copy = {}, menuCategories = [], photos = [], dailyItems = [], dailyStatus = "loading", specialItems = [], specialStatus = "loading", today, onLanguageSelect, cookieNoticeAccepted, onAcceptCookies, applyLanguageSeo }) {
-  const [route, setRoute] = useState(() => parseRoute(window.location.pathname, window.location.hash));
+export default function RestaurantSite({ language = "cs", initialPath, copy = {}, menuCategories = [], photos = [], dailyItems = [], dailyStatus = "loading", specialItems = [], specialStatus = "loading", today, onLanguageSelect }) {
+  const [route, setRoute] = useState(() => parseRoute(initialPath || (typeof window === "undefined" ? routeHref("home", language) : window.location.pathname)));
   const [mobileOpen, setMobileOpen] = useState(false);
   const [heroMotionPaused, setHeroMotionPaused] = useState(false);
   const [cookieDetailsOpen, setCookieDetailsOpen] = useState(false);
@@ -119,6 +119,11 @@ export default function RestaurantSite({ language = "cs", copy = {}, menuCategor
   const navPages = ["home", ...(activeLanguage === "cs" ? ["daily"] : []), "menu", "special", "about", "gallery", "contact"];
 
   useEffect(() => {
+    const canonicalTarget = getRedirectUrl(window.location.href);
+    if (canonicalTarget) {
+      window.location.replace(canonicalTarget);
+      return undefined;
+    }
     const syncRoute = () => {
       const next = parseRoute(window.location.pathname, window.location.hash);
       setRoute(next);
@@ -126,7 +131,7 @@ export default function RestaurantSite({ language = "cs", copy = {}, menuCategor
       setActivePhoto(null);
       callbackRef.current?.(next.language);
       const aliases = ["#daily-menu", "#special-menu", "#reservation", "#about", "#gallery", "#menu", "#contact"];
-      if (next.page !== "notFound" && (aliases.includes(window.location.hash) || next.page === "daily" && window.location.pathname !== "/denni-menu")) window.history.replaceState({}, "", routeHref(next.page, next.language));
+      if (next.page !== "notFound" && (aliases.includes(window.location.hash) || next.page === "daily" && window.location.pathname !== "/denni-menu")) window.history.replaceState({}, "", routeHref(next.page, next.language) + window.location.search);
     };
     syncRoute();
     window.addEventListener("popstate", syncRoute);
@@ -135,24 +140,8 @@ export default function RestaurantSite({ language = "cs", copy = {}, menuCategor
   }, []);
 
   useEffect(() => {
-    applyLanguageSeo?.(activeLanguage);
-    document.documentElement.lang = activeLanguage;
-    const title = route.page === "home" ? (copy.title || "La Piccola Perla — Ristorante italiano, Praha") : `${t.pages[route.page]} | La Piccola Perla`;
-    document.title = title;
-    const canonical = `${SITE_URL}${routeHref(route.page, activeLanguage)}`;
-    const setHead = (selector, tag, attrs) => {
-      let element = document.head.querySelector(selector);
-      if (!element) { element = document.createElement(tag); document.head.appendChild(element); }
-      Object.entries(attrs).forEach(([name, value]) => element.setAttribute(name, value));
-    };
-    setHead('link[rel="canonical"]', "link", { rel: "canonical", href: canonical });
-    setHead('meta[property="og:title"]', "meta", { property: "og:title", content: title });
-    setHead('meta[property="og:url"]', "meta", { property: "og:url", content: canonical });
-    setHead('meta[name="robots"]', "meta", { name: "robots", content: route.page === "notFound" ? "noindex, follow" : "index, follow, max-image-preview:large" });
-    for (const code of ["cs", "en", "it", "x-default"]) {
-      setHead(`link[rel="alternate"][hreflang="${code}"]`, "link", { rel: "alternate", hreflang: code, href: `${SITE_URL}${routeHref(route.page, code)}` });
-    }
-  }, [route.page, activeLanguage, copy.title, applyLanguageSeo, t]);
+    applyPageSeo(route.page, activeLanguage, { hasSpecialMenu: specialItems.length > 0 });
+  }, [route.page, activeLanguage, specialItems.length]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -264,7 +253,7 @@ export default function RestaurantSite({ language = "cs", copy = {}, menuCategor
       <ContactDetails t={t} copy={copy} />
       <div className="r-footer-bottom"><p>© {new Date().getFullYear()} La Piccola Perla</p><nav aria-label={copy.footerAria || t.pages.contact}>
         {["menu", "about", "gallery", "contact", "privacy"].map((page) => <a key={page} href={href(page)}>{t.pages[page]}</a>)}
-        <button type="button" onClick={() => setCookieDetailsOpen(true)}>{privacyUi[activeLanguage].title}</button>
+        <PrivacySettingsButton language={activeLanguage} onClick={() => setCookieDetailsOpen(true)} />
       </nav></div>
       <div className="r-footer-legal">
         <span>{copy.legal?.operator || "Provozovatel"}: B &amp; D DINAMIC, s.r.o.</span><span>{copy.legal?.registeredOffice || "Sídlo"}: Perlová 1020/8, Praha 1</span><span>{copy.legal?.companyId || "IČO"}: 26764776 · {copy.legal?.vatId || "DIČ"}: CZ26764776</span><a href="mailto:la.piccola.perla@email.cz">la.piccola.perla@email.cz</a>
@@ -272,7 +261,7 @@ export default function RestaurantSite({ language = "cs", copy = {}, menuCategor
       </div>
     </div></footer>
 
-    <CookiePrivacy language={activeLanguage} noticeAccepted={cookieNoticeAccepted} onAcknowledge={onAcceptCookies} detailsOpen={cookieDetailsOpen} onOpenDetails={() => setCookieDetailsOpen(true)} onCloseDetails={() => setCookieDetailsOpen(false)} hideNotice={route.page === "privacy"} />
+    <CookiePrivacy language={activeLanguage} pathname={routeHref(route.page, activeLanguage)} detailsOpen={cookieDetailsOpen} onOpenDetails={() => setCookieDetailsOpen(true)} onCloseDetails={() => setCookieDetailsOpen(false)} hideNotice={route.page === "privacy"} />
 
     <dialog ref={dialogRef} className="r-lightbox" aria-label={t.pages.gallery} onCancel={(event) => { event.preventDefault(); setActivePhoto(null); }} onClose={() => setActivePhoto(null)} onClick={(event) => { if (event.target === event.currentTarget) setActivePhoto(null); }} onKeyDown={(event) => { if (event.key === "ArrowLeft") { event.preventDefault(); nextPhoto(-1); } if (event.key === "ArrowRight") { event.preventDefault(); nextPhoto(1); } }}>
       {activePhoto && <><button className="r-lightbox-close r-icon-button" aria-label={t.close} onClick={() => setActivePhoto(null)} autoFocus><X size={24} /></button><button className="r-lightbox-prev r-icon-button" aria-label={t.previous} onClick={() => nextPhoto(-1)}><ArrowLeft /></button><figure><Picture photo={activePhoto} eager /><figcaption>{activePhoto.title}<span>{lightboxPhotos.findIndex((photo) => photo.file === activePhoto.file) + 1} / {lightboxPhotos.length}</span></figcaption></figure><button className="r-lightbox-next r-icon-button" aria-label={t.next} onClick={() => nextPhoto(1)}><ArrowRight /></button></>}

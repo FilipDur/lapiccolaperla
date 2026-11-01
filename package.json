@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.js",
     "optimize-images": "node scripts/optimize-images.mjs",
     "preview": "vite preview"
@@ -13,6 +13,7 @@
   "dependencies": {
     "@fontsource/dm-serif-display": "^5.3.0",
     "@fontsource/manrope": "^5.3.0",
+    "@vercel/functions": "^3.10.5",
     "@vitejs/plugin-react": "^5.0.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
@@ -23,6 +24,7 @@
     "vite": "^6.0.1"
   },
   "devDependencies": {
-    "sharp": "^0.34.5"
-  }
+    "sharp": "^0.35.5"
+  },
+  "overrides": { "zod": "^4.6.6" }
 }

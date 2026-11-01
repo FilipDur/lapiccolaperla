@@ -8,6 +8,13 @@ const hashPages = {
   about: "about", gallery: "gallery", menu: "menu", contact: "contact"
 };
 
+const legacySlugs = {
+  "copy-of-home": "menu", gallery: "galerie", "specialni-nabidka": "specialni-menu",
+  about: "o-nas", contact: "kontakt", specials: "specialni-menu",
+  ristorante: "o-nas", galleria: "galerie", contatti: "kontakt", specialita: "specialni-menu",
+  rezervace: "kontakt", reservation: "kontakt", prenotazioni: "kontakt"
+};
+
 /** Resolve public URLs without browser globals; daily offers are Czech only. */
 export function parseRoute(pathname = "/", hash = "") {
   let value = String(pathname || "/");
@@ -29,7 +36,9 @@ export function parseRoute(pathname = "/", hash = "") {
   let parts = clean.split("/").filter(Boolean);
   if (["en", "it", "cs"].includes(parts[0])) language = parts.shift();
   let slug = legacy || ["index.html", "index-en.html", "index-it.html"].includes(clean) ? "" : parts.join("/");
-  if (slug === "index.html") slug = "";
+  if (slug === "index.html" || slug === "index") slug = "";
+  slug = slug.replace(/\.html$/, "");
+  if (Object.hasOwn(legacySlugs, slug)) slug = legacySlugs[slug];
   let page = Object.entries(restaurantRoutes).find(([, path]) => path === slug)?.[0] || "notFound";
   const hashKey = String(hash).replace(/^#/, "");
   const alias = Object.hasOwn(hashPages, hashKey) ? hashPages[hashKey] : undefined;

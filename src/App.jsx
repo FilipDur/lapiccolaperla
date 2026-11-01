@@ -12,6 +12,7 @@ import {
   X
 } from "lucide-react";
 import { menuCategories as baseMenuCategories } from "./data/menu";
+import { localizeMenuName } from "./data/menuNames.js";
 import { seededDailyMenus } from "./data/dailyMenuSeed";
 import SpecialMenuEditor from "./components/SpecialMenuEditor";
 import MenuPrintSheet, { MenuPrintItems } from "./components/MenuPrintSheet";
@@ -72,33 +73,6 @@ const photoData = [
 
 const languageCodes = ["cs", "en", "it"];
 const SITE_URL = "https://lapiccolaperla.cz";
-const SEO_IMAGE_URL = `${SITE_URL}/og-la-piccola-perla.webp`;
-const seoByLanguage = {
-  cs: {
-    path: "/",
-    htmlLang: "cs",
-    locale: "cs_CZ",
-    title: "Italská restaurace Praha 1 | La Piccola Perla",
-    description: "Italská restaurace v Praze 1 u Staroměstského náměstí. Užijte si pastu, pizzu, mořské plody a víno. Prohlédněte si menu a rezervujte stůl."
-  },
-  en: {
-    path: "/en",
-    htmlLang: "en",
-    locale: "en_US",
-    title: "Italian Restaurant in Prague | La Piccola Perla",
-    description: "Italian restaurant in Prague Old Town near Old Town Square. Enjoy pasta, pizza, seafood and Italian wine. Explore the menu and book your table online."
-  },
-  it: {
-    path: "/it",
-    htmlLang: "it",
-    locale: "it_IT",
-    title: "Ristorante italiano a Praga | La Piccola Perla",
-    description: "Ristorante italiano nel centro storico di Praga, vicino alla Piazza della Città Vecchia. Pasta, pizza, pesce e vini italiani. Prenota online."
-  }
-};
-
-const getCanonicalUrl = (language) => `${SITE_URL}${seoByLanguage[language].path}`;
-
 const setMetaTag = (attribute, key, content) => {
   let element = document.head.querySelector(`meta[${attribute}="${key}"]`);
 
@@ -120,39 +94,6 @@ const setLinkTag = (selector, attributes) => {
   }
 
   Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, value));
-};
-
-const applyPublicSeo = (language) => {
-  const seo = seoByLanguage[language] || seoByLanguage.cs;
-  const canonicalUrl = getCanonicalUrl(language);
-
-  document.documentElement.lang = seo.htmlLang;
-  document.title = seo.title;
-
-  setMetaTag("name", "description", seo.description);
-  setMetaTag("name", "robots", "index, follow, max-image-preview:large");
-  setMetaTag("property", "og:title", seo.title);
-  setMetaTag("property", "og:description", seo.description);
-  setMetaTag("property", "og:url", canonicalUrl);
-  setMetaTag("property", "og:locale", seo.locale);
-  setMetaTag("property", "og:image", SEO_IMAGE_URL);
-  setMetaTag("name", "twitter:title", seo.title);
-  setMetaTag("name", "twitter:description", seo.description);
-  setMetaTag("name", "twitter:image", SEO_IMAGE_URL);
-
-  setLinkTag('link[rel="canonical"]', { rel: "canonical", href: canonicalUrl });
-  languageCodes.forEach((code) => {
-    setLinkTag(`link[rel="alternate"][hreflang="${code}"]`, {
-      rel: "alternate",
-      hreflang: code,
-      href: getCanonicalUrl(code)
-    });
-  });
-  setLinkTag('link[rel="alternate"][hreflang="x-default"]', {
-    rel: "alternate",
-    hreflang: "x-default",
-    href: getCanonicalUrl("cs")
-  });
 };
 
 const applyAdminSeo = () => {
@@ -899,6 +840,7 @@ const getLocalizedMenuCategories = (language) => {
       accent: categoryMeta?.[1] || category.accent,
       items: category.items.map((item, index) => ({
         ...item,
+        name: localizeMenuName(item.name, language),
         description: descriptions[index] ?? item.description,
         price: localizePrice(item.price, language)
       }))
@@ -908,7 +850,6 @@ const getLocalizedMenuCategories = (language) => {
 
 const DAILY_MENU_STORAGE_KEY = "la-piccola-perla-daily-menu";
 const DAILY_MENU_COOKIE_KEY = "la_piccola_perla_daily_menu";
-const COOKIE_NOTICE_STORAGE_KEY = "la-piccola-perla-cookie-notice";
 const ADMIN_SESSION_KEY = "la-piccola-perla-admin-session";
 const ADMIN_AUTH_STORAGE_KEY = "la-piccola-perla-admin-auth";
 
@@ -1015,26 +956,6 @@ const saveDailyMenuItems = async (dateValue, items) => {
   }
 };
 
-const getCookieNoticeAccepted = () => {
-  if (typeof window === "undefined") {
-    return true;
-  }
-
-  try {
-    return window.localStorage?.getItem(COOKIE_NOTICE_STORAGE_KEY) === "accepted";
-  } catch {
-    return false;
-  }
-};
-
-const saveCookieNoticeAccepted = () => {
-  try {
-    window.localStorage?.setItem(COOKIE_NOTICE_STORAGE_KEY, "accepted");
-  } catch {
-    // The banner can still be dismissed for the current session.
-  }
-};
-
 const normalizePriceInput = (value) => value.replace(/[^\d,.\s]/g, "").replace(/\s+/g, " ").trim();
 const formatPrice = (value) => {
   const cleanValue = normalizePriceInput(value);
@@ -1056,18 +977,17 @@ const formatDate = (dateValue) =>
     year: "numeric"
   }).format(new Date(`${dateValue}T12:00:00`));
 
-function App() {
+function App({ initialData = {} } = {}) {
   const isAdminRoute = typeof window !== "undefined" && ["/admin", "/admin.html"].includes(window.location.pathname.replace(/\/$/, ""));
-  return isAdminRoute ? <AdminPage /> : <PublicSite />;
+  return isAdminRoute ? <AdminPage /> : <PublicSite initialData={initialData} />;
 }
 
-function PublicSite() {
-  const [language, setLanguage] = useState(() => parseRoute(window.location.pathname, window.location.hash).language);
+function PublicSite({ initialData }) {
+  const [language, setLanguage] = useState(() => initialData.language || parseRoute(typeof window === "undefined" ? "/" : window.location.pathname).language);
   const copy = publicCopy[language];
   const photos = useMemo(() => getLocalizedPhotos(language), [language]);
   const menuCategories = useMemo(() => getLocalizedMenuCategories(language), [language]);
-  const menus = usePublicMenus(language);
-  const [cookieNoticeAccepted, setCookieNoticeAccepted] = useState(getCookieNoticeAccepted);
+  const menus = usePublicMenus(language, initialData);
   useEffect(() => {
     try {
       // The URL determines the language; remove the old, unused preference.
@@ -1080,22 +1000,15 @@ function PublicSite() {
     if (!languageCodes.includes(code)) return;
     setLanguage(code);
   }, []);
-  const acceptCookieNotice = () => {
-    saveCookieNoticeAccepted();
-    setCookieNoticeAccepted(true);
-  };
-
   return (
     <RestaurantSite
       language={language}
-      applyLanguageSeo={applyPublicSeo}
+      initialPath={initialData.pathname}
       copy={copy}
       photos={photos}
       menuCategories={menuCategories}
       {...menus}
       onLanguageSelect={handleLanguageSelect}
-      cookieNoticeAccepted={cookieNoticeAccepted}
-      onAcceptCookies={acceptCookieNotice}
     />
   );
 }

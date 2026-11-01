@@ -51,12 +51,12 @@ export default function GoogleReviews({ language }) {
   const suppressClickRef = useRef(false);
   const offsetRef = useRef(0);
   const [current, setCurrent] = useState(0);
-  const [slots, setSlots] = useState(visibleCards);
+  const [slots, setSlots] = useState(3);
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const [reducedMotion, setReducedMotion] = useState(true);
   const [inView, setInView] = useState(false);
-  const [hidden, setHidden] = useState(() => document.hidden);
+  const [hidden, setHidden] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -85,6 +85,8 @@ export default function GoogleReviews({ language }) {
     const resize = () => setSlots(visibleCards());
     const visibility = () => setHidden(document.hidden);
     preference();
+    resize();
+    visibility();
     media.addEventListener("change", preference);
     window.addEventListener("resize", resize, { passive: true });
     document.addEventListener("visibilitychange", visibility);

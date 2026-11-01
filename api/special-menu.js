@@ -53,7 +53,7 @@ const validateItems = (items) => {
   });
 };
 
-const readItems = async () => {
+export const readSpecialMenuItems = async () => {
   let stored;
   try {
     stored = await redisCommand(["GET", STORAGE_KEY]);
@@ -95,7 +95,7 @@ export default async function handler(request, response) {
 
   try {
     if (request.method === "GET") {
-      response.status(200).json({ items: await readItems() });
+      response.status(200).json({ items: await readSpecialMenuItems() });
       return;
     }
 

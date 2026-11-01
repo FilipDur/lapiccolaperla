@@ -25,7 +25,7 @@ export default function PrivacyPage({ language = "cs" }) {
       <div className="privacy-overview-copy">
         <p className="privacy-lead">{t.lead}</p>
         <p>{t.intro}</p>
-        <time dateTime="2026-10-27">{t.updated}</time>
+        <time dateTime="2026-10-31">{t.updated}</time>
       </div>
       <ul className="privacy-facts">{t.facts.map((fact) => <li key={fact}>{fact}</li>)}</ul>
     </div>
@@ -68,6 +68,8 @@ export default function PrivacyPage({ language = "cs" }) {
               <thead><tr>{t.tableHeaders.map((header) => <th key={header} scope="col">{header}</th>)}</tr></thead>
               <tbody>
                 <tr><th scope="row" data-label={t.tableHeaders[0]}><code>la-piccola-perla-cookie-notice</code></th><td data-label={t.tableHeaders[1]}>{t.noticePurpose}</td><td data-label={t.tableHeaders[2]}>{t.storageDuration}</td></tr>
+                <tr><th scope="row" data-label={t.tableHeaders[0]}><code>la-piccola-perla-analytics-consent-v1</code></th><td data-label={t.tableHeaders[1]}>{t.consentPurpose}</td><td data-label={t.tableHeaders[2]}>{t.consentDuration}</td></tr>
+                <tr><th scope="row" data-label={t.tableHeaders[0]}><code>_ga, _ga_&lt;ID&gt;</code></th><td data-label={t.tableHeaders[1]}>{t.analyticsPurpose}</td><td data-label={t.tableHeaders[2]}>{t.analyticsDuration}</td></tr>
               </tbody>
             </table>
           </div>

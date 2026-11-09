@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { inject } from "@vercel/analytics";
 import { ShieldCheck, X } from "lucide-react";
 import { routeHref } from "./routes.js";
-import { getAnalytics } from "../lib/analytics.js";
+import { ANALYTICS_ORIGINS } from "../data/analyticsConfig.js";
+import { getAnalytics, getAnalyticsContext } from "../lib/analytics.js";
 import { privacyUi } from "./analyticsCopy.js";
 import "./cookie-privacy.css";
 
@@ -25,6 +27,20 @@ export default function CookiePrivacy({ language, pathname, detailsOpen, onOpenD
     pathname: pathname || window.location.pathname,
     onConsentChange: setConsent,
   }), [pathname]);
+
+  useEffect(() => {
+    const { origin } = window.location;
+    if (consent !== "granted" || !ANALYTICS_ORIGINS.includes(origin)) return;
+    inject({
+      mode: "production",
+      beforeSend(event) {
+        if (getAnalytics().getConsent() !== "granted") return null;
+        const url = new URL(event.url, origin);
+        const context = getAnalyticsContext(url.pathname);
+        return url.origin === origin && context ? { ...event, url: `${origin}${context.path}` } : null;
+      },
+    });
+  }, [consent]);
 
   useEffect(() => {
     const dialog = dialogRef.current;

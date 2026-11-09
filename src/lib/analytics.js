@@ -1,7 +1,7 @@
 import { publicRoutes, SITE_URL } from "../restaurant/seo.js";
 import { ANALYTICS_ORIGINS, GA4_MEASUREMENT_ID } from "../data/analyticsConfig.js";
 
-export const ANALYTICS_CONSENT_KEY = "la-piccola-perla-analytics-consent-v1";
+export const ANALYTICS_CONSENT_KEY = "la-piccola-perla-analytics-consent-v2";
 export const CONSENT_MAX_AGE_MS = 180 * 24 * 60 * 60 * 1000;
 const SCRIPT_ID = "perla-google-analytics";
 const deniedConsent = { analytics_storage: "denied", ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" };
@@ -74,7 +74,7 @@ export function createAnalytics({ browser, measurementId = GA4_MEASUREMENT_ID, a
   function readChoice() {
     try {
       const value = JSON.parse(browser?.localStorage.getItem(ANALYTICS_CONSENT_KEY) || "null");
-      if (value?.version === 1 && ["granted", "denied"].includes(value.analytics)
+      if (value?.version === 2 && ["granted", "denied"].includes(value.analytics)
         && Number.isFinite(value.updatedAt) && value.updatedAt <= now()
         && now() - value.updatedAt < CONSENT_MAX_AGE_MS) return value;
     } catch { /* Storage may be unavailable; the session choice still works. */ }
@@ -192,7 +192,7 @@ export function createAnalytics({ browser, measurementId = GA4_MEASUREMENT_ID, a
     getConsent: consent,
     setConsent(choice) {
       if (!["granted", "denied"].includes(choice)) return false;
-      storedChoice = { version: 1, analytics: choice, updatedAt: now() };
+      storedChoice = { version: 2, analytics: choice, updatedAt: now() };
       try { browser?.localStorage.setItem(ANALYTICS_CONSENT_KEY, JSON.stringify(storedChoice)); } catch { /* Remember for this page only. */ }
       if (choice === "denied") stopCollection();
       else activate();

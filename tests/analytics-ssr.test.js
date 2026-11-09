@@ -24,9 +24,10 @@ test("current-site privacy stays readable without JS while consent controls wait
       const html = renderToString(React.createElement(PrivacyPage, { language }));
       assert.match(html, /B &amp; D DINAMIC, s\.r\.o\./);
       assert.match(html, /26764776/);
-      assert.match(html, /la-piccola-perla-analytics-consent-v1/);
+      assert.match(html, /la-piccola-perla-analytics-consent-v2/);
       assert.match(html, /Google Analytics 4/);
-      assert.match(html, /2026-10-31/);
+      assert.match(html, /Vercel Web Analytics/);
+      assert.match(html, /2026-11-09/);
       assert.doesNotMatch(html, /<script[^>]+googletagmanager\.com|<iframe/);
     }
   } finally {

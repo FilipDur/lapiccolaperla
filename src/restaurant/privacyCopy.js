@@ -1,6 +1,6 @@
 const privacyCopy = {
   cs: {
-    updated: "Aktualizováno 31. října 2026",
+    updated: "Aktualizováno 9. listopadu 2026",
     lead: "Dobré jídlo. Příjemný večer. A jasno v tom, co se děje s vašimi údaji.",
     intro: "Na této stránce najdete, co náš web ukládá, kdo s údaji pracuje a jak se na nás můžete obrátit.",
     facts: ["Analytika pouze s vaším souhlasem", "Bez reklamního měření", "Mapy a rezervace přes samostatné odkazy"],
@@ -42,6 +42,7 @@ const privacyCopy = {
     services: [
       {"title": "Google Analytics 4 · volitelná statistika", "text": "Po vašem souhlasu Google zpracovává návštěvnostní události a související technické údaje. Reklamní ukládání, reklamní uživatelská data a personalizace zůstávají odmítnuté; Google Signals nezapínáme. Více informací o zpracování údajů Google uvádí níže.", "links": [{"label": "Jak Google používá údaje z partnerských webů", "href": "https://policies.google.com/technologies/partner-sites"}, {"label": "Ochrana soukromí u Google", "href": "https://policies.google.com/privacy"}]},
       { title: "Vercel · hosting webu", text: "Zajišťuje doručení a ochranu webu a při tom zpracovává technické údaje požadavků. Při poskytování hostingu může docházet ke zpracování i mimo Evropský hospodářský prostor; podmínky předávání a ochranná opatření popisuje smlouva Vercel o zpracování osobních údajů.", links: [{ label: "Soukromí u Vercel", href: "https://vercel.com/legal/privacy-policy" }, { label: "Smlouva a ochranná opatření", href: "https://vercel.com/legal/dpa" }] },
+      { title: "Vercel Web Analytics · volitelná statistika", text: "S vaším souhlasem Vercel měří zobrazení veřejných stránek, zdroje návštěv a technické údaje, například typ zařízení. Adresu navštívené stránky odesíláme bez parametrů a části za #. Služba nepoužívá analytické cookies a identifikátor návštěvy odvozený z požadavku se zahazuje po 24 hodinách.", links: [{ label: "Soukromí ve Vercel Web Analytics", href: "https://vercel.com/docs/analytics/privacy-policy" }] },
       { title: "ChoiceQR · rezervace stolu", text: "Odkaz na rezervaci otevře rozhraní ChoiceQR. Na jeho provoz se vztahují také informace a pravidla poskytovatele. Rozsah požadovaných údajů, jejich použití a dobu uchování si ověřte přímo v rezervačním rozhraní před odesláním rezervace.", links: [{ label: "Otevřít rezervační rozhraní", href: "https://la-piccola-perla.choiceqr.com/takeaway/booking" }] },
       { title: "Google · mapy a recenze", text: "Po otevření odkazu na mapu nebo recenze Google obdrží technické údaje vaší návštěvy podle svých pravidel. Tyto odkazy jsou oddělené od analytického souhlasu. Písma webu jsou poskytována z naší domény.", links: [{ label: "Ochrana soukromí u Google", href: "https://policies.google.com/privacy" }] },
     ],
@@ -55,7 +56,7 @@ const privacyCopy = {
     admin: ["Přihlášení administrátora používá sessionStorage. Relace se odstraní při odhlášení nebo zavření příslušné karty prohlížeče.", "Místní mezipaměť menu a záznamy la-piccola-perla-daily-menu-revision a la-piccola-perla-special-menu-revision slouží ke správě menu a rozpoznání aktualizací. Záznamy v localStorage nemají automatickou expiraci a lze je smazat s daty webu.", "Cookie la_piccola_perla_daily_menu má platnost jeden rok a obsahuje nabídku jídel a ceny. Slouží jako úložiště menu, nikoli k identifikaci nebo sledování návštěvníka."],
   },
   en: {
-    updated: "Updated 31 October 2026",
+    updated: "Updated 9 November 2026",
     lead: "Good food. A lovely evening. And a clear view of what happens to your data.",
     intro: "Here is what our website stores, who handles your data and how to contact us about it.",
     facts: ["Analytics only with your permission", "No advertising tracking", "Maps and bookings use separate links"],
@@ -97,6 +98,7 @@ const privacyCopy = {
     services: [
       {"title": "Google Analytics 4 · optional statistics", "text": "After you allow analytics, Google processes website usage events and related technical data. Advertising storage, advertising user data and ad personalization remain denied; we do not enable Google Signals. Google explains its data processing in the links below.", "links": [{"label": "How Google uses data from partner websites", "href": "https://policies.google.com/technologies/partner-sites"}, {"label": "Google privacy policy", "href": "https://policies.google.com/privacy"}]},
       { title: "Vercel · website hosting", text: "Delivers and protects the website, processing technical request data in the process. Hosting may involve processing outside the European Economic Area; Vercel’s data processing agreement describes the transfer terms and safeguards.", links: [{ label: "Vercel privacy policy", href: "https://vercel.com/legal/privacy-policy" }, { label: "Data agreement and safeguards", href: "https://vercel.com/legal/dpa" }] },
+      { title: "Vercel Web Analytics · optional statistics", text: "With your consent, Vercel measures public page views, traffic sources, and technical details such as device type. We send the visited page URL without its query or fragment. The service uses no analytics cookies and discards the visitor identifier derived from the request after 24 hours.", links: [{ label: "Vercel Web Analytics privacy", href: "https://vercel.com/docs/analytics/privacy-policy" }] },
       { title: "ChoiceQR · table bookings", text: "The booking link opens the ChoiceQR interface. The provider’s information and policies also apply to the operation of that interface. Before submitting a booking, check the requested data, its use and retention period directly in the booking interface.", links: [{ label: "Open the booking interface", href: "https://la-piccola-perla.choiceqr.com/takeaway/booking" }] },
       { title: "Google · maps and reviews", text: "When you follow a Google map or review link, Google receives technical data about that visit under its own policies. These links are separate from analytics consent. Our website fonts are served from our own domain.", links: [{ label: "Google privacy policy", href: "https://policies.google.com/privacy" }] },
     ],
@@ -110,7 +112,7 @@ const privacyCopy = {
     admin: ["Administrator authentication uses sessionStorage. The session is removed on logout or when the relevant browser tab is closed.", "The local menu cache and the la-piccola-perla-daily-menu-revision and la-piccola-perla-special-menu-revision records support menu administration and update detection. Records in localStorage have no automatic expiry and can be removed by clearing site data.", "The la_piccola_perla_daily_menu cookie lasts for one year and contains dishes and prices. It stores the menu rather than identifying or tracking visitors."],
   },
   it: {
-    updated: "Aggiornato il 31 ottobre 2026",
+    updated: "Aggiornato il 9 novembre 2026",
     lead: "Buona cucina. Una bella serata. E chiarezza su come vengono trattati i vostri dati.",
     intro: "Qui trovate cosa memorizza il nostro sito, chi tratta i dati e come contattarci per qualsiasi domanda.",
     facts: ["Analisi solo con il vostro consenso", "Nessun tracciamento pubblicitario", "Mappe e prenotazioni tramite link separati"],
@@ -152,6 +154,7 @@ const privacyCopy = {
     services: [
       {"title": "Google Analytics 4 · statistiche facoltative", "text": "Dopo il vostro consenso, Google tratta gli eventi d’uso del sito e i dati tecnici collegati. Archiviazione pubblicitaria, dati degli utenti per la pubblicità e personalizzazione restano negati; non attiviamo Google Signals. Google descrive il trattamento dei dati nei link seguenti.", "links": [{"label": "Come Google usa i dati dei siti partner", "href": "https://policies.google.com/technologies/partner-sites"}, {"label": "Informativa sulla privacy di Google", "href": "https://policies.google.com/privacy"}]},
       { title: "Vercel · hosting del sito", text: "Fornisce e protegge il sito, trattando i dati tecnici delle richieste. Il servizio di hosting può comportare trattamenti anche al di fuori dello Spazio economico europeo; l’accordo sul trattamento dei dati di Vercel descrive le condizioni dei trasferimenti e le relative garanzie.", links: [{ label: "Privacy di Vercel", href: "https://vercel.com/legal/privacy-policy" }, { label: "Accordo e garanzie sui dati", href: "https://vercel.com/legal/dpa" }] },
+      { title: "Vercel Web Analytics · statistiche facoltative", text: "Con il vostro consenso Vercel misura le visualizzazioni delle pagine pubbliche, le fonti delle visite e dati tecnici come il tipo di dispositivo. Inviamo l’indirizzo della pagina visitata senza parametri né frammento. Il servizio non usa cookie analitici ed elimina dopo 24 ore l’identificatore della visita ricavato dalla richiesta.", links: [{ label: "Privacy in Vercel Web Analytics", href: "https://vercel.com/docs/analytics/privacy-policy" }] },
       { title: "ChoiceQR · prenotazioni", text: "Il link per prenotare apre l’interfaccia ChoiceQR. Al suo funzionamento si applicano anche le informazioni e le regole del fornitore. Prima di inviare la prenotazione, verificate direttamente nell’interfaccia quali dati vengono richiesti, come sono usati e per quanto tempo sono conservati.", links: [{ label: "Apri l’interfaccia di prenotazione", href: "https://la-piccola-perla.choiceqr.com/takeaway/booking" }] },
       { title: "Google · mappe e recensioni", text: "Quando aprite un link a una mappa o alle recensioni di Google, Google riceve i dati tecnici della visita secondo le proprie regole. Questi link sono separati dal consenso alle analisi. I caratteri del sito vengono forniti dal nostro dominio.", links: [{ label: "Informativa sulla privacy di Google", href: "https://policies.google.com/privacy" }] },
     ],

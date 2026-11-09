@@ -5,7 +5,7 @@ import { privacyUi as analyticsCopy } from "../src/restaurant/analyticsCopy.js";
 
 const measurementId = "G-TEST123456";
 const currentTime = Date.parse("2026-10-31T12:00:00Z");
-const choice = (analytics, updatedAt = currentTime) => JSON.stringify({ version: 1, analytics, updatedAt });
+const choice = (analytics, updatedAt = currentTime) => JSON.stringify({ version: 2, analytics, updatedAt });
 
 // Pure fake browser: no script execution, real cookies, network or Google traffic.
 function fakeBrowser(url = "https://lapiccolaperla.cz/", initial = {}) {

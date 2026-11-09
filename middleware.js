@@ -1,7 +1,7 @@
 import { next, rewrite } from "@vercel/functions";
 import { getRedirectUrl } from "./src/restaurant/seo.js";
 
-export const config = { matcher: ["/((?!api/|assets/|images/|src/|node_modules/|@).*)"] };
+export const config = { matcher: ["/((?!api/|assets/|images/|src/|node_modules/|_vercel/|@).*)"] };
 
 export default function middleware(request) {
   const url = new URL(request.url);

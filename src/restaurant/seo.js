@@ -15,9 +15,9 @@ const homeTitles = {
 };
 
 const pageTitles = {
-  cs: { menu: "Jídelní lístek a ceny v Praze 1", daily: "Denní menu Praha 1", reservation: "Rezervace stolu v Praze 1", contact: "Kontakt a cesta do restaurace v Praze 1", special: "Speciální menu v Praze 1" },
-  en: { menu: "Italian Menu and Prices in Prague 1", reservation: "Book a Table in Prague 1", contact: "Contact and Directions in Prague 1", special: "Special Menu in Prague 1" },
-  it: { menu: "Menù italiano e prezzi a Praga 1", reservation: "Prenota un tavolo a Praga 1", contact: "Contatti e indicazioni a Praga 1", special: "Menù speciale a Praga 1" }
+  cs: { menu: "Jídelní lístek a ceny v Praze 1", daily: "Denní menu Praha 1", reservation: "Rezervace stolu v Praze 1", contact: "Kontakt a cesta do restaurace v Praze 1", special: "Speciální menu v Praze 1", about: "O restauraci v Perlové ulici, Praha 1", gallery: "Galerie restaurace v Praze 1" },
+  en: { menu: "Italian Menu and Prices in Prague 1", reservation: "Book a Table in Prague 1", contact: "Contact and Directions in Prague 1", special: "Special Menu in Prague 1", about: "About our Italian restaurant in Prague 1", gallery: "Restaurant gallery, Prague 1" },
+  it: { menu: "Menù italiano e prezzi a Praga 1", reservation: "Prenota un tavolo a Praga 1", contact: "Contatti e indicazioni a Praga 1", special: "Menù speciale a Praga 1", about: "Il ristorante italiano a Praga 1", gallery: "Galleria del ristorante, Praga 1" }
 };
 
 const descriptions = {

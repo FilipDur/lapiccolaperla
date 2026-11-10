@@ -12,7 +12,9 @@ const legacySlugs = {
   "copy-of-home": "menu", gallery: "galerie", "specialni-nabidka": "specialni-menu",
   about: "o-nas", contact: "kontakt", specials: "specialni-menu",
   ristorante: "o-nas", galleria: "galerie", contatti: "kontakt", specialita: "specialni-menu",
-  rezervace: "kontakt", reservation: "kontakt", prenotazioni: "kontakt"
+  rezervace: "kontakt", reservation: "kontakt", prenotazioni: "kontakt",
+  // Old site URL that Search Console still reports as a 404.
+  home: ""
 };
 
 /** Resolve public URLs without browser globals; daily offers are Czech only. */

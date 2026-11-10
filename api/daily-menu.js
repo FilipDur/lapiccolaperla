@@ -44,12 +44,17 @@ const readPublicMenus = async () => {
       ...(await readStoredMenus())
     };
   } catch (error) {
-    if (error.statusCode === 503) {
+    if (error.code === "MENU_STORAGE_NOT_CONFIGURED") {
       return seededDailyMenus;
     }
 
     throw error;
   }
+};
+
+export const readPublicDailyMenu = async (date) => {
+  const menus = await readPublicMenus();
+  return Array.isArray(menus[date]) ? menus[date] : [];
 };
 
 const writeMenus = async (menus) => {
@@ -77,8 +82,7 @@ export default async function handler(request, response) {
         return;
       }
 
-      const menus = await readPublicMenus();
-      sendJson(response, 200, { date, items: Array.isArray(menus[date]) ? menus[date] : [] });
+      sendJson(response, 200, { date, items: await readPublicDailyMenu(date) });
       return;
     }
 

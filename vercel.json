@@ -1,5 +1,13 @@
 {
-  "cleanUrls": true,
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "cleanUrls": false,
+  "functions": {
+    "api/public-page.js": {
+      "includeFiles": ".server/**"
+    }
+  },
   "headers": [
     {
       "source": "/admin",
@@ -22,55 +30,1466 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/denni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/denni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/o-nas",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/galerie",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/kontakt",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/ochrana-soukromi",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/en",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/en/menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/o-nas",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/galerie",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/kontakt",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/ochrana-soukromi",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/it",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/it/menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/o-nas",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/galerie",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/kontakt",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/ochrana-soukromi",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
       "source": "/index-en",
-      "destination": "https://lapiccolaperla.cz/en",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
       "permanent": true
     },
     {
       "source": "/index-en.html",
-      "destination": "https://lapiccolaperla.cz/en",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
       "permanent": true
     },
     {
       "source": "/index-it",
-      "destination": "https://lapiccolaperla.cz/it",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
       "permanent": true
     },
     {
       "source": "/index-it.html",
-      "destination": "https://lapiccolaperla.cz/it",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
       "permanent": true
     },
     {
       "source": "/index-de",
-      "destination": "https://lapiccolaperla.cz/it",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
       "permanent": true
     },
     {
       "source": "/index-de.html",
-      "destination": "https://lapiccolaperla.cz/it",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
       "has": [
         {
           "type": "host",
-          "value": "en.lapiccolaperla.cz"
+          "value": "cs.lapiccolaperla.cz"
         }
       ],
-      "destination": "https://lapiccolaperla.cz/en",
+      "destination": "https://lapiccolaperla.cz/",
       "permanent": true
     },
     {
-      "source": "/:path*",
+      "source": "/copy-of-home",
       "has": [
         {
           "type": "host",
-          "value": "it.lapiccolaperla.cz"
+          "value": "cs.lapiccolaperla.cz"
         }
       ],
-      "destination": "https://lapiccolaperla.cz/it",
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-home.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/gallery",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/gallery.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-nabidka",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-nabidka.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/specials",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specials.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/ristorante",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/ristorante.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/galleria",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/galleria.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/contatti",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/contatti.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/specialita",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialita.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/rezervace",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/rezervace.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/reservation",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/reservation.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/prenotazioni",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/prenotazioni.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/index",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/en/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/en/copy-of-home",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/copy-of-home.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/gallery",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/gallery.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-nabidka",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-nabidka.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/about",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/about.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/specials",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specials.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/ristorante",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/ristorante.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/galleria",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/galleria.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/contatti",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/contatti.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialita",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialita.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/rezervace",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/rezervace.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/reservation",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/reservation.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/prenotazioni",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/prenotazioni.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/index",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/it/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/it/copy-of-home",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/copy-of-home.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/gallery",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/gallery.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-nabidka",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-nabidka.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/about",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/about.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/contact",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/contact.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/specials",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specials.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/ristorante",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/ristorante.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/galleria",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/galleria.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/contatti",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/contatti.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialita",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialita.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/rezervace",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/rezervace.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/reservation",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/reservation.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/prenotazioni",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/prenotazioni.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/denni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/denni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/o-nas.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/galerie.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/kontakt.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/ochrana-soukromi.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/en.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/en/menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/o-nas.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/galerie.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/kontakt.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/ochrana-soukromi.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/it.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/",
+      "permanent": true
+    },
+    {
+      "source": "/it/menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/o-nas.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/galerie.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/kontakt.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/ochrana-soukromi.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "cs.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/ochrana-soukromi",
       "permanent": true
     },
     {
@@ -81,7 +1500,2955 @@
           "value": "cs.lapiccolaperla.cz"
         }
       ],
-      "destination": "https://lapiccolaperla.cz/",
+      "destination": "https://lapiccolaperla.cz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/denni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/denni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/o-nas",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/galerie",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/kontakt",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/ochrana-soukromi",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/en",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/en/menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/o-nas",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/galerie",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/kontakt",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/ochrana-soukromi",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/it",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/it/menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/o-nas",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/galerie",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/kontakt",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/ochrana-soukromi",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/index-en",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/index-en.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/index-it",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/index-it.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/index-de",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/index-de.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-home",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-home.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/gallery",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/gallery.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-nabidka",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-nabidka.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/specials",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specials.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/ristorante",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/ristorante.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/galleria",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/galleria.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/contatti",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/contatti.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/specialita",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialita.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/rezervace",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/rezervace.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/reservation",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/reservation.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/prenotazioni",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/prenotazioni.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/index",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/en/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/en/copy-of-home",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/copy-of-home.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/gallery",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/gallery.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-nabidka",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-nabidka.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/about",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/about.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/specials",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specials.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/ristorante",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/ristorante.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/galleria",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/galleria.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/contatti",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/contatti.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialita",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialita.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/rezervace",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/rezervace.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/reservation",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/reservation.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/prenotazioni",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/prenotazioni.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/index",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/it/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/it/copy-of-home",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/copy-of-home.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/gallery",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/gallery.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-nabidka",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-nabidka.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/about",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/about.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/contact",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/contact.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/specials",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specials.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/ristorante",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/ristorante.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/galleria",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/galleria.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/contatti",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/contatti.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialita",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialita.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/rezervace",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/rezervace.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/reservation",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/reservation.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/prenotazioni",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/prenotazioni.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/denni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/denni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/o-nas.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/galerie.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/kontakt.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/ochrana-soukromi.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/en.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/en/menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/o-nas.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/galerie.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/kontakt.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/ochrana-soukromi.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/it.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en",
+      "permanent": true
+    },
+    {
+      "source": "/it/menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/o-nas.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/galerie.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/kontakt.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/ochrana-soukromi.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/en/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "en.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/denni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/denni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/o-nas",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/galerie",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/kontakt",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/ochrana-soukromi",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/en",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/en/menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/o-nas",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/galerie",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/kontakt",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/ochrana-soukromi",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/it",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/it/menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-menu",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/o-nas",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/galerie",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/kontakt",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/ochrana-soukromi",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/index-en",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/index-en.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/index-it",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/index-it.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/index-de",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/index-de.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-home",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/copy-of-home.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/gallery",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/gallery.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-nabidka",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-nabidka.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/about.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/specials",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specials.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/ristorante",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/ristorante.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/galleria",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/galleria.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/contatti",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/contatti.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/specialita",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialita.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/rezervace",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/rezervace.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/reservation",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/reservation.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/prenotazioni",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/prenotazioni.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/index",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/en/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/en/copy-of-home",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/copy-of-home.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/gallery",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/gallery.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-nabidka",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-nabidka.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/about",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/about.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/contact.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/specials",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specials.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/ristorante",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/ristorante.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/galleria",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/galleria.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/contatti",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/contatti.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialita",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialita.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/rezervace",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/rezervace.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/reservation",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/reservation.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/prenotazioni",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/prenotazioni.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/index",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/it/index.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/it/copy-of-home",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/copy-of-home.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/gallery",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/gallery.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-nabidka",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-nabidka.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/about",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/about.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/contact",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/contact.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/specials",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specials.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/ristorante",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/ristorante.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/galleria",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/galleria.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/contatti",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/contatti.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialita",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialita.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/rezervace",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/rezervace.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/reservation",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/reservation.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/prenotazioni",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/prenotazioni.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/denni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/denni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/specialni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/o-nas.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/galerie.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/kontakt.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/ochrana-soukromi.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/en.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/en/menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/specialni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/en/o-nas.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/en/galerie.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/en/kontakt.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/en/ochrana-soukromi.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/it.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it",
+      "permanent": true
+    },
+    {
+      "source": "/it/menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/specialni-menu.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/specialni-menu",
+      "permanent": true
+    },
+    {
+      "source": "/it/o-nas.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/o-nas",
+      "permanent": true
+    },
+    {
+      "source": "/it/galerie.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/galerie",
+      "permanent": true
+    },
+    {
+      "source": "/it/kontakt.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/kontakt",
+      "permanent": true
+    },
+    {
+      "source": "/it/ochrana-soukromi.html",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/it/ochrana-soukromi",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "it.lapiccolaperla.cz"
+        }
+      ],
+      "destination": "https://lapiccolaperla.cz/:path*",
       "permanent": true
     },
     {
@@ -109,8 +4476,8 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/"
+      "source": "/admin",
+      "destination": "/admin.html"
     }
   ]
 }

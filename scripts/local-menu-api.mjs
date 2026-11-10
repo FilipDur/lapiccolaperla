@@ -105,6 +105,22 @@ function createLocalStore(storePath) {
   };
 }
 
+export function createLocalMenuReaders({ storePath } = {}) {
+  if (!storePath) throw new Error("A local menu storage path is required.");
+  const store = createLocalStore(resolve(storePath));
+  return {
+    async readSpecial() {
+      const data = await store.read();
+      try { return validateSpecialItems(data.special); } catch { return []; }
+    },
+    async readDaily(date) {
+      const data = await store.read();
+      const menus = { ...seededDailyMenus, ...data.daily };
+      return Array.isArray(menus[date]) ? menus[date] : [];
+    }
+  };
+}
+
 export function createLocalMenuMiddleware({ storePath, authorize } = {}) {
   if (!storePath) throw new Error("A local menu storage path is required.");
   const store = createLocalStore(resolve(storePath));
@@ -186,6 +202,9 @@ export function localMenuApiPlugin() {
       storePath = resolve(config.root, ".local/menus.json");
     },
     configureServer(server) {
+      server.middlewares.use(createLocalMenuMiddleware({ storePath }));
+    },
+    configurePreviewServer(server) {
       server.middlewares.use(createLocalMenuMiddleware({ storePath }));
     }
   };

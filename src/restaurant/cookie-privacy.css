@@ -24,6 +24,8 @@
 .restaurant-site .cp-status-active { border-color: var(--r-wine-deep); color: var(--r-ivory); background: var(--r-wine-deep); }
 .restaurant-site .cp-note { padding-top: 17px; border-top: 1px solid var(--r-line); font-size: 11px; line-height: 1.8; }
 .restaurant-site .cp-dialog-actions { margin-top: 20px; }
+.restaurant-site .cp-consent-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+.restaurant-site .cp-consent-choices .r-button { justify-content: center; width: 100%; min-height: 46px; padding: 11px 12px; text-align: center; }
 .restaurant-site .r-footer-bottom nav > button { min-height: 44px; font-size: inherit; text-align: left; }
 .restaurant-site .r-footer-bottom nav > a { display: inline-flex; align-items: center; min-height: 44px; }
 @media (max-width: 760px) {

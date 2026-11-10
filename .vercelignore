@@ -1,0 +1,7 @@
+artifacts/
+.local/
+.env*
+tests/
+node_modules/
+dist/
+.server/

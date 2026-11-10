@@ -4,9 +4,9 @@ import { SPECIAL_MENU_REVISION_KEY, SPECIAL_MENU_UPDATED, fetchSpecialMenuItems,
 import { getCompleteSpecialMenuItems } from '../components/SpecialMenuSection.jsx';
 import { getRestaurantDate } from './restaurantDate.js';
 
-export function usePublicMenus(language) {
-  const [daily, setDaily] = useState(() => ({ date: getRestaurantDate(), items: [], status: 'loading' }));
-  const [special, setSpecial] = useState({ items: [], status: 'loading' });
+export function usePublicMenus(language, initialData = {}) {
+  const [daily, setDaily] = useState(() => ({ date: initialData.today || getRestaurantDate(), items: initialData.dailyMenuItems || [], status: Array.isArray(initialData.dailyMenuItems) ? 'ready' : 'loading' }));
+  const [special, setSpecial] = useState(() => ({ items: getCompleteSpecialMenuItems(initialData.specialMenuItems || []), status: Array.isArray(initialData.specialMenuItems) ? 'ready' : 'loading' }));
 
   useEffect(() => {
     const controller = new AbortController();
@@ -19,7 +19,7 @@ export function usePublicMenus(language) {
           setSpecial({ items: getCompleteSpecialMenuItems(items), status: 'ready' });
         }
       } catch {
-        if (!controller.signal.aborted && request === revision) setSpecial({ items: [], status: 'error' });
+        if (!controller.signal.aborted && request === revision) setSpecial((current) => current.status === 'ready' ? current : { ...current, status: 'error' });
       }
     };
     const forceRefresh = () => { invalidateSpecialMenuReads(); void refresh(); };
@@ -56,7 +56,7 @@ export function usePublicMenus(language) {
         }
       } catch {
         if (!controller.signal.aborted && request === revision && date === getRestaurantDate()) {
-          setDaily({ date, items: [], status: 'error' });
+          setDaily((current) => current.date === date && current.status === 'ready' ? current : { date, items: [], status: 'error' });
         }
       }
     };

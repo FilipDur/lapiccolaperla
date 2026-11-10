@@ -1,5 +1,5 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./styles.css";
 
@@ -25,10 +25,15 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-createRoot(document.getElementById("root")).render(
+const root = document.getElementById("root");
+const initialElement = document.getElementById("perla-initial-data");
+const bootstrap = initialElement ? JSON.parse(initialElement.textContent) : {};
+const application = (
   <React.StrictMode>
     <ErrorBoundary>
-      <App />
+      <App initialData={bootstrap.initialData} />
     </ErrorBoundary>
   </React.StrictMode>
 );
+if (initialElement && root.hasChildNodes()) hydrateRoot(root, application);
+else createRoot(root).render(application);

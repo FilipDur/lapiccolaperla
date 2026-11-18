@@ -9,8 +9,8 @@ export const routeLabels = {
 };
 
 const homeTitles = {
-  cs: "Italská restaurace Praha 1 | La Piccola Perla",
-  en: "Italian Restaurant in Prague | La Piccola Perla",
+  cs: "Italská restaurace Praha 1 – Staré Město | La Piccola Perla",
+  en: "Italian Restaurant in Prague Old Town | La Piccola Perla",
   it: "Ristorante italiano a Praga | La Piccola Perla"
 };
 
@@ -22,7 +22,7 @@ const pageTitles = {
 
 const descriptions = {
   cs: {
-    home: "Italská kuchyně v Perlové ulici v centru Prahy. Objevte naši pastu, pizzu, mořské plody a vína. Prohlédněte si menu a rezervujte si stůl.",
+    home: "Italská restaurace v Praze 1, pár kroků od Staroměstského náměstí. Pasta, pizza, mořské plody a italská vína. Otevřeno denně 11:00–23:00.",
     about: "Poznejte La Piccola Perla, italskou restauraci v pražském Starém Městě. Náš příběh, kuchyně a místo pro společné chvíle u stolu.",
     menu: "Jídelní a nápojový lístek La Piccola Perla v Praze 1 s cenami: pasta, pizza, ryby, maso, dezerty a italská vína. Vyberte si a rezervujte stůl.",
     daily: "Dnešní polední nabídka La Piccola Perla v Praze 1. Denní menu podáváme od pondělí do pátku od 11:00 do 14:30.",
@@ -34,7 +34,7 @@ const descriptions = {
     notFound: "Tuto stránku jsme nenašli. Prohlédněte si menu, rezervujte stůl nebo navštivte úvodní stránku La Piccola Perla."
   },
   en: {
-    home: "Italian food on Perlova Street in central Prague. Discover pasta, pizza, seafood and Italian wines. Explore our menu and book your table.",
+    home: "Italian restaurant in Prague Old Town, steps from Old Town Square. Pasta, pizza, seafood and Italian wines. Open daily 11:00–23:00. Book a table.",
     about: "Meet La Piccola Perla, an Italian restaurant in Prague Old Town. Discover our story, our food and a place to enjoy time around the table.",
     menu: "Explore the food and drinks menu with prices at La Piccola Perla in Prague 1: pasta, pizza, seafood, desserts and Italian wines. Book your table online.",
     gallery: "Explore photographs of our restaurant, Italian dishes and the atmosphere at La Piccola Perla on Perlova Street in Prague.",
@@ -45,7 +45,7 @@ const descriptions = {
     notFound: "We could not find this page. Explore the menu, book a table or visit the La Piccola Perla home page."
   },
   it: {
-    home: "Cucina italiana in via Perlová, nel centro di Praga. Scopri pasta, pizza, pesce e vini italiani. Consulta il menù e prenota un tavolo.",
+    home: "Ristorante italiano a pochi passi dalla Piazza della Città Vecchia a Praga. Pasta, pizza, pesce e vini italiani. Aperto ogni giorno 11:00–23:00.",
     about: "Conosci La Piccola Perla, ristorante italiano nel centro storico di Praga. La nostra storia, la cucina e il piacere di stare a tavola.",
     menu: "Consulta il menù con prezzi di La Piccola Perla a Praga 1: pasta, pizza, pesce, carne, dolci, vini italiani e bevande. Scegli e prenota un tavolo.",
     gallery: "Guarda le fotografie del ristorante, dei piatti italiani e dell’atmosfera di La Piccola Perla in via Perlová a Praga.",

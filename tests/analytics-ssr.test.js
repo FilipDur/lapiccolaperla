@@ -18,7 +18,7 @@ test("current-site privacy stays readable without JS while consent controls wait
   try {
     const { default: CookiePrivacy, PrivacySettingsButton } = await server.ssrLoadModule("/src/restaurant/CookiePrivacy.jsx");
     const { default: PrivacyPage } = await server.ssrLoadModule("/src/restaurant/PrivacyPage.jsx");
-    for (const language of ["cs", "en", "it"]) {
+    for (const language of ["cs", "en", "it", "de"]) {
       assert.equal(renderToString(React.createElement(CookiePrivacy, { language, pathname: "/", noticeAccepted: true })), "");
       assert.equal(renderToString(React.createElement(PrivacySettingsButton, { language })), "");
       const html = renderToString(React.createElement(PrivacyPage, { language }));

@@ -32,4 +32,15 @@ export const privacyUi = {
     marketing: "Pubblicità", marketingText: "I consensi pubblicitari restano negati. Non attiviamo Google Signals né la personalizzazione pubblicitaria.",
     note: "Il rifiuto o la revoca del consenso interrompe le misurazioni successive ed elimina i cookie analitici di questo sito. Alla revoca la pagina viene ricaricata. Mappe e prenotazioni si aprono tramite link separati.",
   },
+  de: {
+    title: "Cookies & Datenschutz", heading: "Ob wir messen, entscheiden Sie.",
+    intro: "Mit Ihrer Einwilligung messen wir Besuche mit Vercel Web Analytics und Google Analytics. Google Analytics misst auch Klicks auf die Reservierung, die Telefonnummer oder die Karte. Ohne Ihre Einwilligung wird keine Analyse geladen.",
+    allow: "Analyse erlauben", deny: "Analyse ablehnen", details: "Details", policy: "Datenschutzerklärung", close: "Datenschutzeinstellungen schließen",
+    description: "Hier können Sie die Analyse erlauben oder ablehnen. Ihre Wahl können Sie jederzeit über „Cookies & Datenschutz“ in der Fußzeile ändern.",
+    necessary: "Funktionaler Speicher", necessaryText: "Dieser Browser speichert Ihre Wahl zur Analyse höchstens 180 Tage. Die Administration nutzt eigene Betriebsspeicher, die in der Datenschutzerklärung beschrieben sind.", active: "In Verwendung",
+    analytics: "Analyse", analyticsText: "Vercel Web Analytics misst Aufrufe öffentlicher Seiten ohne Analyse-Cookies. Mit Ihrer Einwilligung misst Google Analytics 4 auch Klicks auf Kontaktlinks.",
+    granted: "Erlaubt", denied: "Abgelehnt", unknown: "Aus bis zur Einwilligung", unused: "Nicht verwendet",
+    marketing: "Werbung", marketingText: "Werbeeinwilligungen bleiben abgelehnt. Google Signals und personalisierte Werbung aktivieren wir nicht.",
+    note: "Eine Ablehnung oder ein späterer Widerruf beendet weitere Messungen und entfernt die Analyse-Cookies dieser Website. Beim Widerruf wird die Seite neu geladen. Karten und Reservierungen öffnen sich über separate Links.",
+  },
 };

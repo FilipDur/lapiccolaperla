@@ -232,11 +232,11 @@ test("blocked browser storage still permits a page-session choice and rejection"
   assert.equal(fake.reloads, 1);
 });
 
-test("route and target classifiers reject unrelated or private values, with all three consent languages", () => {
+test("route and target classifiers reject unrelated or private values, with all four consent languages", () => {
   assert.deepEqual(getAnalyticsContext("/en/menu?private=1#private"), { path: "/en/menu", language: "en" });
   for (const path of ["https://evil.example/menu", "//evil.example/menu", "/unknown/private", "/admin"]) assert.equal(getAnalyticsContext(path), null);
   for (const href of ["/rezervace", "https://la-piccola-perla.choiceqr.com.evil.example/takeaway/booking", "https://private@la-piccola-perla.choiceqr.com/takeaway/booking", "https://www.google.com/maps?cid=123", "mailto:private@example.com"]) assert.equal(classifyAnalyticsLink(href), null);
-  for (const language of ["cs", "en", "it"]) {
+  for (const language of ["cs", "en", "it", "de"]) {
     assert.ok(analyticsCopy[language].allow);
     assert.ok(analyticsCopy[language].deny);
     assert.ok(analyticsCopy[language].title);

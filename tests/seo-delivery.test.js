@@ -19,8 +19,8 @@ test("all current-design pages render full public HTML, metadata and safe bootst
   const server = await createServer({ configFile: false, root: fileURLToPath(new URL("../", import.meta.url)), plugins: [react()], server: { middlewareMode: true, hmr: false, watch: null }, appType: "custom", logLevel: "error" });
   try {
     const { renderDocument } = await server.ssrLoadModule("/src/entry-server.jsx");
-    const templates = Object.fromEntries(await Promise.all(["cs", "en", "it"].map(async language => [language, await readFile(new URL(language === "cs" ? "../index.html" : `../${language}.html`, import.meta.url), "utf8")])));
-    assert.equal(publicRoutes.length, 22);
+    const templates = Object.fromEntries(await Promise.all(["cs", "en", "it", "de"].map(async language => [language, await readFile(new URL(language === "cs" ? "../index.html" : `../${language}.html`, import.meta.url), "utf8")])));
+    assert.equal(publicRoutes.length, 29);
     for (const route of publicRoutes) {
       const html = renderDocument(templates[route.language], route, { today: "2026-10-31", specialMenuItems: [offer], dailyMenuItems: [] });
       const seo = getPageSeo(route.page, route.language, { hasSpecialMenu: true });
@@ -29,7 +29,7 @@ test("all current-design pages render full public HTML, metadata and safe bootst
       assert.ok(html.includes(`<link rel="canonical" href="${SITE_URL}${route.path}"`), route.path);
       assert.ok(html.includes(`<html lang="${route.language}">`), route.path);
       assert.ok(html.includes(`<meta name="robots" content="${seo.robots}"`), route.path);
-      assert.equal((html.match(/hreflang=/g) || []).length, route.page === "daily" ? 2 : 4, route.path);
+      assert.equal((html.match(/hreflang=/g) || []).length, route.page === "daily" ? 2 : 5, route.path);
       assert.ok(html.includes("#940b0b"), "current red brand theme retained");
       const bootstrap = JSON.parse(html.match(/<script id="perla-initial-data" type="application\/json">([\s\S]*?)<\/script>/)[1]);
       assert.equal(bootstrap.initialData.pathname, route.path);
@@ -38,6 +38,13 @@ test("all current-design pages render full public HTML, metadata and safe bootst
       const graph = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1])["@graph"];
       assert.equal(graph.find(entity => entity["@type"] === "WebPage").url, SITE_URL + route.path);
       assert.doesNotMatch(html, /<script[^>]+googletagmanager\.com/);
+      if (route.language === "de" && route.page === "menu") {
+        assert.match(html, /Spaghetti alla carbonara/, "Italian dish names stay unchanged");
+        assert.match(html, /Parmesan, Ei und italienischer Speck/, "German dish description");
+        assert.match(html, /Glühwein/, "generic Czech drink names are translated");
+        assert.doesNotMatch(html, /Svařené víno|Kuřecí vývar/, "no Czech menu copy on the German page");
+      }
+      if (route.language === "de" && route.page === "special") assert.match(html, /SSR offer/, "German specials fall back to the English name");
     }
     const notFound = renderDocument(templates.en, { page: "notFound", language: "en" }, { pathname: "/en/missing", today: "2026-10-31" });
     assert.doesNotMatch(notFound, /rel="canonical"|hreflang=/);
@@ -70,7 +77,7 @@ test("all current-design pages render full public HTML, metadata and safe bootst
 test("current sitemap follows live offer state and omits nonexistent reservation URLs", () => {
   for (const hasSpecialMenu of [false, true]) {
     const xml = renderSitemap({ hasSpecialMenu });
-    assert.equal((xml.match(/<loc>/g) || []).length, hasSpecialMenu ? 22 : 19);
+    assert.equal((xml.match(/<loc>/g) || []).length, hasSpecialMenu ? 29 : 25);
     assert.equal(xml.includes("/specialni-menu"), hasSpecialMenu);
     assert.doesNotMatch(xml, /\/rezervace|\/reservation|\/prenotazioni|\/admin|\/copy-of-home|\/gallery/);
   }
@@ -97,7 +104,9 @@ test("HTML, trailing slashes and language selection normalize in a single middle
     ["/gallery.html", "/galerie"],
     ["/index-en.html", "/en"],
     ["/index-it.html", "/it"],
-    ["/index-de.html", "/it"],
+    ["/index-de.html", "/de"],
+    ["/index-de", "/de"],
+    ["/de/", "/de"],
     ["/en/gallery.html?lang=it&x=1&x=2", "/it/galerie?x=1&x=2"],
     ["/menu/?lang=en&category=pasta", "/en/menu?category=pasta"],
     ["/en/gallery.html/?lang=it&x=1&x=2", "/it/galerie?x=1&x=2"],

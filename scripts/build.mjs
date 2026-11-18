@@ -10,7 +10,7 @@ await build({ build: {
   rollupOptions: { input: resolve("src/entry-server.jsx"), output: { entryFileNames: "entry-server.js" } }
 } });
 await mkdir(".server/templates", { recursive: true });
-for (const language of ["cs", "en", "it"]) {
+for (const language of ["cs", "en", "it", "de"]) {
   const file = language === "cs" ? "index.html" : `${language}.html`;
   await writeFile(`.server/templates/${language}.html`, await readFile(`dist/${file}`, "utf8"));
 }

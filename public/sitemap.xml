@@ -1,49 +1,225 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml"
-  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://lapiccolaperla.cz/</loc>
-    <lastmod>2026-08-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <changefreq>monthly</changefreq>
     <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en" />
     <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/" />
-    <image:image>
-      <image:loc>https://lapiccolaperla.cz/og-la-piccola-perla.webp</image:loc>
-      <image:title>La Piccola Perla – italská restaurace v Praze 1</image:title>
-    </image:image>
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/menu</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/menu" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/menu" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/menu" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/menu" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/menu" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/denni-menu</loc>
+    <changefreq>daily</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/denni-menu" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/denni-menu" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/o-nas</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/o-nas" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/o-nas" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/o-nas" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/o-nas" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/galerie</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/galerie" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/galerie" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/galerie" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/galerie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/galerie" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/kontakt</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/kontakt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/kontakt" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/kontakt" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/kontakt" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/ochrana-soukromi</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/ochrana-soukromi" />
   </url>
   <url>
     <loc>https://lapiccolaperla.cz/en</loc>
-    <lastmod>2026-08-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
     <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en" />
     <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/" />
-    <image:image>
-      <image:loc>https://lapiccolaperla.cz/og-la-piccola-perla.webp</image:loc>
-      <image:title>La Piccola Perla Italian restaurant in Prague</image:title>
-    </image:image>
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/en/menu</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/menu" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/menu" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/menu" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/menu" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/menu" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/en/o-nas</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/o-nas" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/o-nas" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/o-nas" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/o-nas" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/en/galerie</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/galerie" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/galerie" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/galerie" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/galerie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/galerie" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/en/kontakt</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/kontakt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/kontakt" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/kontakt" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/kontakt" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/en/ochrana-soukromi</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/ochrana-soukromi" />
   </url>
   <url>
     <loc>https://lapiccolaperla.cz/it</loc>
-    <lastmod>2026-08-21</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
     <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en" />
     <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/" />
-    <image:image>
-      <image:loc>https://lapiccolaperla.cz/og-la-piccola-perla.webp</image:loc>
-      <image:title>La Piccola Perla ristorante italiano a Praga</image:title>
-    </image:image>
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/it/menu</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/menu" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/menu" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/menu" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/menu" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/menu" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/it/o-nas</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/o-nas" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/o-nas" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/o-nas" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/o-nas" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/it/galerie</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/galerie" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/galerie" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/galerie" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/galerie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/galerie" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/it/kontakt</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/kontakt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/kontakt" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/kontakt" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/kontakt" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/it/ochrana-soukromi</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/ochrana-soukromi" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/de</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/de/menu</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/menu" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/menu" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/menu" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/menu" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/menu" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/de/o-nas</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/o-nas" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/o-nas" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/o-nas" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/o-nas" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/de/galerie</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/galerie" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/galerie" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/galerie" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/galerie" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/galerie" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/de/kontakt</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/kontakt" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/kontakt" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/kontakt" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/kontakt" />
+  </url>
+  <url>
+    <loc>https://lapiccolaperla.cz/de/ochrana-soukromi</loc>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://lapiccolaperla.cz/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://lapiccolaperla.cz/en/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://lapiccolaperla.cz/it/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://lapiccolaperla.cz/de/ochrana-soukromi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lapiccolaperla.cz/ochrana-soukromi" />
   </url>
 </urlset>

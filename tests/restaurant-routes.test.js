@@ -5,7 +5,7 @@ import { parseRoute, routeHref } from '../src/restaurant/routes.js';
 import { getRestaurantDate } from '../src/lib/restaurantDate.js';
 
 test('public links resolve to the same page in every supported language', () => {
-  for (const language of ['cs', 'en', 'it']) {
+  for (const language of ['cs', 'en', 'it', 'de']) {
     for (const page of ['home', 'menu', 'special', 'about', 'gallery', 'contact', 'privacy']) {
       const href = routeHref(page, language);
       assert.deepEqual(parseRoute(href), { page, language }, href);
@@ -15,10 +15,12 @@ test('public links resolve to the same page in every supported language', () => 
   assert.equal(routeHref('menu', 'cs'), '/menu');
   assert.equal(routeHref('contact', 'en'), '/en/kontakt');
   assert.equal(routeHref('gallery', 'it'), '/it/galerie');
+  assert.equal(routeHref('home', 'de'), '/de');
+  assert.equal(routeHref('menu', 'de'), '/de/menu');
 });
 
 test('daily menu always resolves to the Czech version', () => {
-  for (const language of ['cs', 'en', 'it']) {
+  for (const language of ['cs', 'en', 'it', 'de']) {
     assert.equal(routeHref('daily', language), '/denni-menu');
     assert.deepEqual(parseRoute(`/${language}/denni-menu`), { page: 'daily', language: 'cs' });
     assert.deepEqual(parseRoute(`/${language}`, '#daily-menu'), { page: 'daily', language: 'cs' });
@@ -33,6 +35,7 @@ test('existing section links reach the corresponding pages and preserve language
   for (const [hash, page] of Object.entries(aliases)) {
     assert.deepEqual(parseRoute('/en', `#${hash}`), { page, language: 'en' });
     assert.deepEqual(parseRoute(`/it#${hash}`), { page, language: 'it' });
+    assert.deepEqual(parseRoute(`/de#${hash}`), { page, language: 'de' });
   }
 });
 
@@ -40,8 +43,8 @@ test('legacy language entry points remain usable', () => {
   assert.deepEqual(parseRoute('/index.html'), { page: 'home', language: 'cs' });
   for (const [path, language] of [
     ['/en.html', 'en'], ['/it.html', 'it'],
-    ['/index-en.html', 'en'], ['/index-it.html', 'it'], ['/index-de.html', 'it'],
-    ['/index-en', 'en'], ['/index-it', 'it'], ['/index-de', 'it']
+    ['/index-en.html', 'en'], ['/index-it.html', 'it'], ['/index-de.html', 'de'], ['/de.html', 'de'],
+    ['/index-en', 'en'], ['/index-it', 'it'], ['/index-de', 'de'], ['/de', 'de'], ['/de/', 'de']
   ]) {
     assert.deepEqual(parseRoute(path), { page: 'home', language }, path);
   }
@@ -51,6 +54,7 @@ test('URLs with queries, full origins or encoded slugs keep their intended route
   assert.deepEqual(parseRoute('/en/menu?source=header'), { page: 'menu', language: 'en' });
   assert.deepEqual(parseRoute('https://lapiccolaperla.cz/it/menu?source=footer#gallery'), { page: 'gallery', language: 'it' });
   assert.deepEqual(parseRoute('/%65n/%6denu'), { page: 'menu', language: 'en' });
+  assert.deepEqual(parseRoute('/de/kontakt?utm_source=maps'), { page: 'contact', language: 'de' });
 });
 
 test('unknown routes cannot be converted into valid pages by a legacy hash', () => {

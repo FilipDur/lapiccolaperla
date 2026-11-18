@@ -345,7 +345,7 @@
           "value": "cs.lapiccolaperla.cz"
         }
       ],
-      "destination": "https://lapiccolaperla.cz/",
+      "destination": "https://lapiccolaperla.cz/de",
       "permanent": true
     },
     {
@@ -356,7 +356,7 @@
           "value": "cs.lapiccolaperla.cz"
         }
       ],
-      "destination": "https://lapiccolaperla.cz/",
+      "destination": "https://lapiccolaperla.cz/de",
       "permanent": true
     },
     {
@@ -1819,7 +1819,7 @@
           "value": "en.lapiccolaperla.cz"
         }
       ],
-      "destination": "https://lapiccolaperla.cz/en",
+      "destination": "https://lapiccolaperla.cz/de",
       "permanent": true
     },
     {
@@ -1830,7 +1830,7 @@
           "value": "en.lapiccolaperla.cz"
         }
       ],
-      "destination": "https://lapiccolaperla.cz/en",
+      "destination": "https://lapiccolaperla.cz/de",
       "permanent": true
     },
     {
@@ -3293,7 +3293,7 @@
           "value": "it.lapiccolaperla.cz"
         }
       ],
-      "destination": "https://lapiccolaperla.cz/it",
+      "destination": "https://lapiccolaperla.cz/de",
       "permanent": true
     },
     {
@@ -3304,7 +3304,7 @@
           "value": "it.lapiccolaperla.cz"
         }
       ],
-      "destination": "https://lapiccolaperla.cz/it",
+      "destination": "https://lapiccolaperla.cz/de",
       "permanent": true
     },
     {

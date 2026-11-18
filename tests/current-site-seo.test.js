@@ -3,17 +3,17 @@ import test from 'node:test';
 import { parseRoute } from '../src/restaurant/routes.js';
 import { getPageSeo, getRedirectUrl, publicRoutes, SITE_URL } from '../src/restaurant/seo.js';
 
-const localizedSlugs = ['', 'menu', 'specialni-menu', 'o-nas', 'galerie', 'kontakt', 'ochrana-soukromi'];
+const localizedSlugs = ['', 'menu', 'specialni-menu', 'novorocni-menu', 'o-nas', 'galerie', 'kontakt', 'ochrana-soukromi'];
 const expectedPaths = [
   ...localizedSlugs.map(slug => `/${slug}`),
   '/denni-menu',
   ...['en', 'it'].flatMap(language => localizedSlugs.map(slug => `/${language}${slug ? `/${slug}` : ''}`))
 ];
 
-test('current restaurant publishes exactly its 22 canonical pages, with reservations on contact pages', () => {
-  assert.equal(publicRoutes.length, 22);
+test('current restaurant publishes exactly its 25 canonical pages, with reservations on contact pages', () => {
+  assert.equal(publicRoutes.length, 25);
   assert.deepEqual(publicRoutes.map(route => route.path).sort(), [...expectedPaths].sort());
-  assert.equal(new Set(publicRoutes.map(route => route.path)).size, 22);
+  assert.equal(new Set(publicRoutes.map(route => route.path)).size, 25);
   for (const route of publicRoutes) {
     assert.deepEqual(parseRoute(route.path), { page: route.page, language: route.language });
     assert.equal(getRedirectUrl(route.path), null, route.path);
@@ -37,8 +37,8 @@ test('every canonical page has distinct title and description and its own canoni
     titles.add(seo.title);
     descriptions.add(seo.description);
   }
-  assert.equal(titles.size, 22);
-  assert.equal(descriptions.size, 22);
+  assert.equal(titles.size, 25);
+  assert.equal(descriptions.size, 25);
 });
 
 test('hreflang points to reciprocal canonical translations of the same page', () => {

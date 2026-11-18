@@ -1,0 +1,128 @@
+.restaurant-site .r-new-year-promotion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 60px;
+  padding: 10px clamp(12px, 2.4vw, 34px);
+  border-bottom: 1px solid var(--r-line);
+  background: var(--r-surface);
+  color: var(--r-wine);
+}
+
+.restaurant-site .r-new-year-promotion:hover {
+  background: #be9b7b26;
+}
+
+.restaurant-site .r-new-year-event {
+  font: 400 clamp(18px, 2.1vw, 28px) / 1.15 var(--r-serif);
+}
+
+.restaurant-site .r-new-year-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.restaurant-site .r-new-year {
+  display: grid;
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+  grid-template-areas: "intro menu" "dish menu";
+  align-items: start;
+  column-gap: clamp(32px, 6vw, 90px);
+  row-gap: 24px;
+  padding-block: clamp(36px, 6vw, 84px) clamp(54px, 8vw, 112px);
+}
+
+.restaurant-site .r-new-year-intro {
+  grid-area: intro;
+}
+
+.restaurant-site .r-new-year-intro h1 {
+  margin-block: 14px 19px;
+  color: var(--r-wine);
+}
+
+.restaurant-site .r-new-year-intro h1 em {
+  display: block;
+  line-height: 1.12;
+}
+
+.restaurant-site .r-new-year-description {
+  max-width: 38ch;
+  margin-bottom: 20px;
+}
+
+.restaurant-site .r-new-year-booking-note {
+  max-width: 44ch;
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+.restaurant-site .r-new-year-paper {
+  grid-area: menu;
+}
+
+.restaurant-site .r-new-year-paper h2 {
+  color: var(--r-wine);
+  font: italic clamp(24px, 3vw, 34px) / 1.18 var(--r-serif);
+}
+
+.restaurant-site .r-new-year-list .sp-item {
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding-block: 15px;
+}
+
+.restaurant-site .r-new-year-list h3 {
+  color: var(--r-wine-deep);
+  font-size: clamp(19px, 2vw, 24px);
+  line-height: 1.24;
+  text-wrap: initial;
+}
+
+.restaurant-site .r-new-year-list p {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.restaurant-site .r-new-year-paper-footer {
+  margin-top: 8px;
+  padding-top: 13px;
+  border-top: 1px solid var(--r-line);
+  text-align: center;
+  font-size: 11px;
+}
+
+.restaurant-site .r-new-year-dish {
+  grid-area: dish;
+  margin: 0;
+  background: var(--r-wine-deep);
+  color: var(--r-ivory);
+}
+
+.restaurant-site .r-new-year-dish img {
+  width: 100%;
+  height: auto;
+}
+
+.restaurant-site .r-new-year-dish figcaption {
+  padding: 0 14px 14px;
+  text-align: center;
+  font-size: 11px;
+}
+
+@media (max-width: 760px) {
+  .restaurant-site .r-new-year {
+    grid-template-columns: 1fr;
+    grid-template-areas: "intro" "menu" "dish";
+    gap: 28px;
+  }
+
+  .restaurant-site .r-new-year-intro h1 {
+    font-size: clamp(44px, 11.5vw, 64px);
+  }
+}

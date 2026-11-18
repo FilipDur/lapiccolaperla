@@ -1,5 +1,5 @@
 export const restaurantRoutes = Object.freeze({
-  home: "", menu: "menu", daily: "denni-menu", special: "specialni-menu",
+  home: "", menu: "menu", daily: "denni-menu", special: "specialni-menu", newYear: "novorocni-menu",
   about: "o-nas", gallery: "galerie", contact: "kontakt", privacy: "ochrana-soukromi"
 });
 

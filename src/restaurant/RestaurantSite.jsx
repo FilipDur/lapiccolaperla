@@ -6,8 +6,6 @@ import { usePhotoDepth } from "./usePhotoDepth.js";
 import GoogleReviews from "./GoogleReviews.jsx";
 import RestaurantMenu, { MenuOffers } from "./RestaurantMenu.jsx";
 import SpecialMenuPage from "./SpecialMenuPage.jsx";
-import NewYearPage, { NewYearPromotion } from "./NewYearPage.jsx";
-import { showNewYearPromotion } from "./newYearCopy.js";
 import CookiePrivacy, { PrivacySettingsButton } from "./CookiePrivacy.jsx";
 import PrivacyPage from "./PrivacyPage.jsx";
 import "@fontsource/dm-serif-display/400.css";
@@ -197,7 +195,6 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
 
     <main id="r-main" ref={mainRef} tabIndex={-1}>
       {route.page === "home" ? <>
-        {showNewYearPromotion(today) && <NewYearPromotion language={activeLanguage} />}
         <section className="r-hero r-hero-editorial" aria-labelledby="r-hero-title" data-motion={heroMotionPaused ? "paused" : "playing"}>
           <div className="r-hero-inner r-container">
             <div className="r-hero-copy">
@@ -238,9 +235,7 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
         </section>
         <section className="r-gallery-section r-section"><div className="r-container r-heading-row"><SectionHeading kicker="La Piccola Perla" title={t.galleryTitle} /><a className="r-text-link" href={href("gallery")}>{t.galleryLink}<ArrowUpRight size={18} /></a></div><div className="r-container"><GalleryGrid photos={selectedGallery} t={t} openPhoto={setActivePhoto} compact /></div></section>
         <GoogleReviews language={activeLanguage} /><Booking t={t} photo={findPhoto("_DSR0014.webp")} />
-      </> : route.page === "newYear" ? (
-        <NewYearPage language={activeLanguage} categories={menuCategories} allergy={copy.menu?.allergy || t.allergy} />
-      ) : <>
+      </> : <>
         {!["menu", "special"].includes(route.page) && <header className={`r-page-heading${route.page === "about" ? " r-page-heading-photo" : ""}`}>{route.page === "about" && <Picture photo={findPhoto("_DSR0023.webp")} eager />}<div className="r-container"><p className="r-eyebrow">{route.page === "menu" ? "La nostra cucina" : route.page === "daily" ? "Buon appetito" : route.page === "special" ? "Qualcosa di speciale" : "La Piccola Perla"}</p><h1>{route.page === "contact" ? t.contactTitle : route.page === "about" ? t.tableTitle : t.pages[route.page]}</h1>{route.page !== "privacy" && <p>{route.page === "menu" ? t.menuIntro : route.page === "gallery" ? t.galleryIntro : route.page === "contact" ? t.contactText : route.page === "special" ? t.specialIntro : route.page === "daily" ? t.dailyNote : route.page === "notFound" ? t.notFoundText : t.tableText}</p>}</div></header>}
         {route.page === "menu" && <RestaurantMenu categories={menuCategories} language={activeLanguage} specialItems={specialItems} specialStatus={specialStatus} allergy={copy.menu?.allergy || t.allergy} />}
         {route.page === "daily" && <DailyMenu items={dailyItems} status={dailyStatus} today={today} t={UI.cs} language="cs" photo={findPhoto("6.webp")} />}

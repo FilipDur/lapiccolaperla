@@ -1,6 +1,5 @@
 import { restaurantRoutes, parseRoute, routeHref } from './routes.js';
 import { getStructuredData } from './structuredData.js';
-import { newYearCopy } from './newYearCopy.js';
 export const SITE_URL = 'https://lapiccolaperla.cz';
 export const publicLanguages = ['cs', 'en', 'it'];
 export const routeLabels = {
@@ -80,10 +79,9 @@ export function getPageSeo(page, language = 'cs', {hasSpecialMenu = false} = {})
   const locale = page === 'daily' ? 'cs' : publicLanguages.includes(language) ? language : 'cs';
   const knownPage = Object.hasOwn(restaurantRoutes, page) ? page : 'notFound';
   const path = routeHref(knownPage, locale);
-  const campaign = knownPage === 'newYear' ? newYearCopy[locale] : null;
   return {
-    title: knownPage === 'home' ? homeTitles[locale] : (campaign?.seoTitle || pageTitles[locale][knownPage] || routeLabels[locale][knownPage]) + ' | La Piccola Perla',
-    description: campaign?.seoDescription || descriptions[locale][knownPage], path,
+    title: knownPage === 'home' ? homeTitles[locale] : (pageTitles[locale][knownPage] || routeLabels[locale][knownPage]) + ' | La Piccola Perla',
+    description: descriptions[locale][knownPage], path,
     canonical: knownPage === 'notFound' ? null : SITE_URL + path,
     htmlLang: locale, locale: {cs:'cs_CZ',en:'en_US',it:'it_IT'}[locale],
     robots: knownPage === 'notFound' || (knownPage === 'special' && !hasSpecialMenu) ? 'noindex, follow' : 'index, follow, max-image-preview:large',

@@ -58,7 +58,8 @@ export default defineConfig(({ isSsrBuild }) => ({
         main: resolve("index.html"),
         admin: resolve("admin.html"),
         en: resolve("en.html"),
-        it: resolve("it.html")
+        it: resolve("it.html"),
+        de: resolve("de.html")
       }
     }
   }

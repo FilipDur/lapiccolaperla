@@ -7,13 +7,13 @@ const localizedSlugs = ['', 'menu', 'specialni-menu', 'o-nas', 'galerie', 'konta
 const expectedPaths = [
   ...localizedSlugs.map(slug => `/${slug}`),
   '/denni-menu',
-  ...['en', 'it'].flatMap(language => localizedSlugs.map(slug => `/${language}${slug ? `/${slug}` : ''}`))
+  ...['en', 'it', 'de'].flatMap(language => localizedSlugs.map(slug => `/${language}${slug ? `/${slug}` : ''}`))
 ];
 
-test('current restaurant publishes exactly its 22 canonical pages, with reservations on contact pages', () => {
-  assert.equal(publicRoutes.length, 22);
+test('current restaurant publishes exactly its 29 canonical pages, with reservations on contact pages', () => {
+  assert.equal(publicRoutes.length, 29);
   assert.deepEqual(publicRoutes.map(route => route.path).sort(), [...expectedPaths].sort());
-  assert.equal(new Set(publicRoutes.map(route => route.path)).size, 22);
+  assert.equal(new Set(publicRoutes.map(route => route.path)).size, 29);
   for (const route of publicRoutes) {
     assert.deepEqual(parseRoute(route.path), { page: route.page, language: route.language });
     assert.equal(getRedirectUrl(route.path), null, route.path);
@@ -29,7 +29,7 @@ test('every canonical page has distinct title and description and its own canoni
     assert.equal(seo.path, path);
     assert.equal(seo.canonical, `${SITE_URL}${path}`);
     assert.equal(seo.htmlLang, language);
-    assert.equal(seo.locale, { cs: 'cs_CZ', en: 'en_US', it: 'it_IT' }[language]);
+    assert.equal(seo.locale, { cs: 'cs_CZ', en: 'en_US', it: 'it_IT', de: 'de_DE' }[language]);
     assert.ok(seo.title.trim(), `${path} title`);
     assert.ok(seo.description.trim(), `${path} description`);
     assert.equal(titles.has(seo.title), false, `Duplicate title at ${path}: ${seo.title}`);
@@ -37,14 +37,14 @@ test('every canonical page has distinct title and description and its own canoni
     titles.add(seo.title);
     descriptions.add(seo.description);
   }
-  assert.equal(titles.size, 22);
-  assert.equal(descriptions.size, 22);
+  assert.equal(titles.size, 29);
+  assert.equal(descriptions.size, 29);
 });
 
 test('hreflang points to reciprocal canonical translations of the same page', () => {
   for (const { page, language } of publicRoutes.filter(route => route.page !== 'daily')) {
     const seo = getPageSeo(page, language);
-    assert.deepEqual(seo.alternates.map(alternate => alternate.language), ['cs', 'en', 'it']);
+    assert.deepEqual(seo.alternates.map(alternate => alternate.language), ['cs', 'en', 'it', 'de']);
     for (const alternate of seo.alternates) {
       const translatedRoute = parseRoute(new URL(alternate.href).pathname);
       assert.deepEqual(translatedRoute, { page, language: alternate.language });
@@ -55,8 +55,18 @@ test('hreflang points to reciprocal canonical translations of the same page', ()
   }
 });
 
+test('German pages target Prague Old Town searches with the site location fact', () => {
+  const home = getPageSeo('home', 'de');
+  assert.equal(home.title, 'Italienisches Restaurant Prag Altstadt | La Piccola Perla');
+  assert.equal(home.canonical, `${SITE_URL}/de`);
+  assert.equal(home.locale, 'de_DE');
+  assert.match(home.description, /nur wenige Schritte vom Altstädter Ring/);
+  assert.equal(getPageSeo('about', 'de').canonical, `${SITE_URL}/de/o-nas`);
+  assert.equal(publicRoutes.some(route => route.language === 'de' && route.page === 'daily'), false);
+});
+
 test('daily SEO is Czech only even when requested through a legacy translated URL', () => {
-  for (const language of ['cs', 'en', 'it']) {
+  for (const language of ['cs', 'en', 'it', 'de']) {
     const seo = getPageSeo('daily', language);
     assert.equal(seo.htmlLang, 'cs');
     assert.equal(seo.canonical, `${SITE_URL}/denni-menu`);
@@ -66,7 +76,7 @@ test('daily SEO is Czech only even when requested through a legacy translated UR
 });
 
 test('missing pages have no canonical or alternate language targets and cannot become home redirects', () => {
-  for (const [path, language] of [['/missing', 'cs'], ['/en/missing', 'en'], ['/it/missing', 'it']]) {
+  for (const [path, language] of [['/missing', 'cs'], ['/en/missing', 'en'], ['/it/missing', 'it'], ['/de/missing', 'de']]) {
     assert.deepEqual(parseRoute(path), { page: 'notFound', language });
     for (const page of ['notFound', 'unknown-page', 'constructor']) {
       const seo = getPageSeo(page, language, { hasSpecialMenu: true });
@@ -80,7 +90,7 @@ test('missing pages have no canonical or alternate language targets and cannot b
 });
 
 test('special-menu indexability follows published content without changing its canonical identity', () => {
-  for (const language of ['cs', 'en', 'it']) {
+  for (const language of ['cs', 'en', 'it', 'de']) {
     const absent = getPageSeo('special', language);
     const empty = getPageSeo('special', language, { hasSpecialMenu: false });
     const active = getPageSeo('special', language, { hasSpecialMenu: true });
@@ -117,7 +127,7 @@ test('old language entry points and canonical HTML paths need at most one redire
     ['/index', '/'], ['/index.html', '/'],
     ['/index-en', '/en'], ['/index-en.html', '/en'], ['/en.html', '/en'],
     ['/index-it', '/it'], ['/index-it.html', '/it'], ['/it.html', '/it'],
-    ['/index-de', '/it'], ['/index-de.html', '/it']
+    ['/index-de', '/de'], ['/index-de.html', '/de'], ['/de.html', '/de'], ['/de/', '/de']
   ]) {
     assert.equal(getRedirectUrl(input), target, input);
     assert.equal(getRedirectUrl(target), null);
@@ -139,8 +149,11 @@ test('recognized lang translates the same page while preserving unrelated repeat
     ['/en/reservation.html?lang=it', '/it/kontakt'],
     ['/ochrana-soukromi?lang=en', '/en/ochrana-soukromi'],
     ['/en/menu?lang=en&lang=it&x=1', '/en/menu?x=1'],
-    ['/menu?lang=de&category=wine', null],
-    ['/gallery?lang=de', '/galerie?lang=de'],
+    ['/menu?lang=de&category=wine', '/de/menu?category=wine'],
+    ['/gallery?lang=de', '/de/galerie'],
+    ['/de/kontakt?lang=en', '/en/kontakt'],
+    ['/menu?lang=fr&category=wine', null],
+    ['/gallery?lang=fr', '/galerie?lang=fr'],
     ['/en/menu?category=wine#details', null],
     ['/en/unknown?lang=cs', null]
   ];

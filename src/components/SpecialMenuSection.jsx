@@ -22,6 +22,13 @@ export const specialMenuCopy = {
     eyebrow: "Qualcosa di speciale",
     intro: "Qualcosa in più rispetto al nostro menù abituale. Scopri le specialità del momento di La Piccola Perla.",
     allergy: "Per informazioni sugli allergeni, rivolgiti al nostro personale."
+  },
+  de: {
+    navLabel: "Spezialitäten",
+    title: "Spezialitäten",
+    eyebrow: "Etwas Besonderes",
+    intro: "Etwas mehr zu unserer Speisekarte. Entdecken Sie die aktuellen Spezialitäten von La Piccola Perla.",
+    allergy: "Informationen zu Allergenen erhalten Sie gerne bei unserem Team."
   }
 };
 

@@ -161,12 +161,12 @@ const pages = [];
 for (let index = 0; index < publicRoutes.length; index += 3) {
   pages.push(...await Promise.all(publicRoutes.slice(index, index + 3).map(route => inspectPage(route))));
 }
-check('public inventory', pages.length === 22, `Expected 22 public pages, got ${pages.length}`);
-check('public inventory', new Set(pages.map(page => page.title)).size === 22, 'Public titles are not all unique');
-check('public inventory', new Set(pages.flatMap(page => page.canonical)).size === 22, 'Public canonicals are not all unique');
+check('public inventory', pages.length === 29, `Expected 29 public pages, got ${pages.length}`);
+check('public inventory', new Set(pages.map(page => page.title)).size === 29, 'Public titles are not all unique');
+check('public inventory', new Set(pages.flatMap(page => page.canonical)).size === 29, 'Public canonicals are not all unique');
 
 const notFound = [];
-for (const [path, language] of [['/seo-audit-missing-20261031', 'cs'], ['/en/seo-audit-missing-20261031', 'en'], ['/it/seo-audit-missing-20261031.html', 'it']]) {
+for (const [path, language] of [['/seo-audit-missing-20261031', 'cs'], ['/en/seo-audit-missing-20261031', 'en'], ['/it/seo-audit-missing-20261031.html', 'it'], ['/de/seo-audit-missing-20261031', 'de']]) {
   notFound.push(await inspectPage({ path, language, page: 'notFound' }, 404));
 }
 
@@ -174,7 +174,7 @@ const redirects = [];
 for (const [path, target] of [
   ['/copy-of-home', '/menu'], ['/copy-of-home.html?utm_source=maps', '/menu?utm_source=maps'],
   ['/gallery', '/galerie'], ['/gallery.html', '/galerie'],
-  ['/index.html', '/'], ['/index-en.html', '/en'], ['/index-it.html', '/it'], ['/index-de.html', '/it'],
+  ['/index.html', '/'], ['/index-en.html', '/en'], ['/index-it.html', '/it'], ['/index-de.html', '/de'], ['/index-de', '/de'], ['/de/', '/de'],
   ['/en/gallery.html?lang=it&x=1&x=2', '/it/galerie?x=1&x=2'],
   ['/menu/?lang=en&category=pasta', '/en/menu?category=pasta'],
   ['/en/denni-menu?lang=it', '/denni-menu'],
@@ -201,7 +201,7 @@ const locations = [...sitemapResponse.body.matchAll(/<loc>([^<]+)<\/loc>/g)].map
 const expectedLocations = pages.filter(page => !page.robots.robots?.includes('noindex')).flatMap(page => page.canonical);
 check('/sitemap.xml', sitemapResponse.status === 200, `Expected HTTP 200, received ${sitemapResponse.status}`);
 check('/sitemap.xml', sitemapResponse.headers['content-type']?.includes('xml'), 'Response is not XML');
-check('/sitemap.xml', [19, 22].includes(locations.length), `Expected 19 or 22 sitemap URLs, got ${locations.length}`);
+check('/sitemap.xml', [25, 29].includes(locations.length), `Expected 25 or 29 sitemap URLs, got ${locations.length}`);
 check('/sitemap.xml', JSON.stringify([...locations].sort()) === JSON.stringify([...expectedLocations].sort()), 'Sitemap differs from the indexable canonical pages actually served');
 check('/sitemap.xml', new Set(locations).size === locations.length, 'Duplicate sitemap URLs');
 

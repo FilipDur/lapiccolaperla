@@ -34,10 +34,10 @@ export function parseRoute(pathname = "/", hash = "") {
   try { value = decodeURIComponent(value); } catch { return { page: "notFound", language: "cs" }; }
   const clean = value.replace(/^\/+|\/+$/g, "");
   const legacy = /^(?:index-)?(en|it|de)(?:\.html)?$/.exec(clean);
-  let language = legacy?.[1] === "de" ? "it" : legacy?.[1] || "cs";
+  let language = legacy?.[1] || "cs";
   let parts = clean.split("/").filter(Boolean);
-  if (["en", "it", "cs"].includes(parts[0])) language = parts.shift();
-  let slug = legacy || ["index.html", "index-en.html", "index-it.html"].includes(clean) ? "" : parts.join("/");
+  if (["en", "it", "de", "cs"].includes(parts[0])) language = parts.shift();
+  let slug = legacy || ["index.html", "index-en.html", "index-it.html", "index-de.html"].includes(clean) ? "" : parts.join("/");
   if (slug === "index.html" || slug === "index") slug = "";
   slug = slug.replace(/\.html$/, "");
   if (Object.hasOwn(legacySlugs, slug)) slug = legacySlugs[slug];
@@ -50,7 +50,7 @@ export function parseRoute(pathname = "/", hash = "") {
 }
 
 export function routeHref(page = "home", language = "cs") {
-  const code = ["en", "it"].includes(language) && page !== "daily" ? language : "cs";
+  const code = ["en", "it", "de"].includes(language) && page !== "daily" ? language : "cs";
   const slug = restaurantRoutes[page] ?? "";
   const prefix = code === "cs" ? "" : `/${code}`;
   return `${prefix}/${slug}`.replace(/\/$/, "") || "/";

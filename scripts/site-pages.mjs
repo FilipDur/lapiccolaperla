@@ -65,7 +65,7 @@ export function renderSitemap({ hasSpecialMenu = false } = {}) {
 }
 
 export async function writePublicPages(outputDirectory, renderDocument = renderRouteHtml) {
-  const templates = Object.fromEntries(await Promise.all(["cs", "en", "it"].map(async (language) => [language, await readFile(resolve(outputDirectory, language === "cs" ? "index.html" : `${language}.html`), "utf8")])));
+  const templates = Object.fromEntries(await Promise.all(["cs", "en", "it", "de"].map(async (language) => [language, await readFile(resolve(outputDirectory, language === "cs" ? "index.html" : `${language}.html`), "utf8")])));
   for (const route of publicRoutes) {
     const target = resolve(outputDirectory, routeFileName(route.path));
     await mkdir(dirname(target), { recursive: true });

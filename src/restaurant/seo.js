@@ -1,23 +1,26 @@
 import { restaurantRoutes, parseRoute, routeHref } from './routes.js';
 import { getStructuredData } from './structuredData.js';
 export const SITE_URL = 'https://lapiccolaperla.cz';
-export const publicLanguages = ['cs', 'en', 'it'];
+export const publicLanguages = ['cs', 'en', 'it', 'de'];
 export const routeLabels = {
   cs: { home: "Úvod", about: "O nás", menu: "Jídelní lístek", daily: "Denní menu", gallery: "Galerie", reservation: "Rezervace", contact: "Kontakt", special: "Speciální nabídka", privacy: "Ochrana soukromí", notFound: "Stránka nenalezena" },
   en: { home: "Home", about: "Our story", menu: "Menu", daily: "Lunch menu", gallery: "Gallery", reservation: "Reservations", contact: "Contact", special: "Special menu", privacy: "Privacy", notFound: "Page not found" },
-  it: { home: "Home", about: "Il ristorante", menu: "Menù", daily: "Menù del pranzo", gallery: "Galleria", reservation: "Prenotazioni", contact: "Contatti", special: "Specialità", privacy: "Informativa sulla privacy", notFound: "Pagina non trovata" }
+  it: { home: "Home", about: "Il ristorante", menu: "Menù", daily: "Menù del pranzo", gallery: "Galleria", reservation: "Prenotazioni", contact: "Contatti", special: "Specialità", privacy: "Informativa sulla privacy", notFound: "Pagina non trovata" },
+  de: { home: "Startseite", about: "Über uns", menu: "Speisekarte", daily: "Mittagsmenü", gallery: "Galerie", reservation: "Reservierung", contact: "Kontakt", special: "Spezialitäten", privacy: "Datenschutz", notFound: "Seite nicht gefunden" }
 };
 
 const homeTitles = {
   cs: "Italská restaurace Praha 1 – Staré Město | La Piccola Perla",
   en: "Italian Restaurant in Prague Old Town | La Piccola Perla",
-  it: "Ristorante italiano a Praga | La Piccola Perla"
+  it: "Ristorante italiano a Praga | La Piccola Perla",
+  de: "Italienisches Restaurant Prag Altstadt | La Piccola Perla"
 };
 
 const pageTitles = {
   cs: { menu: "Jídelní lístek a ceny v Praze 1", daily: "Denní menu Praha 1", reservation: "Rezervace stolu v Praze 1", contact: "Kontakt a cesta do restaurace v Praze 1", special: "Speciální menu v Praze 1", about: "O restauraci v Perlové ulici, Praha 1", gallery: "Galerie restaurace v Praze 1" },
   en: { menu: "Italian Menu and Prices in Prague 1", reservation: "Book a Table in Prague 1", contact: "Contact and Directions in Prague 1", special: "Special Menu in Prague 1", about: "About our Italian restaurant in Prague 1", gallery: "Restaurant gallery, Prague 1" },
-  it: { menu: "Menù italiano e prezzi a Praga 1", reservation: "Prenota un tavolo a Praga 1", contact: "Contatti e indicazioni a Praga 1", special: "Menù speciale a Praga 1", about: "Il ristorante italiano a Praga 1", gallery: "Galleria del ristorante, Praga 1" }
+  it: { menu: "Menù italiano e prezzi a Praga 1", reservation: "Prenota un tavolo a Praga 1", contact: "Contatti e indicazioni a Praga 1", special: "Menù speciale a Praga 1", about: "Il ristorante italiano a Praga 1", gallery: "Galleria del ristorante, Praga 1" },
+  de: { menu: "Italienische Speisekarte und Preise in Prag 1", reservation: "Tisch reservieren in Prag 1", contact: "Kontakt und Anfahrt in Prag 1", special: "Aktuelle Spezialitäten in Prag 1", about: "Unser Restaurant in der Prager Altstadt", gallery: "Bildergalerie des Restaurants, Prag 1" }
 };
 
 const descriptions = {
@@ -54,6 +57,17 @@ const descriptions = {
     special: "Scopri le specialità del momento di La Piccola Perla a Praga. Piatti italiani stagionali con prezzi, accanto al nostro menù abituale.",
     privacy: "Informazioni sulla privacy del sito La Piccola Perla: gestore, dati dei visitatori, memoria del browser, servizi esterni e contatti per le richieste.",
     notFound: "Questa pagina non è stata trovata. Consulta il menù, prenota un tavolo o visita la pagina iniziale di La Piccola Perla."
+  },
+  de: {
+    home: "Italienisches Restaurant in der Prager Altstadt, nur wenige Schritte vom Altstädter Ring. Pasta, Pizza, Meeresfrüchte und italienische Weine. Jetzt Tisch reservieren.",
+    about: "Lernen Sie La Piccola Perla kennen, ein italienisches Restaurant in der Prager Altstadt. Unsere Geschichte, unsere Küche und schöne Stunden am Tisch.",
+    menu: "Speisekarte mit Preisen von La Piccola Perla in Prag 1: Pasta, Pizza, Fisch, Fleisch, Desserts, italienische Weine und Getränke. Wählen Sie aus und reservieren Sie.",
+    gallery: "Fotos von unserem Restaurant, von italienischen Gerichten und der Atmosphäre bei La Piccola Perla in der Perlová-Straße in Prag.",
+    reservation: "Reservieren Sie einen Tisch bei La Piccola Perla in der Perlová-Straße, Prag 1. Online oder unter +420 224 282 537. Täglich geöffnet 11:00–23:00.",
+    contact: "La Piccola Perla finden Sie in der Perlová 412/1, Prag 1. Telefon +420 224 282 537, täglich geöffnet 11:00–23:00. Karte und Kontaktdaten.",
+    special: "Die aktuellen Spezialitäten von La Piccola Perla in Prag: saisonale italienische Gerichte mit Preisen, ergänzend zu unserer Speisekarte.",
+    privacy: "Datenschutzhinweise der Website von La Piccola Perla: Betreiber, Besucherdaten, Browser-Speicher, externe Dienste und Kontakt für Anfragen.",
+    notFound: "Diese Seite haben wir leider nicht gefunden. Sehen Sie sich die Speisekarte an, reservieren Sie einen Tisch oder besuchen Sie die Startseite von La Piccola Perla."
   }
 };
 
@@ -83,7 +97,7 @@ export function getPageSeo(page, language = 'cs', {hasSpecialMenu = false} = {})
     title: knownPage === 'home' ? homeTitles[locale] : (pageTitles[locale][knownPage] || routeLabels[locale][knownPage]) + ' | La Piccola Perla',
     description: descriptions[locale][knownPage], path,
     canonical: knownPage === 'notFound' ? null : SITE_URL + path,
-    htmlLang: locale, locale: {cs:'cs_CZ',en:'en_US',it:'it_IT'}[locale],
+    htmlLang: locale, locale: {cs:'cs_CZ',en:'en_US',it:'it_IT',de:'de_DE'}[locale],
     robots: knownPage === 'notFound' || (knownPage === 'special' && !hasSpecialMenu) ? 'noindex, follow' : 'index, follow, max-image-preview:large',
     alternates: knownPage === 'notFound' ? [] : (knownPage === 'daily' ? ['cs'] : publicLanguages).map(code => ({language:code,href:SITE_URL+routeHref(knownPage,code)}))
   };

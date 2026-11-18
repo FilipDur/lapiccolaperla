@@ -71,7 +71,7 @@ const photoData = [
   };
 });
 
-const languageCodes = ["cs", "en", "it"];
+const languageCodes = ["cs", "en", "it", "de"];
 const SITE_URL = "https://lapiccolaperla.cz";
 const setMetaTag = (attribute, key, content) => {
   let element = document.head.querySelector(`meta[${attribute}="${key}"]`);
@@ -409,6 +409,113 @@ const publicCopy = {
       "3.webp": ["Calamaretti alla griglia", "Frutti di mare"],
       "5.webp": ["Soufflé", "Dolce"],
       "6.webp": ["Selezione di sapori italiani", "La Perla"]
+    }
+  },
+  de: {
+    locale: "de-DE",
+    title: "Italienisches Restaurant Prag Altstadt | La Piccola Perla",
+    navAria: "Hauptnavigation",
+    footerAria: "Fußzeilennavigation",
+    languageAria: "Sprache",
+    openMenu: "Menü öffnen",
+    closeMenu: "Menü schließen",
+    reservation: "Reservierung",
+    nav: {
+      about: "Geschichte",
+      menu: "Speisekarte",
+      gallery: "Galerie",
+      contact: "Kontakt"
+    },
+    hero: {
+      eyebrow: "La Piccola Perla · Prager Altstadt",
+      title: "Italienisches Restaurant im Herzen von Prag",
+      text: "Frische Pasta, knusprige Pizza, Meeresfrüchte und italienischer Wein, nur wenige Schritte vom Altstädter Ring. Kommen Sie zum Mittagessen, zu einem Date oder zu einem langen Abendessen in Prag 1.",
+      reserve: "Tisch reservieren",
+      menu: "Speisekarte ansehen"
+    },
+    stats: ["Gästebewertung", "Online-Bewertungen", "täglich geöffnet", "Perlová 412/1"],
+    about: {
+      eyebrow: "Seit 2012",
+      title: "Italienische Lebensfreude in Prags Gassen",
+      text: [
+        "La Piccola Perla entstand aus dem Wunsch, die Atmosphäre familiengeführter italienischer Restaurants ins Zentrum von Prag zu bringen: ein lebhafter Tisch, guter Wein, duftende Saucen und ein Service, der den Abend entspannt dahinfließen lässt.",
+        "In der Perlová-Straße in der Prager Altstadt kochen wir mit italienischen Zutaten, mit Respekt vor der Einfachheit und mit Blick auf die Gerichte, für die unsere Gäste gerne wiederkommen."
+      ],
+      imageAlts: ["Gemütlicher Innenraum des italienischen Restaurants La Piccola Perla in Prag", "Tagliata di manzo im La Piccola Perla"],
+      link: "Einen Blick hineinwerfen"
+    },
+    experiences: {
+      eyebrow: "Warum zu uns",
+      title: "Warum ins La Piccola Perla",
+      text: "Italienische Klassiker, sorgfältig ausgewählte Weine und ein gemütlicher Gastraum in der Prager Altstadt: ideal für ein schnelles Mittagessen oder ein langes Abendessen.",
+      cards: [
+        ["Mit Sorgfalt gekocht", "Pasta, Risotto, Meeresfrüchte und Pizza, zubereitet mit Respekt vor der italienischen Einfachheit."],
+        ["Wein zum Essen und für den Abend", "Gläser und Flaschen aus Italien, vom leichten Prosecco bis zu kräftigen Rotweinen aus der Toskana."],
+        ["Für Verabredungen und Gruppen", "Ein gemütlicher Gastraum im Zentrum von Prag, für ein schnelles Mittagessen ebenso wie für ein langes Abendessen."]
+      ]
+    },
+    menu: {
+      eyebrow: "Speisekarte",
+      title: "Die beliebtesten italienischen Klassiker an einem Ort",
+      text: "Wählen Sie eine Kategorie und finden Sie schnell das Gericht, für das sich eine Reservierung schon heute lohnt.",
+      tabsAria: "Kategorien der Speisekarte",
+      picksAria: "Empfohlene Gerichte",
+      allergy: "Informationen zu Allergenen erhalten Sie auf Anfrage."
+    },
+    gallery: {
+      eyebrow: "Galerie",
+      title: "Fotos, die Appetit machen",
+      text: "Sehen Sie sich vor Ihrem Besuch unseren Gastraum in der Perlová-Straße, italienische Gerichte, Weine und Desserts an."
+    },
+    reservationBlock: {
+      eyebrow: "Reservierungen und Bestellungen",
+      title: "Ein Tisch im Zentrum von Prag mit wenigen Klicks",
+      text: "Kommen Sie zu einem italienischen Mittag- oder Abendessen, oder bestellen Sie Ihre Lieblingsgerichte online.",
+      book: "Tisch reservieren",
+      order: "Online bestellen"
+    },
+    contact: {
+      eyebrow: "Kontakt",
+      title: "Italienisches Restaurant in der Prager Altstadt, Prag 1",
+      addressTitle: "Adresse",
+      phoneTitle: "Telefon",
+      hoursTitle: "Öffnungszeiten",
+      address: ["Perlová 412/1, Altstadt", "110 00 Prag 1"],
+      hours: ["Mo–So", "11:00–23:00"]
+    },
+    footer: "© 2026 La Piccola Perla. Italienische Küche im Zentrum von Prag.",
+    footerCredit: "Website von",
+    legal: {
+      operator: "Betreiber",
+      registeredOffice: "Firmensitz",
+      companyId: "Firmennummer (IČO)",
+      vatId: "USt-IdNr.",
+      email: "E-Mail"
+    },
+    lightbox: {
+      close: "Galerie schließen",
+      previous: "Vorheriges Foto",
+      next: "Nächstes Foto"
+    },
+    cookieNotice: {
+      text: "Wir verwenden nur technische Cookies und lokalen Speicher für die Sprache der Website und das Mittagsmenü. Wir verwenden keine Werbe- oder Analyse-Cookies.",
+      accept: "Verstanden"
+    },
+    photos: {
+      "_DSR0014.webp": ["Abend an der Weinbar", "Innenraum"],
+      "_DSR0003.webp": ["Gedeckter Gastraum in der Perlová", "Atmosphäre"],
+      "_DSR0022.webp": ["Lange Tafel für gesellige Runden", "Reservierung"],
+      "_DSR0023.webp": ["Ruhiger Salon", "Innenraum"],
+      "_DSR0026.webp": ["Gemütliche Sitzecke", "Prag 1"],
+      "_DSR0048.webp": ["Espresso und ein Gläschen Grappa", "Nach dem Essen"],
+      "_DSR0080.webp": ["Frittierte Calamari", "Meeresfrüchte"],
+      "_DSR0090.webp": ["Dessert mit Früchten", "Dolce"],
+      "1.webp": ["Pizza mit Prosciutto und Rucola", "Küche"],
+      "4.webp": ["Pasta mit Meeresfrüchten", "Küche"],
+      "2.webp": ["Tagliata di manzo", "Fleisch"],
+      "3.webp": ["Calamaretti alla griglia", "Meeresfrüchte"],
+      "5.webp": ["Soufflé", "Dolce"],
+      "6.webp": ["Auswahl italienischer Aromen", "La Perla"]
     }
   }
 };
@@ -802,6 +909,199 @@ const menuLocalization = {
         "Single malt",
         "Bourbon",
         "Vodka",
+        "Rum",
+        "Rum",
+        "Cognac",
+        "Tequila"
+      ]
+    }
+  },
+  de: {
+    priceOnRequest: "nach Angebot",
+    categoryMeta: {
+      soups: ["Suppen", "Leichter Auftakt"],
+      salads: ["Salate", "Frische Teller"],
+      starters: ["Vorspeisen", "Zum Wein und zum Teilen"],
+      pasta: ["Pasta & Risotto", "Italienische Klassiker"],
+      pizza: ["Pizza", "Aus dem Ofen auf den Tisch"],
+      meat: ["Fleisch", "Italienische Hauptgerichte"],
+      seafood: ["Fisch & Meeresfrüchte", "Das Meer auf italienische Art"],
+      sides: ["Beilagen", "Für einen guten Teller"],
+      desserts: ["Desserts", "Süßes Finale"],
+      drinks: ["Getränke", "Kaffee, Softdrinks, Bier"],
+      wine: ["Weine", "Gläser und Flaschen"],
+      spirits: ["Spirituosen", "Digestif nach dem Essen"]
+    },
+    itemDescriptions: {
+      soups: ["Hühnerbrühe", "Tomatencremesuppe", "Traditionelle Gemüsesuppe", "Venezianische Bohnensuppe", "Spargelcremesuppe", "Fischsuppe"],
+      salads: [
+        "Gemischter Salat der Saison",
+        "Mozzarella mit Tomaten und Basilikum",
+        "Salat der Saison mit Thunfisch, Ei und Oliven",
+        "Salat mit Hähnchenbrust",
+        "Spinatsalat mit gegrilltem Lachs",
+        "Marinierte Paprika mit Feta",
+        "Rucola mit Kirschtomaten und Parmesan",
+        "Salat der Saison mit gegrillten Garnelen"
+      ],
+      starters: [
+        "Hausgemachtes Brot mit Tomaten, Basilikum und Knoblauch",
+        "Geröstetes Brot mit Parmaschinken und Pilzen",
+        "Thunfisch-Carpaccio",
+        "Carpaccio vom Rinderfilet mit Rucola und Pesto",
+        "Parmaschinken mit Melone",
+        "Kalbfleischscheiben mit Thunfischsauce",
+        "Burrata mit Rucola und Tomaten",
+        "Auswahl italienischer Wurstspezialitäten",
+        "Auswahl italienischer Käsesorten",
+        "Große Auswahl italienischer Vorspeisen"
+      ],
+      pasta: [
+        "Knoblauch, Olivenöl und Chili",
+        "Parmesan, Ei und italienischer Speck",
+        "Basilikumpesto",
+        "Mit Venusmuscheln",
+        "Speck, Paprika, Zwiebeln und Tomaten",
+        "Meeresfrüchte",
+        "Schweinefilet, Speck und Basilikumpesto",
+        "Fleischsauce",
+        "Parmaschinken, Steinpilze und Sahne",
+        "Pilze, Erbsen, Schinken, Sahne und Tomaten",
+        "Garnelen, Knoblauch und Olivenöl",
+        "Knoblauch, Tomatensauce und Chili",
+        "Frischer Lachs und Tomaten",
+        "Hähnchen, Spinat und Sahne",
+        "Hausgemachte italienische Lasagne",
+        "Gnocchi mit vier Käsesorten",
+        "Steinpilze und Trüffelbutter",
+        "Garnelen und Zucchini",
+        "Meeresfrüchte"
+      ],
+      pizza: [
+        "Tomatensauce, Mozzarella und frisches Basilikum",
+        "Tomatensauce, Knoblauch, Mozzarella und Sardellen",
+        "Tomatensauce, Mozzarella und Champignons",
+        "Tomatensauce, Mozzarella, Ananas und Schinken",
+        "Tomatensauce, Mozzarella, Schinken, Salami und Pilze",
+        "Tomatensauce, Mozzarella, Schinken, Pilze und Oliven",
+        "Tomatensauce, Mozzarella, Pilze, Schinken und Oliven",
+        "Tomatensauce, Mozzarella und Tiroler Speck",
+        "Tomatensauce, Mozzarella, Thunfisch und Zwiebeln",
+        "Paprika, Zwiebeln, Zucchini, Aubergine und Mozzarella",
+        "Scharfe Salami, Mozzarella und Chilischoten",
+        "Sahne und vier Käsesorten",
+        "Parmaschinken, Mozzarella und Rucola",
+        "Tomatensauce, Mozzarella, Rucola und Parmesan",
+        "Tomatensauce, Mozzarella, Schinken, Zwiebeln und Paprika",
+        "Tomatensauce, Mozzarella und Meeresfrüchte",
+        "Rinderfilet, Rucola und Parmesan",
+        "Büffelmozzarella, Kirschtomaten und Basilikum",
+        "Mozzarella, Gorgonzola, Salami, Parmaschinken und Paprika"
+      ],
+      meat: [
+        "Schweinefilet mit Rucola und Gorgonzolasauce",
+        "Hähnchenbrust mit Zitrone und Rosmarin",
+        "Kalbsschnitzel nach Mailänder Art",
+        "Kalb mit Parmaschinken und Salbei",
+        "Überbackene Kalbfleischscheiben mit Mozzarella",
+        "Gegrilltes Rumpsteak vom Rind",
+        "Gegrilltes Rinderfilet",
+        "Gemischte Grillplatte La Piccola Perla",
+        "Gegrillte Lammkoteletts",
+        "Tagesspezialität nach Angebot"
+      ],
+      seafood: [
+        "Miesmuscheln in Weißwein",
+        "Gegrillte Baby-Calamari mit Knoblauch",
+        "Gegrillter Oktopus",
+        "Lachs mit Proseccosauce",
+        "Gegrillte Garnelen und Calamari",
+        "Garnelen, Tomatensauce, Knoblauch und Paprika",
+        "Gebackene Dorade oder Wolfsbarsch",
+        "Gemischte Grillplatte mit Fisch und Meeresfrüchten"
+      ],
+      sides: ["Pommes frites", "Ofenkartoffeln", "Spinat mit Knoblauch", "Grüne Bohnen", "Gegrilltes Gemüse", "Dünnes Pizzabrot mit Olivenöl und Oregano"],
+      desserts: [
+        "Klassisches italienisches Tiramisu",
+        "Zarte Panna cotta",
+        "Schokoladensoufflé",
+        "Eisauswahl",
+        "Warme Himbeeren mit Eis",
+        "Warme Waldfrüchte mit Mascarpone",
+        "Zitronensorbet"
+      ],
+      drinks: [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "Entkoffeinierter Kaffee",
+        "Heiße Schokolade",
+        "Tee",
+        "Frischer Minz- oder Ingwertee",
+        "Glühwein",
+        "",
+        "",
+        "",
+        "",
+        "Mineralwasser mit Kohlensäure",
+        "Stilles Wasser",
+        "",
+        "",
+        "Karaffe Wasser",
+        "Limonade",
+        "",
+        "Bier",
+        "Bier",
+        "Alkoholfreies Bier",
+        ""
+      ],
+      wine: [
+        "Schaumwein, Veneto",
+        "Weißwein, Veneto",
+        "Weißwein",
+        "Weißwein",
+        "Weißwein",
+        "Rotwein, Toskana",
+        "Rotwein, Piemont",
+        "Rotwein, Abruzzen",
+        "Rotwein, Apulien",
+        "Weißwein, Veneto, Flasche",
+        "Weißwein, Veneto, Flasche",
+        "Weißwein, Toskana, Flasche",
+        "Weißwein, Piemont, Flasche",
+        "Weißwein, Trentino, Flasche",
+        "Schaumwein, Flasche",
+        "Schaumwein, Flasche",
+        "Champagner",
+        "Rotwein, Veneto, Flasche",
+        "Rotwein, Veneto, Flasche",
+        "Rotwein, Apulien, Flasche",
+        "Rotwein, Toskana, Flasche",
+        "Rotwein, Toskana, Flasche",
+        "Rotwein, Toskana, Flasche",
+        "Rotwein, Toskana, Flasche",
+        "Rotwein, Piemont, Flasche"
+      ],
+      spirits: [
+        "Birnenbrand",
+        "Pflaumenbrand",
+        "",
+        "Im Barrique gereift",
+        "",
+        "Likör",
+        "Likör",
+        "Likör",
+        "Likör",
+        "Likör",
+        "",
+        "Gin",
+        "Gin",
+        "Whiskey",
+        "Single Malt",
+        "Bourbon",
+        "Wodka",
         "Rum",
         "Rum",
         "Cognac",

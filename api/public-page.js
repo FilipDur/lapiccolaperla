@@ -5,7 +5,7 @@ import { readPublicDailyMenu } from "./daily-menu.js";
 
 const templatePromises = new Map();
 const readTemplate = (language) => {
-  if (!["cs", "en", "it"].includes(language)) throw new Error("Unsupported language.");
+  if (!["cs", "en", "it", "de"].includes(language)) throw new Error("Unsupported language.");
   if (!templatePromises.has(language)) {
     const promise = readFile(new URL(`../.server/templates/${language}.html`, import.meta.url), "utf8")
       .catch(error => { templatePromises.delete(language); throw error; });

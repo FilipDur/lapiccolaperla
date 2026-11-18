@@ -16,7 +16,7 @@ Otevřete http://127.0.0.1:5173/. Dev server zůstává dostupný pouze na tomto
 - `/denni-menu` – aktuální denní nabídka, pondělí–pátek 11:00–14:30
 - `/specialni-menu` – speciální nabídka včetně prázdného stavu
 - `/o-nas`, `/galerie`, `/kontakt`
-- `/en` a `/it` – jazykové verze včetně podstránek
+- `/en`, `/it` a `/de` – jazykové verze včetně podstránek
 - `/admin` – stávající administrace a tisk/PDF
 
 Vite obsluhuje lokální API `/api/daily-menu` a `/api/special-menu`. Ukládají do ignorovaného `.local/menus.json`; nečtou ani nemění produkční Redis. Administrace ověřuje přihlášení na serveru přes `POST /api/admin-auth` a používá stejné oprávnění jako ukládání menu. Klientský kód neobsahuje správné přihlašovací hodnoty. Datum denní nabídky se řídí časovým pásmem Europe/Prague. Odkazy na speciální menu a jeho stránka zůstávají dostupné i při prázdné nabídce; stránka v takovém případě zobrazí prázdný stav bez jídel.

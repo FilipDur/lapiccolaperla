@@ -7,12 +7,14 @@ const copy = {
   cs: { title: "Co o nás říkají hosté", selection: "Vaše spokojenost je pro nás tou největší odměnou.", count: "recenzí", onGoogle: "na Google", all: "Všechny recenze na Google", source: "Otevřít recenzi na Google", previous: "Předchozí recenze", next: "Další recenze", checked: "Ověřeno", stars: "z 5 hvězdiček", note: "Výběr úryvků z recenzí s hodnocením 5/5. Celkové hodnocení je uvedeno výše." },
   en: { title: "What our guests say", selection: "Your satisfaction is our greatest reward.", count: "reviews", onGoogle: "on Google", all: "All reviews on Google", source: "Open review on Google", previous: "Previous review", next: "Next review", checked: "Checked on", stars: "out of 5 stars", note: "Selected excerpts from 5/5 reviews. The overall rating is shown above." },
   it: { title: "Cosa dicono i nostri ospiti", selection: "La vostra soddisfazione è la nostra ricompensa più grande.", count: "recensioni", onGoogle: "su Google", all: "Tutte le recensioni su Google", source: "Apri recensione su Google", previous: "Recensione precedente", next: "Recensione successiva", checked: "Verificato il", stars: "su 5 stelle", note: "Una selezione di estratti da recensioni con 5/5. La valutazione complessiva è riportata sopra." },
+  de: { title: "Was unsere Gäste sagen", selection: "Ihre Zufriedenheit ist unser schönster Lohn.", count: "Bewertungen", onGoogle: "bei Google", all: "Alle Bewertungen bei Google", source: "Bewertung bei Google öffnen", previous: "Vorherige Bewertung", next: "Nächste Bewertung", checked: "Geprüft am", stars: "von 5 Sternen", note: "Ausgewählte Auszüge aus 5/5-Bewertungen. Die Gesamtbewertung steht oben." },
 };
 
 const controls = {
   cs: { pause: "Pozastavit recenze", play: "Spustit recenze", carousel: "Karusel recenzí", slide: "recenze", of: "z" },
   en: { pause: "Pause reviews", play: "Play reviews", carousel: "Review carousel", slide: "review", of: "of" },
   it: { pause: "Pausa recensioni", play: "Avvia recensioni", carousel: "Carosello delle recensioni", slide: "recensione", of: "di" },
+  de: { pause: "Bewertungen pausieren", play: "Bewertungen abspielen", carousel: "Bewertungskarussell", slide: "Bewertung", of: "von" },
 };
 const PIXELS_PER_SECOND = 32;
 // Keep the verified source data intact; this carousel is explicitly a 5-star selection.
@@ -40,7 +42,7 @@ function GoogleMark() {
 export default function GoogleReviews({ language }) {
   const t = copy[language] || copy.cs;
   const c = controls[language] || controls.cs;
-  const locale = { cs: "cs-CZ", en: "en-GB", it: "it-IT" }[language] || "cs-CZ";
+  const locale = { cs: "cs-CZ", en: "en-GB", it: "it-IT", de: "de-DE" }[language] || "cs-CZ";
   const reviews = fiveStarReviews;
   const count = reviews.length;
   const carouselRef = useRef(null);

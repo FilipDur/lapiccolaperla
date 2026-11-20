@@ -198,7 +198,11 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
     <a className="r-skip-link" href="#r-main">{t.skip}</a>
     <header className="r-header">
       <a className="r-logo" href={href("home")} aria-label="La Piccola Perla — home"><img src="/logo-transparent.png" width="1200" height="190" alt="La Piccola Perla" /></a>
-      <nav className={`r-navigation${mobileOpen ? " is-open" : ""}`} id="r-navigation" aria-label={copy.navAria || t.open}>{navPages.map((page) => <a key={page} href={href(page)} aria-current={route.page === page ? "page" : undefined}>{t.pages[page]}</a>)}<a className="r-nav-booking" href={BOOKING} target="_blank" rel="noopener noreferrer">{t.reserve}<ArrowUpRight size={17} /></a></nav>
+      <nav className={`r-navigation${mobileOpen ? " is-open" : ""}`} id="r-navigation" aria-label={copy.navAria || t.open}>
+        {navPages.map((page) => <a key={page} href={href(page)} aria-current={route.page === page ? "page" : undefined}>{t.pages[page]}</a>)}
+        <a className="r-nav-booking" href={BOOKING} target="_blank" rel="noopener noreferrer">{t.reserve}<ArrowUpRight size={17} aria-hidden="true" /></a>
+        <a className="r-nav-order" href={ORDER} target="_blank" rel="noopener noreferrer">{copy.reservationBlock.order}<ArrowUpRight size={17} aria-hidden="true" /></a>
+      </nav>
       <div className="r-header-actions"><div className="r-languages" aria-label={t.language}>{["cs", "en", "it", "de"].map((code) => <a key={code} href={routeHref(route.page === "daily" && code !== "cs" ? "menu" : route.page, code)} lang={code} aria-label={{ cs: "Čeština", en: "English", it: "Italiano", de: "Deutsch" }[code]} aria-current={activeLanguage === code ? "true" : undefined}>{code === "cs" ? "CZ" : code.toUpperCase()}</a>)}</div><a className="r-button r-header-booking" href={BOOKING} target="_blank" rel="noopener noreferrer">{t.reserve}<ArrowUpRight size={16} /></a><button ref={menuToggleRef} className="r-mobile-toggle r-icon-button" aria-label={mobileOpen ? t.close : t.open} aria-expanded={mobileOpen} aria-controls="r-navigation" onClick={() => setMobileOpen(!mobileOpen)}>{mobileOpen ? <X /> : <Menu />}</button></div>
     </header>
 

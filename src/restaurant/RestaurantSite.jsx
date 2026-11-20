@@ -108,6 +108,7 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
   const [cookieDetailsOpen, setCookieDetailsOpen] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
   const dialogRef = useRef(null);
+  const navRef = useRef(null);
   const menuToggleRef = useRef(null);
   const mainRef = useRef(null);
   const siteRef = useRef(null);
@@ -153,10 +154,22 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
 
   useEffect(() => {
     if (!mobileOpen) return;
-    const escape = (event) => { if (event.key === "Escape") { setMobileOpen(false); menuToggleRef.current?.focus(); } };
+    navRef.current?.querySelector("a")?.focus({ preventScroll: true });
+    const desktop = window.matchMedia("(min-width: 1101px)");
+    const onResize = () => { if (desktop.matches) setMobileOpen(false); };
+    const escape = (event) => { if (event.key === "Escape") closeMobileMenu(); };
     document.addEventListener("keydown", escape);
-    return () => document.removeEventListener("keydown", escape);
+    desktop.addEventListener("change", onResize);
+    return () => {
+      document.removeEventListener("keydown", escape);
+      desktop.removeEventListener("change", onResize);
+    };
   }, [mobileOpen]);
+
+  function closeMobileMenu() {
+    setMobileOpen(false);
+    menuToggleRef.current?.focus({ preventScroll: true });
+  }
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -196,15 +209,18 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
   return <div ref={siteRef} className="restaurant-site" onClick={navigate}>
     <NewYearInvitation language={activeLanguage} eligible={showNewYear && !["newYear", "privacy", "notFound"].includes(route.page)} />
     <a className="r-skip-link" href="#r-main">{t.skip}</a>
-    <header className="r-header">
+    <header className={`r-header${mobileOpen ? " is-menu-open" : ""}`} onBlur={event => {
+      if (mobileOpen && event.relatedTarget && !event.currentTarget.contains(event.relatedTarget)) setMobileOpen(false);
+    }}>
       <a className="r-logo" href={href("home")} aria-label="La Piccola Perla — home"><img src="/logo-transparent.png" width="1200" height="190" alt="La Piccola Perla" /></a>
-      <nav className={`r-navigation${mobileOpen ? " is-open" : ""}`} id="r-navigation" aria-label={copy.navAria || t.open}>
-        {navPages.map((page) => <a key={page} href={href(page)} aria-current={route.page === page ? "page" : undefined}>{t.pages[page]}</a>)}
+      <nav ref={navRef} className={`r-navigation${mobileOpen ? " is-open" : ""}`} id="r-navigation" aria-label={copy.navAria || t.open}>
+        {navPages.map((page) => <a className="r-nav-page" key={page} href={href(page)} aria-current={route.page === page ? "page" : undefined}>{t.pages[page]}</a>)}
         <a className="r-nav-booking" href={BOOKING} target="_blank" rel="noopener noreferrer">{t.reserve}<ArrowUpRight size={17} aria-hidden="true" /></a>
         <a className="r-nav-order" href={ORDER} target="_blank" rel="noopener noreferrer">{copy.reservationBlock.order}<ArrowUpRight size={17} aria-hidden="true" /></a>
       </nav>
       <div className="r-header-actions"><div className="r-languages" aria-label={t.language}>{["cs", "en", "it", "de"].map((code) => <a key={code} href={routeHref(route.page === "daily" && code !== "cs" ? "menu" : route.page, code)} lang={code} aria-label={{ cs: "Čeština", en: "English", it: "Italiano", de: "Deutsch" }[code]} aria-current={activeLanguage === code ? "true" : undefined}>{code === "cs" ? "CZ" : code.toUpperCase()}</a>)}</div><a className="r-button r-header-booking" href={BOOKING} target="_blank" rel="noopener noreferrer">{t.reserve}<ArrowUpRight size={16} /></a><button ref={menuToggleRef} className="r-mobile-toggle r-icon-button" aria-label={mobileOpen ? t.close : t.open} aria-expanded={mobileOpen} aria-controls="r-navigation" onClick={() => setMobileOpen(!mobileOpen)}>{mobileOpen ? <X /> : <Menu />}</button></div>
     </header>
+    {mobileOpen && <button type="button" className="r-nav-backdrop" tabIndex={-1} aria-label={t.close} onPointerDown={event => event.preventDefault()} onClick={closeMobileMenu} />}
 
     <main id="r-main" ref={mainRef} tabIndex={-1}>
       {route.page === "home" ? <>

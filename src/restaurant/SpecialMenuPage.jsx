@@ -19,7 +19,7 @@ export default function SpecialMenuPage({ items, status, language, allergy }) {
   return <div className="sp-page r-container">
     <div className="sp-intro"><a className="r-text-link sp-back" href={routeHref("menu", language)}><ArrowLeft size={16} />{t.back}</a><p className="r-eyebrow">Qualcosa di speciale</p><h1>{t.title}</h1><p className="sp-description">{t.intro}</p>
       {selected && <figure className="sp-dish"><span className="sp-dish-circle" aria-hidden="true" /><img src="/images/menu-2026-tuna-tartare-v1.webp" alt={`${itemName(selected, language)} · ${t.illustration}`} width="1536" height="1024" fetchPriority="high" /><figcaption><span>{t.selected}</span><strong>{itemName(selected, language)}</strong><b>{itemPrice(selected, language)}</b><small>{t.illustration}</small></figcaption></figure>}
-      <a className="r-text-link" href="https://la-piccola-perla.choiceqr.com/takeaway/booking" target="_blank" rel="noopener noreferrer">{t.reserve}<ArrowUpRight size={17} /></a>
+      <a className="r-text-link" href="https://la-piccola-perla.choiceqr.com/menu/booking" target="_blank" rel="noopener noreferrer">{t.reserve}<ArrowUpRight size={17} /></a>
     </div>
     <section className="sp-paper" aria-label={t.title}>
       <span className="sp-botanical sp-botanical-top" aria-hidden="true"><img src="/special-menu-botanicals.webp" alt="" /></span><span className="sp-botanical sp-botanical-bottom" aria-hidden="true"><img src="/special-menu-botanicals.webp" alt="" /></span>

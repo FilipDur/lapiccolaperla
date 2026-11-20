@@ -6,6 +6,8 @@ import { usePhotoDepth } from "./usePhotoDepth.js";
 import GoogleReviews from "./GoogleReviews.jsx";
 import RestaurantMenu, { MenuOffers } from "./RestaurantMenu.jsx";
 import SpecialMenuPage from "./SpecialMenuPage.jsx";
+import NewYearPage, { NewYearInvitation, NewYearPromotion } from "./NewYearPage.jsx";
+import { showNewYearPromotion } from "./newYearCopy.js";
 import CookiePrivacy, { PrivacySettingsButton } from "./CookiePrivacy.jsx";
 import PrivacyPage from "./PrivacyPage.jsx";
 import "@fontsource/dm-serif-display/400.css";
@@ -16,7 +18,8 @@ import "@fontsource/manrope/600.css";
 import "@fontsource/manrope/700.css";
 import "./restaurant.css";
 
-const BOOKING = "https://la-piccola-perla.choiceqr.com/takeaway/booking";
+const BOOKING = "https://la-piccola-perla.choiceqr.com/menu/booking";
+const ORDER = "https://order.lapiccolaperla.cz/";
 const GOOGLE = "https://www.google.com/maps?cid=218766933573814212";
 const UI = {
   cs: {
@@ -112,6 +115,7 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
   const callbackRef = useRef(onLanguageSelect);
   callbackRef.current = onLanguageSelect;
   const activeLanguage = route.language || language;
+  const showNewYear = showNewYearPromotion(today);
   const t = UI[activeLanguage] || UI.cs;
   const href = (page) => routeHref(page, activeLanguage);
   const findPhoto = (file) => photos.find((photo) => photo.file === file) || photos[0];
@@ -190,6 +194,7 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
   };
 
   return <div ref={siteRef} className="restaurant-site" onClick={navigate}>
+    <NewYearInvitation language={activeLanguage} eligible={showNewYear && !["newYear", "privacy", "notFound"].includes(route.page)} />
     <a className="r-skip-link" href="#r-main">{t.skip}</a>
     <header className="r-header">
       <a className="r-logo" href={href("home")} aria-label="La Piccola Perla — home"><img src="/logo-transparent.png" width="1200" height="190" alt="La Piccola Perla" /></a>
@@ -209,7 +214,11 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
             <div className="r-hero-ingredient r-hero-tomato" aria-hidden="true"><img src="/images/hero-tomato-v1.webp" width="512" height="512" alt="" decoding="async" /><span>Pomodoro.</span></div>
             <div className="r-hero-intro">
               <p className="r-hero-description">{t.heroText}</p>
-              <div className="r-actions"><a className="r-button" href={BOOKING} target="_blank" rel="noopener noreferrer">{t.reserve}<ArrowUpRight size={18} /></a><a className="r-text-link" href={href("menu")}>{t.all}<ArrowRight size={18} /></a></div>
+              <div className="r-actions">
+                <a className="r-button" href={BOOKING} target="_blank" rel="noopener noreferrer">{t.reserve}<ArrowUpRight size={18} aria-hidden="true" /></a>
+                <a className="r-button r-hero-order" href={ORDER} target="_blank" rel="noopener noreferrer">{copy.reservationBlock.order}<ArrowUpRight size={18} aria-hidden="true" /></a>
+                <a className="r-text-link" href={href("menu")}>{t.all}<ArrowRight size={18} /></a>
+              </div>
             </div>
             <div className="r-hero-visual r-hero-depth" data-depth>
               <div className="r-hero-halo" aria-hidden="true"><img src="/images/hero-halo.svg" width="480" height="480" alt="" /></div>
@@ -220,6 +229,7 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
           <div className="r-hero-bottom r-container"><span>Perlová 412/1 · Praha 1</span><a href="#r-home-menu">{t.discover}<ChevronDown size={18} /></a><div className="r-hero-bottom-end"><span>11:00 — 23:00</span><button className="r-hero-motion-toggle" type="button" onClick={() => setHeroMotionPaused((paused) => !paused)} aria-pressed={heroMotionPaused} aria-label={{ cs: "Pozastavit animace", en: "Pause animations", it: "Metti in pausa le animazioni", de: "Animationen pausieren" }[activeLanguage]}>{heroMotionPaused ? <Play size={14} aria-hidden="true" /> : <Pause size={14} aria-hidden="true" />}</button></div></div>
         </section>
         <MenuOffers language={activeLanguage} specialItems={specialItems} specialStatus={specialStatus} home />
+        {showNewYear && <NewYearPromotion language={activeLanguage} />}
         <section className="r-editorial-story"><div className="r-editorial-story-inner r-container"><div className="r-editorial-story-copy"><SectionHeading kicker={t.welcome} title={t.intro} text={t.introText} /><a className="r-text-link" href={href("about")}>{t.story}<ArrowUpRight size={19} /></a><span className="r-story-signature">La dolce vita.</span></div><div className="r-editorial-story-image"><PhotoCarousel photos={homeStoryPhotos} t={t} openPhoto={setActivePhoto} /></div></div></section>
         <section className="r-kitchen r-container r-section">
           <div className="r-heading-row"><SectionHeading kicker="Fatto con amore" title={t.kitchenTitle} text={t.foodText} /><a className="r-text-link" href={href("menu")}>{t.all}<ArrowUpRight size={19} /></a></div>
@@ -239,7 +249,9 @@ export default function RestaurantSite({ language = "cs", initialPath, copy = {}
         </section>
         <section className="r-gallery-section r-section"><div className="r-container r-heading-row"><SectionHeading kicker="La Piccola Perla" title={t.galleryTitle} /><a className="r-text-link" href={href("gallery")}>{t.galleryLink}<ArrowUpRight size={18} /></a></div><div className="r-container"><GalleryGrid photos={selectedGallery} t={t} openPhoto={setActivePhoto} compact /></div></section>
         <GoogleReviews language={activeLanguage} /><Booking t={t} photo={findPhoto("_DSR0014.webp")} />
-      </> : <>
+      </> : route.page === "newYear" ? (
+        <NewYearPage language={activeLanguage} allergy={copy.menu?.allergy || t.allergy} showReservation={showNewYear} />
+      ) : <>
         {!["menu", "special"].includes(route.page) && <header className={`r-page-heading${route.page === "about" ? " r-page-heading-photo" : ""}`}>{route.page === "about" && <Picture photo={findPhoto("_DSR0023.webp")} eager />}<div className="r-container"><p className="r-eyebrow">{route.page === "menu" ? "La nostra cucina" : route.page === "daily" ? "Buon appetito" : route.page === "special" ? "Qualcosa di speciale" : "La Piccola Perla"}</p><h1>{route.page === "contact" ? t.contactTitle : route.page === "about" ? t.tableTitle : t.pages[route.page]}</h1>{route.page !== "privacy" && <p>{route.page === "menu" ? t.menuIntro : route.page === "gallery" ? t.galleryIntro : route.page === "contact" ? t.contactText : route.page === "special" ? t.specialIntro : route.page === "daily" ? t.dailyNote : route.page === "notFound" ? t.notFoundText : t.tableText}</p>}</div></header>}
         {route.page === "menu" && <RestaurantMenu categories={menuCategories} language={activeLanguage} specialItems={specialItems} specialStatus={specialStatus} allergy={copy.menu?.allergy || t.allergy} />}
         {route.page === "daily" && <DailyMenu items={dailyItems} status={dailyStatus} today={today} t={UI.cs} language="cs" photo={findPhoto("6.webp")} />}

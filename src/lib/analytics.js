@@ -36,10 +36,8 @@ export function classifyAnalyticsLink(href, { isLocationLink = false } = {}) {
   let url;
   try { url = new URL(href, SITE_URL); } catch { return null; }
   if (url.protocol !== "https:" || url.username || url.password) return null;
-  if (url.origin === "https://la-piccola-perla.choiceqr.com") {
-    if (url.pathname.replace(/\/$/, "") === "/takeaway/booking") return "reservation_open";
-    if (url.pathname.startsWith("/takeaway/section:menu/")) return "order_open";
-  }
+  if (url.origin === "https://la-piccola-perla.choiceqr.com" && url.pathname.replace(/\/$/, "") === "/menu/booking") return "reservation_open";
+  if (url.origin === "https://order.lapiccolaperla.cz" && url.pathname === "/") return "order_open";
   if (["www.google.com", "google.com"].includes(url.hostname)
     && (/^\/maps\/(?:search|dir)(?:\/|$)/.test(url.pathname)
       || (url.pathname === "/maps" && (url.searchParams.has("q") || url.searchParams.has("daddr")))

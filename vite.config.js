@@ -6,13 +6,16 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { createLocalMenuReaders, localMenuApiPlugin } from "./scripts/local-menu-api.mjs";
 import { createPublicPageHandler } from "./lib/publicPageServer.js";
+import { createReservationHandler } from "./api/silvestr-reservation.js";
 
 function publicPages() {
   let config;
   let readers;
+  const reservationPreview = createReservationHandler({ preview: true });
   const routeMiddleware = (server, preview = false) => async (request, response, next) => {
     const url = new URL(request.url, "http://localhost");
     const pathname = url.pathname;
+    if (pathname === "/api/silvestr-reservation") return reservationPreview(request, response);
     if (/^\/google260a340fd746cdf3(?:\.html)?$/.test(pathname)) {
       request.url = "/google260a340fd746cdf3.html";
       return next();
@@ -49,6 +52,10 @@ function publicPages() {
 }
 
 export default defineConfig(({ isSsrBuild }) => ({
+  define: {
+    "import.meta.env.SILVESTR_EMAIL_DRAFT": JSON.stringify(process.env.VERCEL_ENV === "production" &&
+      !(process.env.RESEND_API_KEY?.trim() && process.env.RESEND_FROM_EMAIL?.trim())),
+  },
   plugins: [react(), ...(!isSsrBuild ? [localMenuApiPlugin(), publicPages()] : [])],
   server: { host: "127.0.0.1", watch: { ignored: ["**/.local/**"] } },
   preview: { host: "127.0.0.1" },

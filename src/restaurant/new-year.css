@@ -1,0 +1,970 @@
+.restaurant-site .r-new-year-feature {
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr);
+  max-width: 870px;
+  min-height: 224px;
+  margin-bottom: clamp(52px, 7vw, 95px);
+  border: 1px solid var(--r-line);
+  background: #fff8ee;
+}
+
+.restaurant-site .r-new-year-feature:hover {
+  border-color: var(--r-border-strong);
+}
+
+.restaurant-site .r-new-year-feature-photo {
+  position: relative;
+  background: var(--r-wine-deep);
+}
+
+.restaurant-site .r-new-year-feature-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 36%;
+}
+
+.restaurant-site .r-new-year-feature-copy {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 8px;
+  min-width: 0;
+  padding: clamp(16px, 3.7vw, 48px);
+}
+
+.restaurant-site .r-new-year-feature-title {
+  color: var(--r-wine);
+  font: 400 clamp(24px, 4vw, 47px) / 1.02 var(--r-serif);
+}
+
+.restaurant-site .r-new-year-feature-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--r-wine);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.restaurant-site .r-new-year-feature:hover .r-new-year-feature-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.restaurant-site .r-new-year-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(946px, calc(100% - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--r-border-strong);
+  background: var(--r-ivory);
+  color: var(--r-ink);
+  box-shadow: 0 26px 86px #24100a75;
+}
+
+.restaurant-site .r-new-year-dialog::backdrop {
+  background: #2c1410bd;
+  backdrop-filter: blur(3px);
+}
+
+.restaurant-site .r-new-year-dialog-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+  min-height: 500px;
+}
+
+.restaurant-site .r-new-year-dialog-photo {
+  position: relative;
+  background: var(--r-wine-deep);
+}
+
+.restaurant-site .r-new-year-dialog-photo img,
+.restaurant-site .r-new-year-hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 44%;
+}
+
+.restaurant-site .r-new-year-dialog-photo img {
+  position: absolute;
+  inset: 0;
+}
+
+.restaurant-site .r-new-year-invitation {
+  position: relative;
+  align-content: center;
+  display: grid;
+  justify-items: start;
+  padding: 54px clamp(32px, 4.8vw, 74px) 38px;
+  background: #fff7eb;
+}
+
+.restaurant-site .r-new-year-invitation::before,
+.restaurant-site .r-new-year-hero-photo::after {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--r-line);
+  content: "";
+  pointer-events: none;
+}
+
+.restaurant-site .r-new-year-invitation .r-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.restaurant-site .r-new-year-invitation .r-eyebrow::before {
+  width: 21px;
+  height: 1px;
+  background: var(--r-border-strong);
+  content: "";
+}
+
+.restaurant-site .r-new-year-invitation-logo {
+  width: 149px;
+  height: auto;
+  margin-bottom: 24px;
+}
+
+.restaurant-site .r-new-year-invitation h2 {
+  margin-block: 9px 14px;
+  font-size: clamp(41px, 4.65vw, 70px);
+  line-height: 1;
+}
+
+.restaurant-site .r-new-year-invitation h2 em {
+  display: block;
+  line-height: 1.12;
+}
+
+.restaurant-site .r-new-year-invitation > p:not(.r-eyebrow) {
+  margin-bottom: 19px;
+  font-size: 14px;
+}
+
+.restaurant-site .r-new-year-close {
+  position: absolute;
+  z-index: 1;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  background: #fff7eb;
+  color: var(--r-wine);
+}
+
+.restaurant-site .r-new-year-close:hover {
+  background: #f2dfcc;
+}
+
+.restaurant-site .r-new-year-continue {
+  display: block;
+  min-height: 44px;
+  margin-top: 6px;
+  color: var(--r-wine);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.restaurant-site .r-new-year {
+  --r-wine: #701f31;
+  --r-wine-deep: #4b1926;
+  --r-ink: #372921;
+  --r-muted: #675749;
+  --r-ivory: #fffcf5;
+  --r-border-strong: #b8a17e;
+  --r-line: #c9b89a;
+  --event-brass: #815b32;
+  --event-paper: #fffbf2;
+}
+
+.restaurant-site .r-new-year {
+  padding-block: clamp(16px, 2.2vw, 34px) clamp(54px, 8vw, 112px);
+}
+
+.restaurant-site .r-new-year-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  perspective: 1400px;
+  padding: clamp(33px, 5.8vw, 85px) clamp(27px, 6.4vw, 95px);
+  background: #dac3a7;
+}
+
+.restaurant-site .r-new-year-hero-photo,
+.restaurant-site .r-new-year-hero-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.restaurant-site .r-new-year-hero-photo { z-index: -1; overflow: hidden; }
+.restaurant-site .r-new-year-hero-photo img { object-fit: cover; object-position: 55% 12%; }
+
+.restaurant-site .r-new-year-intro {
+  position: relative;
+  width: min(49%, 490px);
+  padding: clamp(32px, 3.6vw, 56px) clamp(20px, 2.9vw, 43px);
+  color: #fff6e6;
+  background: radial-gradient(ellipse at 0 0, #8e3443, transparent 80%), linear-gradient(145deg, #722a38, #471924 84%);
+  border: 1px solid #c59b75;
+  outline: 1px solid #cfa87e99;
+  outline-offset: -9px;
+  text-align: center;
+  transform: rotateY(5deg) rotateZ(-1.5deg);
+  box-shadow: 2px 3px 0 #a68563, 4px 5px 0 #faeaca, 6px 7px 0 #aa8663, 2px 17px 27px #2e151e58;
+}
+
+.restaurant-site .r-new-year-intro::after {
+  position: absolute;
+  right: -15px;
+  bottom: 20px;
+  width: clamp(34px, 3.5vw, 48px);
+  aspect-ratio: 1;
+  border: 1px solid #b79a71;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 24%, #fffef3 0 6%, #ffedc6 21%, #dac09b 48%, #ad875d 67%, #dfc49e 80%, #a48256);
+  box-shadow: inset -2px -4px 6px #a7815c52, 2px 6px 7px #28152366;
+  pointer-events: none;
+  content: "";
+}
+
+.restaurant-site .r-new-year-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: #f4dbb2;
+  font: 700 11px/1.5 var(--r-sans);
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.restaurant-site .r-new-year-date::before,
+.restaurant-site .r-new-year-date::after {
+  width: clamp(12px, 1.7vw, 24px);
+  height: 1px;
+  background: #c8a072;
+  content: "";
+}
+
+.restaurant-site .r-new-year-intro h1 {
+  margin: 20px 0 14px;
+  color: #fff6e6;
+  font-size: clamp(38px, 4.35vw, 67px);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+  text-shadow: 0 2px 1px #451424;
+}
+
+.restaurant-site .r-new-year-intro h1 em {
+  display: block;
+  color: #f7d398;
+}
+
+.restaurant-site .r-new-year-description {
+  max-width: 42ch;
+  margin-inline: auto;
+  color: #fff4e5;
+  font-size: clamp(14px, 1.1vw, 16px);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.restaurant-site .r-new-year-cover-price {
+  margin: 17px auto;
+  color: #f4dbb2;
+  font: 400 clamp(23px, 2vw, 30px)/1.2 var(--r-serif);
+}
+
+.restaurant-site .r-new-year-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+
+.restaurant-site .r-new-year-actions .r-button {
+  min-height: 44px;
+  padding: 10px 17px;
+  border-color: #fcdec0;
+  background: #fff2da;
+  color: #4c1b28;
+}
+
+.restaurant-site .r-new-year-actions .r-button:hover { background: #fffaf2; }
+.restaurant-site .r-new-year-actions .r-text-link { color: #fff4e5; text-decoration: underline; text-underline-offset: 4px; }
+.restaurant-site .r-new-year-actions :focus-visible { outline-color: #fff2da; }
+
+.restaurant-site .r-new-year-information {
+  display: grid;
+  grid-template-columns: minmax(0, 54ch) minmax(0, 43ch);
+  align-items: center;
+  justify-content: center;
+  gap: 14px clamp(25px, 4vw, 60px);
+  margin: 0 auto clamp(42px, 5.3vw, 75px);
+  padding: clamp(24px, 3vw, 40px);
+  border-bottom: 1px solid #cbb692;
+  background: #f8eee0;
+  color: var(--r-ink);
+}
+
+.restaurant-site .r-new-year-information h2 {
+  margin: 0 0 6px;
+  color: var(--r-wine);
+  font: 400 24px/1.2 var(--r-serif);
+}
+.restaurant-site .r-new-year-information p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+.restaurant-site .r-new-year-information > p {
+  padding-left: clamp(20px, 3.5vw, 48px);
+  border-left: 1px solid #cdb996;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .restaurant-site .r-new-year-intro,
+  .restaurant-site .r-new-year-hero-photo img { transition: transform 600ms cubic-bezier(.2,.7,.2,1); }
+  .restaurant-site .r-new-year-hero:hover .r-new-year-intro { transform: translateZ(10px) rotateY(-2deg) rotateZ(-.65deg); }
+  .restaurant-site .r-new-year-hero:hover .r-new-year-hero-photo img { transform: scale(1.025); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .restaurant-site .r-new-year-intro { transform: none; }
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/cormorant-garamond/normal-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/cormorant-garamond/italic-latin.woff2') format('woff2');
+  font-style: italic;
+  font-weight: 400 600;
+  font-display: swap;
+}
+
+.restaurant-site .r-new-year-paper {
+  --menu-serif: 'Cormorant Garamond', Georgia, serif;
+  --menu-ink: #35232b;
+  --menu-wine: #5b2b3b;
+  --menu-gold: #79512c;
+  --menu-muted: #65554b;
+  --menu-line: #b79564;
+  --menu-gutter: clamp(35px, 10vw, 96px);
+  --menu-fan: repeating-conic-gradient(from -90deg at 50% 100%, #a87a43 0deg 1.5deg, #f5e0b7 2deg 3.5deg, transparent 4deg 15deg);
+  position: relative;
+  isolation: isolate;
+  max-width: 940px;
+  margin-inline: auto;
+  scroll-margin-top: 116px;
+  border: 1px solid var(--menu-line);
+  background:
+    radial-gradient(ellipse at 5% 39%, #dec4a36b, transparent 40%),
+    radial-gradient(ellipse at 98% 68%, #e2bdae66, transparent 40%),
+    linear-gradient(102deg, #f6e8d0, #fff9eb 28%, #fcf4e5 70%, #eedac3);
+  color: var(--menu-ink);
+  text-align: center;
+  box-shadow: 0 2px 3px #57352024, 0 17px 42px -13px #6b43324d;
+}
+
+/* Fine foil rails repeat along the entire sheet, like the edge of a printed card. */
+.restaurant-site .r-new-year-paper::before,
+.restaurant-site .r-new-year-paper::after {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  content: "";
+}
+.restaurant-site .r-new-year-paper::before {
+  inset: 6px;
+  border: 1px solid #ad895d;
+  box-shadow: 0 0 0 2px #fff7e28a;
+}
+.restaurant-site .r-new-year-paper::after {
+  inset: 11px;
+  border: 1px solid #bd9e76;
+  background: var(--menu-fan) left top / 12px 17px repeat-y,
+              var(--menu-fan) right top / 12px 17px repeat-y;
+  opacity: .66;
+}
+
+.restaurant-site .r-new-year-menu-heading {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 56% 44%;
+  overflow: hidden;
+}
+.restaurant-site .r-new-year-menu-heading::before {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 57%;
+  background: url('/images/capodanno-prosecco.webp') center 12% / cover;
+  mask-image: linear-gradient(90deg, transparent, #000 28%), linear-gradient(#000 77%, transparent);
+  mask-composite: intersect;
+  content: "";
+}
+.restaurant-site .r-new-year-menu-heading::after {
+  position: absolute;
+  top: 22px;
+  right: 4.5%;
+  bottom: 7%;
+  width: 40%;
+  border: 1px solid #ffefc6ce;
+  border-radius: 50% 50% 0 0 / 47% 47% 0 0;
+  box-shadow: 0 0 0 4px #89674330, 0 0 0 5px #fff1d4b5;
+  mask-image: linear-gradient(#000 10%, #000a 66%, transparent);
+  pointer-events: none;
+  content: "";
+}
+.restaurant-site .r-new-year-poster-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  opacity: .68;
+  mask-image: linear-gradient(90deg, #000, #000b 7%, transparent 26%, transparent 84%, #0009);
+  pointer-events: none;
+}
+.restaurant-site .r-new-year-poster-content {
+  position: relative;
+  z-index: 1;
+  grid-column: 1;
+  padding: clamp(46px, 6vw, 80px) 12px clamp(48px, 6.5vw, 82px) clamp(28px, 4.6vw, 66px);
+}
+.restaurant-site .r-new-year-menu-logo {
+  width: clamp(155px, 18vw, 200px);
+  height: auto;
+  margin: 0 auto;
+}
+.restaurant-site .r-new-year-paper h2 {
+  margin: clamp(28px, 3.6vw, 46px) 0 0;
+  color: var(--menu-wine);
+}
+.restaurant-site .r-new-year-paper h2 em {
+  display: block;
+  color: var(--menu-gold);
+  font: italic 500 clamp(28px, 4vw, 50px) / 1 var(--menu-serif);
+}
+.restaurant-site .r-new-year-paper h2 strong {
+  display: block;
+  margin: 6px 0 0;
+  font: 500 clamp(68px, 10.8vw, 117px) / .9 var(--menu-serif);
+  letter-spacing: -.045em;
+  text-shadow: 0 1px #fff8e3, 1px 2px #bea27d77;
+}
+.restaurant-site .r-new-year-menu-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  margin: clamp(23px, 3vw, 33px) auto 0;
+  width: fit-content;
+}
+.restaurant-site .r-new-year-menu-price::before,
+.restaurant-site .r-new-year-menu-price::after {
+  width: clamp(22px, 3.3vw, 44px);
+  height: 4px;
+  border-block: 1px solid var(--menu-line);
+  content: "";
+}
+.restaurant-site .r-new-year-menu-price data {
+  color: var(--menu-wine);
+  font: 500 clamp(23px, 2.6vw, 34px) / 1.15 var(--r-serif);
+}
+
+.restaurant-site .r-new-year-flyer-body {
+  position: relative;
+  isolation: isolate;
+  padding: 0 var(--menu-gutter) clamp(39px, 5.5vw, 60px);
+}
+.restaurant-site .r-new-year-flyer-body::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: url('/images/silvestr-girlanda.webp') center top / 100% clamp(700px, 112vw, 1240px) repeat-y;
+  mask-image: linear-gradient(transparent, #000 35px);
+  opacity: .7;
+  pointer-events: none;
+  content: "";
+}
+.restaurant-site .r-new-year-list {
+  display: grid;
+  max-width: 662px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+.restaurant-site .r-new-year-list li {
+  position: relative;
+  padding-block: clamp(30px, 3.7vw, 42px) clamp(33px, 4.3vw, 48px);
+}
+.restaurant-site .r-new-year-list li::before,
+.restaurant-site .r-new-year-list li::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+}
+.restaurant-site .r-new-year-list li::before {
+  inset: 0 3% auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #b08c5c 24% 43%, transparent 47% 53%, #b08c5c 57% 76%, transparent);
+}
+/* A fluted shell and a raised pearl tie the course ornaments to La Perla. */
+.restaurant-site .r-new-year-list li::after {
+  top: 0;
+  left: 50%;
+  width: 32px;
+  height: 17px;
+  border: 1px solid #b18d59;
+  border-radius: 52% 52% 24% 24% / 90% 90% 17% 17%;
+  background:
+    radial-gradient(circle at 50% 80%, #fffefd 0 1px, #f2e4cf 2px, #b89873 3.5px, transparent 4px),
+    var(--menu-fan),
+    linear-gradient(110deg, #f6dfb2, #fff4de 38%, #dbbc88 71%, #f3dfbe);
+  box-shadow: inset 0 1px #fff9e6, 0 2px 2px #79563430;
+  transform: translate(-50%, -58%);
+}
+.restaurant-site .r-new-year-list h3 {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 .3em;
+  margin: 0 0 12px;
+  color: var(--menu-wine);
+  font: italic 600 clamp(27px, 3.2vw, 38px) / 1.08 var(--menu-serif);
+}
+.restaurant-site .r-new-year-list h3 small {
+  color: var(--menu-gold);
+  font: italic 500 .78em / 1.15 var(--menu-serif);
+}
+.restaurant-site .r-new-year-course-slash {
+  color: var(--menu-line);
+  font-size: .74em;
+}
+.restaurant-site .r-new-year-dishes {
+  display: grid;
+  align-items: start;
+  gap: clamp(6px, 1.3vw, 17px);
+}
+.restaurant-site .r-new-year-dishes-paired {
+  grid-template-columns: minmax(0, 1fr) max-content minmax(0, 1fr);
+}
+.restaurant-site .r-new-year-dish-option p:first-child {
+  color: var(--menu-ink);
+  font: 600 clamp(23px, 2.2vw, 29px) / 1.1 var(--menu-serif);
+  text-wrap: balance;
+}
+.restaurant-site .r-new-year-dish-option p + p {
+  margin: 8px auto 0;
+  color: var(--menu-muted);
+  font: 500 clamp(14px, 1.15vw, 16px) / 1.48 var(--r-sans);
+  text-wrap: balance;
+}
+.restaurant-site .r-new-year-menu-or {
+  align-self: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  color: var(--menu-gold);
+  font: italic 500 17px / 1.2 var(--menu-serif);
+}
+.restaurant-site .r-new-year-paper-footer {
+  max-width: 440px;
+  margin: 0 auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--menu-line);
+}
+.restaurant-site .r-new-year-paper-footer a {
+  color: var(--menu-gold);
+  font: 500 14px / 1.6 var(--r-sans);
+  text-underline-offset: 4px;
+}
+.restaurant-site .r-new-year-paper-footer a:is(:hover, :focus-visible) { text-decoration: underline; }
+
+@media (max-width: 600px) {
+  .restaurant-site .r-new-year-menu-heading {
+    display: block;
+  }
+  .restaurant-site .r-new-year-menu-heading::before {
+    inset: 0 0 auto;
+    width: 100%;
+    height: clamp(187px, 53vw, 268px);
+    background-position: center 9%;
+    mask-image: linear-gradient(#000 42%, transparent 100%);
+  }
+  .restaurant-site .r-new-year-menu-heading::after {
+    top: 21px;
+    right: 9%;
+    bottom: auto;
+    width: 82%;
+    height: clamp(135px, 40vw, 207px);
+    border-radius: 50% 50% 0 0 / 64% 64% 0 0;
+  }
+  .restaurant-site .r-new-year-poster-content {
+    padding: clamp(161px, 46vw, 232px) 28px 41px;
+  }
+  .restaurant-site .r-new-year-paper h2 { margin-top: 18px; }
+  .restaurant-site .r-new-year-paper h2 strong { font-size: clamp(72px, 19vw, 102px); }
+  .restaurant-site .r-new-year-paper::after { background-size: 7px 12px; }
+  .restaurant-site .r-new-year-dishes-paired {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .restaurant-site .r-new-year-menu-or::before,
+  .restaurant-site .r-new-year-menu-or::after {
+    width: 22px;
+    height: 1px;
+    background: var(--menu-line);
+    content: "";
+  }
+}
+
+.restaurant-site .r-new-year-allergy {
+  margin: 15px auto 0;
+  color: var(--r-muted);
+  font-size: 11px;
+  text-align: center;
+}
+
+.restaurant-site .r-new-year-reservation {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  max-width: 980px;
+  margin: clamp(54px, 8vw, 104px) auto 0;
+  scroll-margin-top: 110px;
+  border: 1px solid #d5c0a7;
+  border-radius: 12px;
+  background: #fffaf2;
+  color: #382724;
+  box-shadow: 0 14px 38px -22px #59362c80;
+}
+.restaurant-site .r-new-year-reservation-intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(74px, 8vw, 124px);
+  padding: clamp(26px, 3.6vw, 46px);
+  border-radius: 11px 0 0 11px;
+  color: #fff8ea;
+  background:
+    linear-gradient(180deg, #29171bed, #351d20d9 30%, #28141826 49%, #281518dd 69%, #29191c 95%),
+    url('/images/silvestr-perlova-small.webp') 50% 51% / cover;
+}
+.restaurant-site .r-new-year-reservation-date {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #f6d8a6;
+  font: 700 12px/1.5 var(--r-sans);
+  letter-spacing: .06em;
+}
+.restaurant-site .r-new-year-reservation-intro h2 {
+  margin: 18px 0 12px;
+  color: #fff7e6;
+  font: 500 clamp(41px, 4.5vw, 64px)/.98 'Cormorant Garamond', var(--r-serif);
+}
+.restaurant-site .r-new-year-reservation-intro h2 em {
+  display: block;
+  color: #f7d29a;
+}
+.restaurant-site .r-new-year-reservation-description,
+.restaurant-site .r-new-year-reservation-policy p {
+  max-width: 37ch;
+  color: #fff6ed;
+  font: 500 14px/1.65 var(--r-sans);
+}
+.restaurant-site .r-new-year-reservation-policy {
+  padding-top: 16px;
+  border-top: 1px solid #f2cb9a73;
+}
+.restaurant-site .r-new-year-reservation-policy h3 {
+  margin: 0 0 6px;
+  color: #ffe3b9;
+  font: 400 22px/1.17 var(--r-serif);
+}
+.restaurant-site .r-new-year-reservation-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  margin-top: 8px;
+  color: #fff9f1;
+  font: 600 14px/1.5 var(--r-sans);
+  font-variant-numeric: tabular-nums;
+}
+.restaurant-site .r-new-year-reservation-phone:focus-visible { outline: 2px solid #ffe6bd; }
+.restaurant-site .r-new-year-form {
+  container: perla-booking / inline-size;
+  min-width: 0;
+  padding: clamp(24px, 3.8vw, 48px);
+}
+.restaurant-site .r-new-year-form-fields {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.restaurant-site .r-new-year-form-fields + fieldset {
+  margin-top: 26px;
+}
+.restaurant-site .r-new-year-form legend {
+  float: left;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid #ddcbb6;
+  color: #502f34;
+  font: 400 clamp(23px, 2.35vw, 29px)/1.15 var(--r-serif);
+}
+.restaurant-site .r-new-year-field-pair,
+.restaurant-site .r-new-year-visit-fields {
+  clear: both;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px clamp(12px, 2vw, 24px);
+}
+.restaurant-site .r-new-year-visit-fields {
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.05fr) minmax(0, 1.2fr);
+  align-items: end;
+}
+.restaurant-site .r-new-year-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.restaurant-site .r-new-year-field label {
+  margin-bottom: 2px;
+  font: 600 13px/1.45 var(--r-sans);
+}
+.restaurant-site .r-new-year-field small {
+  color: #68594f;
+  font: 500 12px/1.4 var(--r-sans);
+}
+.restaurant-site .r-new-year-full-field { margin-top: 16px; }
+.restaurant-site .r-new-year-form :is(input:not([hidden]), select, textarea) {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  padding: 8px 2px;
+  border: 0;
+  border-bottom: 1px solid #a18b76;
+  border-radius: 0;
+  background: transparent;
+  color: #392b27;
+  font: 500 16px/1.4 var(--r-sans);
+}
+.restaurant-site .r-new-year-form :is(input:not([readonly]), select, textarea):focus-visible {
+  outline: 0;
+  border-bottom-color: var(--r-wine);
+  box-shadow: 0 1px var(--r-wine);
+  background: #fbf1e5;
+}
+.restaurant-site .r-new-year-form :is(input[readonly], button, a):focus-visible {
+  outline: 2px solid var(--r-wine);
+  outline-offset: 2px;
+}
+.restaurant-site .r-new-year-form textarea { resize: vertical; }
+.restaurant-site .r-new-year-form textarea::placeholder { color: #716259; font-size: 14px; }
+.restaurant-site .r-new-year-select,
+.restaurant-site .r-new-year-fixed-date { position: relative; }
+.restaurant-site .r-new-year-select svg,
+.restaurant-site .r-new-year-fixed-date svg {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  transform: translateY(-50%);
+  color: #795b47;
+  pointer-events: none;
+}
+.restaurant-site .r-new-year-select svg:last-child { right: 3px; left: auto; }
+.restaurant-site .r-new-year-form .r-new-year-select select {
+  appearance: none;
+  padding-inline: 24px 20px;
+  cursor: pointer;
+}
+.restaurant-site .r-new-year-fixed-date input:not([hidden]) {
+  padding-inline: 24px 0;
+  font-variant-numeric: tabular-nums;
+}
+.restaurant-site .r-new-year-form [aria-invalid=true] { border-bottom: 2px solid #9c3130; }
+
+@container perla-booking (max-width: 385px) {
+  .restaurant-site .r-new-year-visit-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .restaurant-site .r-new-year-visit-fields > :last-child { grid-column: 1 / -1; }
+}
+@container perla-booking (max-width: 270px) {
+  .restaurant-site .r-new-year-field-pair { grid-template-columns: minmax(0, 1fr); }
+}
+.restaurant-site .r-new-year-field-error {
+  margin-top: 5px;
+  color: #922c2a;
+  font: 600 13px/1.45 var(--r-sans);
+}
+.restaurant-site .r-new-year-form-privacy {
+  margin: 15px 0;
+  color: #64534c;
+  font: 500 12px/1.6 var(--r-sans);
+}
+.restaurant-site .r-new-year-form-privacy a { color: #71373c; text-decoration: underline; text-underline-offset: 3px; }
+.restaurant-site .r-new-year-submit {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 20px;
+  border-radius: 6px;
+  border-color: #5e2c38;
+  background: #5e2c38;
+  color: #fff9ed;
+}
+.restaurant-site .r-new-year-submit:hover:enabled { background: #49222d; }
+.restaurant-site .r-new-year-form button:disabled { opacity: .58; cursor: default; transform: none; }
+.restaurant-site .r-new-year-form-message > p {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 12px 0 0;
+  padding: 10px 13px;
+  border-left: 3px solid #a14039;
+  border-radius: 3px;
+  background: #f9eae4;
+  color: #6d2928;
+  font: 600 13px/1.5 var(--r-sans);
+}
+.restaurant-site .r-new-year-form-message [data-success=true] { border-color: #5d7050; background: #eef1e5; color: #344734; }
+.restaurant-site .r-new-year-form-message svg { flex: none; margin-top: 2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .restaurant-site .r-new-year-dialog[open] {
+    animation: perla-invitation-in 230ms ease-out both;
+  }
+}
+
+@keyframes perla-invitation-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 760px) {
+  .restaurant-site .r-new-year-reservation { grid-template-columns: minmax(0, 1fr); }
+  .restaurant-site .r-new-year-reservation-intro {
+    gap: 19px;
+    padding: 25px clamp(18px, 5vw, 38px) 17px;
+    border-radius: 11px 11px 0 0;
+    background:
+      linear-gradient(100deg, #28171bf7 7%, #301c20ed 42%, #301c20c7 78%, #29181cb5),
+      url('/images/silvestr-perlova-small.webp') center 47% / cover;
+  }
+  .restaurant-site .r-new-year-reservation-intro h2 { margin: 11px 0 8px; }
+  .restaurant-site .r-new-year-reservation-intro h2 em { display: inline; }
+  .restaurant-site .r-new-year-reservation-policy p { max-width: 60ch; }
+  .restaurant-site .r-new-year-form { padding: 25px clamp(16px, 5vw, 38px); }
+}
+
+@media (max-width: 680px) {
+  .restaurant-site .r-new-year-hero {
+    align-items: flex-end;
+    justify-content: center;
+    padding: clamp(124px, 33vw, 173px) 17px 22px;
+  }
+  .restaurant-site .r-new-year-hero-photo img { object-position: 70% 0; }
+  .restaurant-site .r-new-year-hero-photo {
+    background: #cbb59d;
+  }
+  .restaurant-site .r-new-year-hero-photo img {
+    height: 72%;
+    mask-image: linear-gradient(#000 76%, transparent);
+  }
+  .restaurant-site .r-new-year-intro {
+    width: min(100%, 414px);
+    padding: 23px 15px 20px;
+    transform: none;
+  }
+  .restaurant-site .r-new-year-intro::after { right: -9px; bottom: 17px; width: 24px; }
+  .restaurant-site .r-new-year-intro h1 { margin: 12px 0; font-size: clamp(34px, 9vw, 50px); }
+  .restaurant-site .r-new-year-cover-price { margin: 12px auto; }
+  .restaurant-site .r-new-year-actions { gap: 2px 12px; }
+  .restaurant-site .r-new-year-actions .r-button { padding-inline: 12px; gap: 7px; }
+  .restaurant-site .r-new-year-actions .r-text-link { gap: 6px; }
+  .restaurant-site .r-new-year-information { grid-template-columns: 1fr; gap: 11px; padding: 21px; }
+  .restaurant-site .r-new-year-information > p { padding: 0; border: 0; }
+
+}
+
+@media (max-width: 560px) {
+  .restaurant-site .r-new-year-feature {
+    grid-template-columns: minmax(0, .68fr) minmax(0, 1.32fr);
+    min-height: 143px;
+  }
+
+  .restaurant-site .r-new-year-feature-copy {
+    padding: 13px 14px;
+  }
+
+  .restaurant-site .r-new-year-feature-copy .r-eyebrow {
+    font-size: 9px;
+    letter-spacing: .12em;
+  }
+
+  .restaurant-site .r-new-year-dialog-layout {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .restaurant-site .r-new-year-dialog-photo {
+    height: clamp(145px, 28svh, 232px);
+  }
+
+  .restaurant-site .r-new-year-invitation {
+    position: static;
+    padding: 22px 24px 17px;
+  }
+
+  .restaurant-site .r-new-year-invitation::before {
+    display: none;
+  }
+
+  .restaurant-site .r-new-year-close {
+    top: 8px;
+    right: 8px;
+  }
+
+  .restaurant-site .r-new-year-invitation-logo {
+    width: 124px;
+    margin-bottom: 15px;
+  }
+
+  .restaurant-site .r-new-year-invitation h2 {
+    font-size: clamp(34px, 10vw, 48px);
+  }
+}

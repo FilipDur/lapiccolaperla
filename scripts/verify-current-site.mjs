@@ -161,9 +161,9 @@ const pages = [];
 for (let index = 0; index < publicRoutes.length; index += 3) {
   pages.push(...await Promise.all(publicRoutes.slice(index, index + 3).map(route => inspectPage(route))));
 }
-check('public inventory', pages.length === 29, `Expected 29 public pages, got ${pages.length}`);
-check('public inventory', new Set(pages.map(page => page.title)).size === 29, 'Public titles are not all unique');
-check('public inventory', new Set(pages.flatMap(page => page.canonical)).size === 29, 'Public canonicals are not all unique');
+check('public inventory', pages.length === 33, `Expected 33 public pages, got ${pages.length}`);
+check('public inventory', new Set(pages.map(page => page.title)).size === 33, 'Public titles are not all unique');
+check('public inventory', new Set(pages.flatMap(page => page.canonical)).size === 33, 'Public canonicals are not all unique');
 
 const notFound = [];
 for (const [path, language] of [['/seo-audit-missing-20261031', 'cs'], ['/en/seo-audit-missing-20261031', 'en'], ['/it/seo-audit-missing-20261031.html', 'it'], ['/de/seo-audit-missing-20261031', 'de']]) {
@@ -201,7 +201,7 @@ const locations = [...sitemapResponse.body.matchAll(/<loc>([^<]+)<\/loc>/g)].map
 const expectedLocations = pages.filter(page => !page.robots.robots?.includes('noindex')).flatMap(page => page.canonical);
 check('/sitemap.xml', sitemapResponse.status === 200, `Expected HTTP 200, received ${sitemapResponse.status}`);
 check('/sitemap.xml', sitemapResponse.headers['content-type']?.includes('xml'), 'Response is not XML');
-check('/sitemap.xml', [25, 29].includes(locations.length), `Expected 25 or 29 sitemap URLs, got ${locations.length}`);
+check('/sitemap.xml', [29, 33].includes(locations.length), `Expected 29 or 33 sitemap URLs, got ${locations.length}`);
 check('/sitemap.xml', JSON.stringify([...locations].sort()) === JSON.stringify([...expectedLocations].sort()), 'Sitemap differs from the indexable canonical pages actually served');
 check('/sitemap.xml', new Set(locations).size === locations.length, 'Duplicate sitemap URLs');
 

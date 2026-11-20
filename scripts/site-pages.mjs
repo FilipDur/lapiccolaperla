@@ -51,7 +51,7 @@ export function renderRouteHtml(template, route, options = {}) {
   const labels = routeLabels[seo.htmlLang];
   const navigation = ["home", "about", "menu", ...(seo.htmlLang === "cs" ? ["daily"] : []), "gallery", "contact", "privacy"]
     .map((key) => `<a href="${routeHref(key, seo.htmlLang)}">${escapeHtml(labels[key])}</a>`).join(" · ");
-  const fallback = `<noscript><main><h1>${escapeHtml(seo.title)}</h1><p>${escapeHtml(seo.description)}</p><p>La Piccola Perla · Perlová 412/1, Praha 1 · 11:00–23:00</p><p><a href="tel:+420224282537">+420 224 282 537</a> · <a href="https://la-piccola-perla.choiceqr.com/takeaway/booking">${escapeHtml(labels.reservation)}</a></p><nav>${navigation}</nav></main></noscript>`;
+  const fallback = `<noscript><main><h1>${escapeHtml(seo.title)}</h1><p>${escapeHtml(seo.description)}</p><p>La Piccola Perla · Perlová 412/1, Praha 1 · 11:00–23:00</p><p><a href="tel:+420224282537">+420 224 282 537</a> · <a href="https://la-piccola-perla.choiceqr.com/menu/booking">${escapeHtml(labels.reservation)}</a></p><nav>${navigation}</nav></main></noscript>`;
   return html.replace(/<noscript>[\s\S]*?<\/noscript>/i, fallback);
 }
 

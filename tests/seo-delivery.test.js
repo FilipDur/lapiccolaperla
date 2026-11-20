@@ -20,7 +20,7 @@ test("all current-design pages render full public HTML, metadata and safe bootst
   try {
     const { renderDocument } = await server.ssrLoadModule("/src/entry-server.jsx");
     const templates = Object.fromEntries(await Promise.all(["cs", "en", "it", "de"].map(async language => [language, await readFile(new URL(language === "cs" ? "../index.html" : `../${language}.html`, import.meta.url), "utf8")])));
-    assert.equal(publicRoutes.length, 29);
+    assert.equal(publicRoutes.length, 33);
     for (const route of publicRoutes) {
       const html = renderDocument(templates[route.language], route, { today: "2026-10-31", specialMenuItems: [offer], dailyMenuItems: [] });
       const seo = getPageSeo(route.page, route.language, { hasSpecialMenu: true });
@@ -77,7 +77,7 @@ test("all current-design pages render full public HTML, metadata and safe bootst
 test("current sitemap follows live offer state and omits nonexistent reservation URLs", () => {
   for (const hasSpecialMenu of [false, true]) {
     const xml = renderSitemap({ hasSpecialMenu });
-    assert.equal((xml.match(/<loc>/g) || []).length, hasSpecialMenu ? 29 : 25);
+    assert.equal((xml.match(/<loc>/g) || []).length, hasSpecialMenu ? 33 : 29);
     assert.equal(xml.includes("/specialni-menu"), hasSpecialMenu);
     assert.doesNotMatch(xml, /\/rezervace|\/reservation|\/prenotazioni|\/admin|\/copy-of-home|\/gallery/);
   }

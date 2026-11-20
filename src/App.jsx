@@ -258,7 +258,7 @@ const publicCopy = {
       title: "A table in central Prague in a few clicks",
       text: "Come for an Italian lunch, an evening menu or order your favourite dishes online.",
       book: "Book a table",
-      order: "Order online"
+      order: "Order Online"
     },
     contact: {
       eyebrow: "Contact",

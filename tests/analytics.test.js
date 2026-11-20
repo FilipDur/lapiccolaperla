@@ -109,7 +109,7 @@ test("StrictMode mount cleanup and re-mount does not duplicate tag, page view or
   assert.equal(fake.scripts.length, 1);
   assert.equal(fake.events().length, 1);
   assert.equal(fake.listeners.get("click").size, 1);
-  fake.click("https://la-piccola-perla.choiceqr.com/takeaway/booking?name=private#private", "reservation");
+  fake.click("https://la-piccola-perla.choiceqr.com/menu/booking?name=private#private", "reservation");
   assert.equal(fake.events().filter((event) => event[1] === "reservation_open").length, 1);
   assert.equal(fake.browser[`ga-disable-${measurementId}`], false);
   cleanupAgain();
@@ -125,10 +125,10 @@ test("only the five intended interactions are measured with fixed destination ty
   analytics.setConsent("granted");
   fake.click("/it/prenotazioni", "header");
   fake.click("https://www.google.com/maps?cid=218766933573814212", "main");
-  fake.click("https://la-piccola-perla.choiceqr.com/takeaway/booking?name=private#private", "reservation");
+  fake.click("https://la-piccola-perla.choiceqr.com/menu/booking?name=private#private", "reservation");
   fake.click("tel:+420224282537", "contact");
   fake.click("https://www.google.com/maps/search/?api=1&query=private", "map");
-  fake.click("https://la-piccola-perla.choiceqr.com/takeaway/section:menu/polevky?private=1", "takeaway");
+  fake.click("https://order.lapiccolaperla.cz/?private=1", "takeaway");
   analytics.track("map_load", "map");
   assert.equal(analytics.track("purchase", "main"), false);
   const events = fake.events().filter((event) => event[1] !== "page_view");
@@ -235,7 +235,7 @@ test("blocked browser storage still permits a page-session choice and rejection"
 test("route and target classifiers reject unrelated or private values, with all four consent languages", () => {
   assert.deepEqual(getAnalyticsContext("/en/menu?private=1#private"), { path: "/en/menu", language: "en" });
   for (const path of ["https://evil.example/menu", "//evil.example/menu", "/unknown/private", "/admin"]) assert.equal(getAnalyticsContext(path), null);
-  for (const href of ["/rezervace", "https://la-piccola-perla.choiceqr.com.evil.example/takeaway/booking", "https://private@la-piccola-perla.choiceqr.com/takeaway/booking", "https://www.google.com/maps?cid=123", "mailto:private@example.com"]) assert.equal(classifyAnalyticsLink(href), null);
+  for (const href of ["/rezervace", "https://la-piccola-perla.choiceqr.com.evil.example/menu/booking", "https://private@la-piccola-perla.choiceqr.com/menu/booking", "https://www.google.com/maps?cid=123", "mailto:private@example.com"]) assert.equal(classifyAnalyticsLink(href), null);
   for (const language of ["cs", "en", "it", "de"]) {
     assert.ok(analyticsCopy[language].allow);
     assert.ok(analyticsCopy[language].deny);

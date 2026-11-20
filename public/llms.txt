@@ -16,8 +16,8 @@ Language entry subdomains: cs.lapiccolaperla.cz redirects to the Czech home page
 - Lunch menu: served Monday-Friday 11:00-14:30 on the Czech version of the site
 - Cuisine: Italian, pizza, pasta, seafood, meat dishes, desserts, wine, coffee
 - Setting: cosy restaurant in Prague Old Town suitable for lunch, dates, group dinners and evening dining
-- Reservations: https://la-piccola-perla.choiceqr.com/takeaway/booking
-- Online ordering: https://la-piccola-perla.choiceqr.com/takeaway/section:menu/polevky
+- Reservations: https://la-piccola-perla.choiceqr.com/menu/booking
+- Online ordering: https://order.lapiccolaperla.cz/
 
 ## Useful Pages
 

@@ -1,5 +1,5 @@
 export const restaurantRoutes = Object.freeze({
-  home: "", menu: "menu", daily: "denni-menu", special: "specialni-menu",
+  home: "", menu: "menu", daily: "denni-menu", special: "specialni-menu", newYear: "silvestr",
   about: "o-nas", gallery: "galerie", contact: "kontakt", privacy: "ochrana-soukromi"
 });
 
@@ -9,6 +9,7 @@ const hashPages = {
 };
 
 const legacySlugs = {
+  "novorocni-menu": "silvestr",
   "copy-of-home": "menu", gallery: "galerie", "specialni-nabidka": "specialni-menu",
   about: "o-nas", contact: "kontakt", specials: "specialni-menu",
   ristorante: "o-nas", galleria: "galerie", contatti: "kontakt", specialita: "specialni-menu",

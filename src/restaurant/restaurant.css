@@ -586,7 +586,7 @@ html:has(.restaurant-site) { scrollbar-color: #be9b7b #fff4e6; }
   .restaurant-site .r-hero-depth { width: 570px; height: 490px; top: 160px; }
   .restaurant-site .r-hero-fork-plane { width: 1100px; left: -265px; }
   .restaurant-site .r-hero-halo { width: 440px; left: 65px; }
-  .restaurant-site .r-hero-side { right: 0; top: 350px; }
+  .restaurant-site .r-hero-side { right: 0; top: 316px; }
   .restaurant-site .r-hero-detail { padding-left: 14px; }
   .restaurant-site .r-hero-detail > p { font-size: 23px; }
   .restaurant-site .r-food-composition { gap: 24px; }
@@ -627,6 +627,18 @@ html:has(.restaurant-site) { scrollbar-color: #be9b7b #fff4e6; }
 .restaurant-site .r-hero-copy { animation: r-hero-reveal 1s cubic-bezier(.16,1,.3,1) both; }
 .restaurant-site .r-hero-intro { top: 385px; animation: r-hero-reveal 1s .25s cubic-bezier(.16,1,.3,1) both; }
 .restaurant-site .r-hero-side { animation: r-hero-reveal 1s .45s cubic-bezier(.16,1,.3,1) both; }
+@media (min-width: 761px) {
+  .restaurant-site .r-hero-intro { width: 100%; pointer-events: none; }
+  .restaurant-site .r-hero-description { max-width: min(25ch, 24%); min-height: 4.8em; }
+  .restaurant-site .r-hero .r-actions { display: grid; grid-template-columns: 1fr 1fr; justify-items: start; }
+  .restaurant-site .r-hero .r-actions a { pointer-events: auto; }
+  .restaurant-site .r-hero-order { justify-self: end; }
+}
+@media (max-width: 760px) {
+  .restaurant-site .r-hero .r-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; max-width: 390px; margin-inline: auto; }
+  .restaurant-site .r-hero .r-actions .r-button { justify-content: center; gap: 6px; padding-inline: 8px; }
+  .restaurant-site .r-hero .r-actions .r-text-link { grid-column: 1 / -1; justify-self: center; }
+}
 .restaurant-site .r-hero-fork { animation: r-fork-rise 1.3s cubic-bezier(.16,1,.3,1) both, r-fork-float 8s 1.3s ease-in-out infinite; }
 .restaurant-site .r-hero-halo { opacity: 1; }
 .restaurant-site .r-hero-ingredient { position: absolute; z-index: 2; width: 156px; pointer-events: none; animation: r-hero-reveal 1.2s .5s cubic-bezier(.16,1,.3,1) both; }

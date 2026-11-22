@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowUpRight, Wine } from "lucide-react";
 import { routeHref } from "./routes.js";
+import { newYearCopy, newYearDate } from "./newYearCopy.js";
 import "./restaurant-menu.css";
 
 const text = {
@@ -24,6 +25,8 @@ const menuVisuals = {
   wine: { name: "Primitivo Manduria Cantolio", src: "/images/menu-2026-mandonion-v2.webp" },
   spirits: { name: "Grappa la Bianca", src: "/images/menu-2026-grappa-v1.webp" },
 };
+// Seasonal link from the menu to the New Year's Eve page until the evening has passed.
+const newYearOpen = () => Date.now() <= Date.parse(`${newYearDate}T23:59:59+01:00`);
 const imageLabels = { cs: "Ilustrační fotografie", en: "Illustrative photograph", it: "Fotografia illustrativa", de: "Beispielfoto" };
 
 const localItem = (item, language) => language === "cs" ? item : item.translations?.[language] || (language === "de" && item.translations?.en) || item;
@@ -85,7 +88,7 @@ export default function RestaurantMenu({ categories, language, specialItems, spe
 
   return <div className="rm-page">
     <header className="rm-hero r-container">
-      <div className="rm-hero-copy"><p className="r-eyebrow">La nostra cucina · {t.menu}</p><h1>{t.title[0]} <em>{t.title[1]}</em></h1><p className="rm-hero-intro">{t.intro}</p><a className="r-text-link" href="#rm-categories">{t.browse}<ArrowDown size={18} /></a></div>
+      <div className="rm-hero-copy"><p className="r-eyebrow">La nostra cucina · {t.menu}</p><h1>{t.title[0]} <em>{t.title[1]}</em></h1><p className="rm-hero-intro">{t.intro}</p><a className="r-text-link" href="#rm-categories">{t.browse}<ArrowDown size={18} /></a>{newYearOpen() && <a className="r-text-link rm-new-year-link" href={routeHref("newYear", language)}>{(newYearCopy[language] || newYearCopy.cs).menuLink}<ArrowUpRight size={18} /></a>}</div>
       <div className="rm-hero-art"><span className="rm-hero-circle" aria-hidden="true" /><img className="rm-hero-dish" src="/images/editorial-pizza-cutout-v3.webp" alt="Pizza · La Piccola Perla" width="1536" height="1024" fetchPriority="high" /><span className="rm-hero-signature" aria-hidden="true">Buon<br />appetito!</span><span className="rm-hero-caption">La nostra pizza.<br /><span>Fatta con passione.</span></span></div>
     </header>
     <MenuOffers language={language} specialItems={specialItems} specialStatus={specialStatus} />

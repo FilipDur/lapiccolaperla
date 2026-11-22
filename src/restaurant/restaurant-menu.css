@@ -177,3 +177,6 @@
   .restaurant-site .rm-hero-dish { animation: rm-arrive .8s cubic-bezier(.2,.7,.2,1) both; }
   @keyframes rm-arrive { from { opacity: 0; transform: translateY(18px) rotate(-9deg); } to { opacity: 1; transform: translateY(0) rotate(-9deg); } }
 }
+
+/* Seasonal link to the New Year page, on its own line under "Explore the menu". */
+.restaurant-site .rm-hero-copy .rm-new-year-link { display: flex; width: fit-content; color: var(--r-wine-deep); }

@@ -13,7 +13,7 @@ export const routeLabels = {
 const homeTitles = {
   cs: "Italská restaurace Praha 1 – Staré Město | La Piccola Perla",
   en: "Italian Restaurant in Prague Old Town | La Piccola Perla",
-  it: "Ristorante italiano a Praga | La Piccola Perla",
+  it: "Ristorante italiano a Praga centro | La Piccola Perla",
   de: "Italienisches Restaurant Prag Altstadt | La Piccola Perla"
 };
 

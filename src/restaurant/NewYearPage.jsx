@@ -114,8 +114,13 @@ export function NewYearInvitation({ language, eligible }) {
   );
 }
 
+// The flyer pairs the Italian dish name with a second line: the page language
+// for Czech and German guests, English otherwise.
+const orWord = { cs: "nebo", de: "oder", en: "or" };
+
 export default function NewYearPage({ language, allergy, showReservation }) {
   const text = newYearCopy[language];
+  const secondary = language === "cs" || language === "de" ? language : "en";
 
   return (
     <article className="r-container r-new-year">
@@ -156,9 +161,9 @@ export default function NewYearPage({ language, allergy, showReservation }) {
           <img className="r-new-year-poster-art" src="/images/silvestr-konfety.webp" width="1050" height="700" alt="" loading="lazy" decoding="async" />
           <div className="r-new-year-poster-content">
             <img className="r-new-year-menu-logo" src="/logo-transparent.png" alt="La Piccola Perla" width="1200" height="190" />
-            <h2 id="r-new-year-menu-title" lang="en">
-              <em>New Years Eve</em>{" "}
-              <strong>MENU</strong>
+            <h2 id="r-new-year-menu-title">
+              <em>{text.posterHeading[0]}</em>{" "}
+              <strong>{text.posterHeading[1]}</strong>
             </h2>
             <p className="r-new-year-menu-price">
               <data value={newYearMenuPrice}>{menuPrice} Kč</data>
@@ -172,19 +177,19 @@ export default function NewYearPage({ language, allergy, showReservation }) {
                 <h3>
                   <span lang="it">{course.it}</span>
                   <span className="r-new-year-course-slash" aria-hidden="true">/</span>
-                  <small lang="en">{course.en}</small>
+                  <small lang={secondary}>{course[secondary] || course.en}</small>
                 </h3>
                 <div className={`r-new-year-dishes${course.dishes.length > 1 ? " r-new-year-dishes-paired" : ""}`}>
                   {course.dishes.map((dish, index) => (
                     <Fragment key={dish.it}>
                       {index > 0 && (
                         <span className="r-new-year-menu-or">
-                          <span lang="it">o</span><span aria-hidden="true">/</span><span lang="en">or</span>
+                          <span lang="it">o</span><span aria-hidden="true">/</span><span lang={secondary}>{orWord[secondary]}</span>
                         </span>
                       )}
                       <div className="r-new-year-dish-option">
                         <p lang="it">{dish.it}</p>
-                        {dish.en && <p lang="en">{dish.en}</p>}
+                        {(dish[secondary] || dish.en) && <p lang={secondary}>{dish[secondary] || dish.en}</p>}
                       </div>
                     </Fragment>
                   ))}

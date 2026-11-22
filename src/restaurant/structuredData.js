@@ -1,5 +1,5 @@
 import { routeHref } from "./routes.js";
-import { newYearDate, newYearMenuPrice } from "./newYearCopy.js";
+import { newYearCopy, newYearDate, newYearMenuPrice } from "./newYearCopy.js";
 
 /** Shared by browser navigation and server HTML; never mutate the base graph. */
 export function getStructuredData(source, { page, language }, seo, siteUrl) {
@@ -29,7 +29,7 @@ export function getStructuredData(source, { page, language }, seo, siteUrl) {
     data["@graph"].push({
       "@type": "Event",
       "@id": `${seo.canonical}#event`,
-      name: seo.title.replace(/ \| La Piccola Perla$/, ""),
+      name: (newYearCopy[language] || newYearCopy.cs).eventName,
       description: seo.description,
       startDate: newYearDate,
       endDate: newYearDate,
@@ -49,9 +49,7 @@ export function getStructuredData(source, { page, language }, seo, siteUrl) {
         "@type": "Offer",
         price: newYearMenuPrice,
         priceCurrency: "CZK",
-        availability: "https://schema.org/InStock",
         url: seo.canonical,
-        validThrough: `${newYearDate}T18:00:00+01:00`,
       },
     });
   }

@@ -52,10 +52,6 @@ function publicPages() {
 }
 
 export default defineConfig(({ isSsrBuild }) => ({
-  define: {
-    "import.meta.env.SILVESTR_EMAIL_DRAFT": JSON.stringify(process.env.VERCEL_ENV === "production" &&
-      !(process.env.RESEND_API_KEY?.trim() && process.env.RESEND_FROM_EMAIL?.trim())),
-  },
   plugins: [react(), ...(!isSsrBuild ? [localMenuApiPlugin(), publicPages()] : [])],
   server: { host: "127.0.0.1", watch: { ignored: ["**/.local/**"] } },
   preview: { host: "127.0.0.1" },

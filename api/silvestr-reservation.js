@@ -2,7 +2,8 @@ import { createHash } from "node:crypto";
 import { getRestaurantDate } from "../src/lib/restaurantDate.js";
 import { newYearDate, showNewYearPromotion } from "../src/restaurant/newYearCopy.js";
 
-const restaurantEmail = "la.piccola.perla@email.cz";
+const reservationInbox = "fimadux@gmail.com";
+const reservationSubject = "La Piccola Perla – New Year's Eve reservation";
 const maxBodyBytes = 4096;
 const windowMs = 10 * 60 * 1000;
 const emailPattern = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
@@ -111,7 +112,9 @@ export function createReservationHandler({
     attempts.set(address, count + 1);
 
     const { name, email, phone, guests, time, note } = reservation;
-    const key = createHash("sha256").update(JSON.stringify({ date: newYearDate, ...reservation })).digest("hex");
+    const submissionId = typeof payload.submissionId === "string" && /^[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}$/i.test(payload.submissionId)
+      ? payload.submissionId : undefined;
+    const key = createHash("sha256").update(JSON.stringify({ date: newYearDate, ...reservation, submissionId })).digest("hex");
     try {
       const result = await send("https://api.resend.com/emails", {
         method: "POST",
@@ -122,9 +125,9 @@ export function createReservationHandler({
         },
         body: JSON.stringify({
           from,
-          to: [restaurantEmail],
+          to: [reservationInbox],
           reply_to: email,
-          subject: "La Piccola Perla | Poptávka stolu na Silvestra 2026",
+          subject: reservationSubject,
           text: [
             `Poptávka stolu na ${newYearDate}`,
             `Jméno: ${name}`,

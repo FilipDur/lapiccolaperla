@@ -21,7 +21,7 @@ async function request(handler, { body = reservation, origin = "https://lapiccol
   return response;
 }
 
-test("routes a valid enquiry to the restaurant through Resend and reuses its retry key", async () => {
+test("sends only to the forwarding inbox with the fixed subject and reuses its retry key", async () => {
   const calls = [];
   const handler = createReservationHandler({
     now,
@@ -36,7 +36,10 @@ test("routes a valid enquiry to the restaurant through Resend and reuses its ret
   assert.equal(calls[0].url, "https://api.resend.com/emails");
   assert.equal(calls[0].options.headers["Idempotency-Key"], calls[1].options.headers["Idempotency-Key"]);
   const email = JSON.parse(calls[0].options.body);
-  assert.deepEqual(email.to, ["la.piccola.perla@email.cz"]);
+  assert.deepEqual(email.to, ["fimadux@gmail.com"]);
+  assert.equal(email.subject, "La Piccola Perla – New Year's Eve reservation");
+  assert.equal(email.cc, undefined);
+  assert.equal(email.bcc, undefined);
   assert.equal(email.from, sender().from);
   assert.equal(email.reply_to, reservation.email);
   assert.equal(email.html, undefined);
@@ -45,6 +48,22 @@ test("routes a valid enquiry to the restaurant through Resend and reuses its ret
   const withPhone = await request(handler, { body: { ...reservation, phone: "+420 123 456 789" } });
   assert.equal(withPhone.statusCode, 200);
   assert.match(JSON.parse(calls[2].options.body).text, /Telefon: \+420 123 456 789/);
+  const injected = { ...reservation, from: "other@example.test", to: "other@example.test", subject: "Other", cc: "other@example.test" };
+  await request(handler, { body: injected });
+  assert.deepEqual(JSON.parse(calls[3].options.body), email);
+});
+
+test("identical details submitted separately each produce a message, while retrying the same form deduplicates", async () => {
+  const keys = [];
+  const handler = createReservationHandler({ now, getSender: sender, send: async (_, options) => {
+    keys.push(options.headers["Idempotency-Key"]);
+    return Response.json({ id: "test_message" });
+  } });
+  for (const submissionId of ["00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000001", "00000000-0000-4000-8000-000000000002"]) {
+    assert.equal((await request(handler, { body: { ...reservation, submissionId } })).statusCode, 200);
+  }
+  assert.equal(keys[0], keys[1]);
+  assert.notEqual(keys[1], keys[2]);
 });
 
 test("rejects invalid, automated, cross-origin and expired submissions before contacting Resend", async () => {

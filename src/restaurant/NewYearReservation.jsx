@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowRight, CalendarDays, Check, ChevronDown, CircleAlert, Phone, UsersRound } from "lucide-react";
 import { newYearCopy, newYearDate } from "./newYearCopy.js";
 import { routeHref } from "./routes.js";
@@ -16,7 +16,6 @@ const copy = {
     privacy: "Ochrana soukromí", purpose: "Údaje použijeme k vyřízení poptávky.",
     sent: "Poptávka odeslána. S potvrzením dostupnosti se vám ozveme e-mailem.",
     preview: "Testovací poptávka prošla. V tomto náhledu se e-maily neodesílají.",
-    openEmail: "Připravit e-mail", draft: "V e-mailové aplikaci zprávu zkontrolujte a odešlete restauraci.",
     invalid: "Zkontrolujte prosím vyplněné údaje.",
     rate_limited: "Odeslali jste více poptávek v krátké době. Zkuste to prosím za chvíli.",
     closed: "Poptávky na tento termín jsou uzavřené.",
@@ -34,7 +33,6 @@ const copy = {
     privacy: "Privacy policy", purpose: "We use your details to respond to your enquiry.",
     sent: "Enquiry sent. We’ll email you to confirm availability.",
     preview: "The test enquiry went through. This preview does not send email.",
-    openEmail: "Prepare email", draft: "Review and send the message to the restaurant in your email app.",
     invalid: "Please check your details.",
     rate_limited: "You sent several enquiries in a short time. Please try again in a few minutes.",
     closed: "Enquiries for this date are closed.",
@@ -52,7 +50,6 @@ const copy = {
     privacy: "Informativa sulla privacy", purpose: "Usiamo i vostri dati per rispondere alla richiesta.",
     sent: "Richiesta inviata. Vi scriveremo per confermare la disponibilità.",
     preview: "La richiesta di prova è riuscita. Questa anteprima non invia e-mail.",
-    openEmail: "Prepara l’e-mail", draft: "Controllate il messaggio e inviatelo al ristorante dalla vostra app di posta.",
     invalid: "Controllate i dati inseriti.",
     rate_limited: "Avete inviato più richieste in poco tempo. Riprova tra qualche minuto.",
     closed: "Le richieste per questa data sono chiuse.",
@@ -70,7 +67,6 @@ const copy = {
     privacy: "Datenschutz", purpose: "Wir verwenden Ihre Angaben, um Ihre Anfrage zu beantworten.",
     sent: "Ihre Anfrage ist eingegangen. Wir melden uns per E-Mail bei Ihnen.",
     preview: "Die Testanfrage war erfolgreich. In dieser Vorschau werden keine E-Mails versendet.",
-    openEmail: "E-Mail vorbereiten", draft: "Prüfen Sie die Nachricht in Ihrem E-Mail-Programm und senden Sie sie an das Restaurant.",
     invalid: "Bitte überprüfen Sie Ihre Angaben.",
     rate_limited: "Sie haben mehrere Anfragen kurz hintereinander gesendet. Bitte versuchen Sie es in einigen Minuten erneut.",
     closed: "Für diesen Termin nehmen wir keine Anfragen mehr an.",
@@ -79,7 +75,6 @@ const copy = {
 };
 
 const endpoint = "/api/silvestr-reservation";
-const reservationEmail = "la.piccola.perla@email.cz";
 const guestCounts = Array.from({ length: 99 }, (_, index) => index + 1);
 const eventDay = new Date(newYearDate + "T12:00:00Z");
 
@@ -87,13 +82,13 @@ export default function NewYearReservation({ language }) {
   const text = copy[language];
   const eventCopy = newYearCopy[language];
   const [status, setStatus] = useState("idle");
+  const submissionId = useRef(null);
   const numericDate = eventDay.toLocaleDateString(language === "en" ? "en-GB" : language, {
     day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC",
   });
   const [invalidFields, setInvalidFields] = useState([]);
   const sent = status === "sent";
   const pending = status === "pending";
-  const [useEmailDraft, setUseEmailDraft] = useState(Boolean(import.meta.env.SILVESTR_EMAIL_DRAFT));
   const message = status === "idle" || pending ? null : text[status] || text.error;
 
   function fieldProps(name) {
@@ -122,16 +117,8 @@ export default function NewYearReservation({ language }) {
       return;
     }
     const details = Object.fromEntries(new FormData(form));
-    if (useEmailDraft) {
-      const body = [
-        eventCopy.date,
-        ...["name", "email", "phone", "guests", "time", "note"]
-          .filter(key => details[key])
-          .map(key => `${text[key]}: ${details[key]}`),
-      ].join("\r\n");
-      window.location.href = `mailto:${reservationEmail}?subject=${encodeURIComponent(eventCopy.event + " · " + newYearDate)}&body=${encodeURIComponent(body)}`;
-      return;
-    }
+    submissionId.current ??= window.crypto.randomUUID?.();
+    details.submissionId = submissionId.current;
     setStatus("pending");
     try {
       const response = await fetch(endpoint, {
@@ -145,12 +132,7 @@ export default function NewYearReservation({ language }) {
         if (data.status === "sent") form.reset();
         return;
       }
-      if (data.error === "unavailable") {
-        setUseEmailDraft(true);
-        setStatus("idle");
-      } else {
-        setStatus(["invalid", "rate_limited", "closed"].includes(data.error) ? data.error : "error");
-      }
+      setStatus(["invalid", "rate_limited", "closed"].includes(data.error) ? data.error : "error");
     } catch {
       setStatus("error");
     }
@@ -228,9 +210,8 @@ export default function NewYearReservation({ language }) {
           <input type="text" name="companyWebsite" autoComplete="off" tabIndex={-1} hidden />
         </fieldset>
         <p className="r-new-year-form-privacy">{text.purpose} <a href={routeHref("privacy", language)}>{text.privacy}</a></p>
-        {useEmailDraft && <p className="r-new-year-form-privacy">{text.draft} <a href={`mailto:${reservationEmail}`}>{reservationEmail}</a></p>}
         <button type="submit" className="r-button r-new-year-submit" disabled={pending || sent}>
-          {pending ? text.pending : useEmailDraft ? text.openEmail : text.send}<ArrowRight size={18} aria-hidden="true" />
+          {pending ? text.pending : text.send}<ArrowRight size={18} aria-hidden="true" />
         </button>
         <div className="r-new-year-form-message" role="status">
           {message && <p data-success={sent || status === "preview"}>{sent || status === "preview" ? <Check size={17} aria-hidden="true" /> : <CircleAlert size={17} aria-hidden="true" />}{message}</p>}
